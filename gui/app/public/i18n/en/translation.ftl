@@ -4,6 +4,8 @@
 # And also comment the string if it's something not easy to translate, so you help
 # translators on what it means
 
+button-working = Working…
+
 ## Websocket (server) status
 websocket-connecting = Loading...
 websocket-connection_lost = The server crashed!
@@ -248,6 +250,8 @@ reset-mounting = Mounting Calibration
 reset-mounting-feet = Feet Calibration
 reset-mounting-fingers = Fingers Calibration
 reset-yaw = Yaw Reset
+reset-countdown-label = { $action } in { $time }
+reset-completed-label = { $action } complete
 reset-error-no_feet_tracker = No feet tracker assigned
 reset-error-no_fingers_tracker = No finger tracker assigned
 reset-error-mounting-need_full_reset = Need a full reset before mounting
@@ -741,6 +745,11 @@ settings-interface-appearance-font_size-description = This affects the font size
 settings-interface-appearance-decorations = Use the system native decorations
 settings-interface-appearance-decorations-description = This will not render the top bar of the interface and will use the operating system's instead.
 settings-interface-appearance-decorations-label = Use native decorations
+settings-interface-performance = Performance
+settings-interface-performance-label = Performance mode
+settings-interface-performance-description = Removes interface animations, uses solid panels, and reduces live preview and telemetry updates.
+settings-interface-performance-fast_preview = Fast preview refresh
+settings-interface-performance-fast_preview-description = Restores the usual refresh rate for the 3D tracker and live skeleton previews. Turn off to update both at 10 Hz.
 settings-interface-appearance-animations = Animations
 settings-interface-appearance-animations-description = Plays the water ripple on the welcome screen. Turn this off to keep the background still.
 settings-interface-appearance-animations-label = Play animations

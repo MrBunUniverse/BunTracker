@@ -35,14 +35,16 @@ export function RefreshTrackersButton() {
         style={{ WebkitAppRegion: 'no-drag' } as any}
         onClick={handleRefresh}
         disabled={refreshing}
+        aria-busy={refreshing}
         className={classNames(
           'apple-interactive flex items-center gap-1.5 text-ui-2xs tnum font-medium rounded-[8px] px-2.5 py-1 cursor-pointer select-none',
           refreshing
-            ? 'border-accent-background-20/50 text-[#EB8E70]'
+            ? 'tracker-scan-busy border-accent-background-20/50 text-[#EB8E70]'
             : 'text-background-20 hover:text-background-10'
         )}
       >
         <svg
+          aria-hidden="true"
           className={classNames(
             'w-3.5 h-3.5',
             refreshing && 'animate-spin text-accent-background-10'

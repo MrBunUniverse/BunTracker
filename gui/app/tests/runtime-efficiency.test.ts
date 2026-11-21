@@ -8,6 +8,79 @@ import ts from 'typescript';
 const require = createRequire(import.meta.url);
 const protocol = require('solarxr-protocol');
 
+test('dropdown keeps its scroll during close and restores the active item on open', () => {
+  const source = readFileSync(
+    new URL('../src/components/commons/Dropdown.tsx', import.meta.url),
+    'utf8'
+  );
+  const { outputText } = ts.transpileModule(source, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
+  });
+  const list = {
+    scrollTop: 0,
+    children: [
+      { scrollIntoView: () => { list.scrollTop = 0; } },
+      { scrollIntoView: () => {
+        assert.equal(list.scrollTop, 0);
+        list.scrollTop = 140;
+      } },
+    ],
+  };
+  let renderList!: (props: object) => void;
+  let effectIndex = 0;
+  const deps: unknown[][] = [];
+  const effects: (() => void)[] = [];
+  const registerEffect = (effect: () => void, nextDeps: unknown[]) => {
+    const previousDeps = deps[effectIndex];
+    deps[effectIndex++] = nextDeps;
+    if (!previousDeps || nextDeps.some((dep, i) => dep !== previousDeps[i])) {
+      effects.push(effect);
+    }
+  };
+  const mocks: Record<string, unknown> = {
+    react: {
+      forwardRef: (render: typeof renderList) => { renderList = render; },
+      useRef: () => ({ current: list }),
+      useEffect: registerEffect,
+      useLayoutEffect: registerEffect,
+    },
+    'react/jsx-runtime': { jsx: () => {}, jsxs: () => {} },
+    classnames: { default: () => '' },
+  };
+  runInNewContext(outputText, {
+    exports: {},
+    require: (name: string) => mocks[name] ?? {},
+  });
+  const render = (isOpen: boolean, value = '', innerFocusValue: string | null = null) => {
+    effectIndex = 0;
+    renderList({
+      isOpen,
+      value,
+      innerFocusValue,
+      items: [{ value: 'first' }, { value: 'last' }],
+    });
+    effects.splice(0).forEach((effect) => effect());
+  };
+
+  render(true, 'last');
+  assert.equal(list.scrollTop, 140);
+  list.scrollTop = 75;
+  render(false, 'last');
+  assert.equal(list.scrollTop, 75);
+  render(true);
+  assert.equal(list.scrollTop, 0);
+  render(true, '', 'last');
+  assert.equal(list.scrollTop, 140);
+  render(false, 'last');
+  render(true, 'last', 'first');
+  assert.equal(list.scrollTop, 0);
+  render(false);
+  render(true, 'first');
+  list.scrollTop = 75;
+  render(true, 'first', 'first');
+  assert.equal(list.scrollTop, 0);
+});
+
 test('dictation survives rerenders during microphone startup and listening', async () => {
   const slots: any[] = [];
   let cursor = 0;
@@ -140,44 +213,65 @@ function loadHook(file: string, mocks: Record<string, unknown>, globals = {}) {
 }
 
 test('feed configuration is reused until the rate changes; masks and rates stay intact', () => {
-  let config = { debug: false, devSettings: { fastDataFeed: false } };
-  let previousDeps: unknown[] = [];
-  let memo: any;
-  const hooks = loadHook('datafeed-config', {
-    react: {
-      useMemo: (factory: () => unknown, deps: unknown[]) => {
-        if (deps.some((dep, i) => dep !== previousDeps[i])) {
-          memo = factory();
-          previousDeps = deps;
-        }
-        return memo;
+  const config = {
+    debug: false,
+    devSettings: { fastDataFeed: false },
+    performanceMode: false,
+    fastPreviewRefresh: false,
+  };
+  const loadFeedHooks = () => {
+    let previousDeps: unknown[] = [];
+    let memo: any;
+    return loadHook('datafeed-config', {
+      react: {
+        useMemo: (factory: () => unknown, deps: unknown[]) => {
+          if (deps.some((dep, i) => dep !== previousDeps[i])) {
+            memo = factory();
+            previousDeps = deps;
+          }
+          return memo;
+        },
       },
-    },
-    './config': { useConfig: () => ({ config }) },
-  });
-  const regular = hooks.useDataFeedConfig();
+      './config': { useConfig: () => ({ config }) },
+    });
+  };
+  const { useDataFeedConfig } = loadFeedHooks();
+  const { useBonesDataFeedConfig } = loadFeedHooks();
+  const regular = useDataFeedConfig();
   assert.equal(regular.feedMaxTps, 10);
   assert.equal(regular.dataFeedConfig.minimumTimeSinceLast, 100);
   assert.equal(regular.dataFeedConfig.dataMask.trackerData.rotation, true);
   // Detail-only fields stay off until a screen that shows them asks (or debug is on).
   assert.equal(regular.dataFeedConfig.dataMask.trackerData.rawMagneticVector, false);
-  assert.equal(hooks.useDataFeedConfig(), regular);
-  const detail = hooks.useDataFeedConfig(false, true);
+  assert.equal(useDataFeedConfig(), regular);
+  const detail = useDataFeedConfig(false, true);
   assert.equal(detail.dataFeedConfig.dataMask.trackerData.rawMagneticVector, true);
   assert.equal(detail.dataFeedConfig.dataMask.trackerData.filterHealth, true);
-  previousDeps = [];
-  assert.equal(hooks.useDataFeedConfig().dataFeedConfig.stayAlignedPoseMask, false);
-  config = { debug: true, devSettings: { fastDataFeed: true } };
-  assert.equal(hooks.useDataFeedConfig().feedMaxTps, 90);
-  assert.notEqual(hooks.useDataFeedConfig(), regular);
-  previousDeps = [];
+  assert.equal(useDataFeedConfig().dataFeedConfig.stayAlignedPoseMask, false);
+  config.debug = true;
+  config.devSettings.fastDataFeed = true;
+  assert.equal(useDataFeedConfig().feedMaxTps, 90);
+  assert.notEqual(useDataFeedConfig(), regular);
   config.debug = false;
-  const bones = hooks.useBonesDataFeedConfig();
+  const bones = useBonesDataFeedConfig();
   assert.equal(bones.minimumTimeSinceLast, 25);
   assert.equal(bones.boneMask, true);
-  assert.equal(hooks.useBonesDataFeedConfig(), bones);
+  assert.equal(useBonesDataFeedConfig(), bones);
   config.debug = true;
-  assert.equal(hooks.useBonesDataFeedConfig().minimumTimeSinceLast, 1000 / 90);
+  assert.equal(useBonesDataFeedConfig().minimumTimeSinceLast, 1000 / 90);
+
+  config.performanceMode = true;
+  assert.equal(useDataFeedConfig(true).feedMaxTps, 10);
+  assert.equal(useBonesDataFeedConfig().minimumTimeSinceLast, 100);
+
+  config.fastPreviewRefresh = true;
+  assert.equal(useDataFeedConfig().feedMaxTps, 10);
+  assert.equal(useDataFeedConfig(true).feedMaxTps, 30);
+  assert.equal(useBonesDataFeedConfig().minimumTimeSinceLast, 25);
+
+  config.performanceMode = false;
+  assert.equal(useDataFeedConfig(true).feedMaxTps, 90);
+  assert.equal(useBonesDataFeedConfig().minimumTimeSinceLast, 1000 / 90);
 });
 
 test('WebSocket decodes real binary data-feed packets synchronously and cleans up', () => {

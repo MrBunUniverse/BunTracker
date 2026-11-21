@@ -7,8 +7,11 @@ import { useConfig } from './config';
 export function useDataFeedConfig(livePreview = false, detail = false) {
   const { config } = useConfig();
 
-  const fastDataFeed = config?.debug && config?.devSettings?.fastDataFeed;
-  const feedMaxTps = fastDataFeed ? 90 : livePreview ? 30 : 10;
+  const fastDataFeed =
+    !config?.performanceMode && config?.debug && config?.devSettings?.fastDataFeed;
+  const fastPreview =
+    livePreview && (!config?.performanceMode || config.fastPreviewRefresh);
+  const feedMaxTps = fastDataFeed ? 90 : fastPreview ? 30 : 10;
   const fullMask = detail || !!config?.debug;
 
   return useMemo(() => {
@@ -47,8 +50,10 @@ export function useDataFeedConfig(livePreview = false, detail = false) {
 export function useBonesDataFeedConfig() {
   const { config } = useConfig();
 
-  const fastDataFeed = config?.debug && config?.devSettings?.fastDataFeed;
-  const feedMaxTps = fastDataFeed ? 90 : 40;
+  const fastDataFeed =
+    !config?.performanceMode && config?.debug && config?.devSettings?.fastDataFeed;
+  const slowPreview = config?.performanceMode && !config.fastPreviewRefresh;
+  const feedMaxTps = slowPreview ? 10 : fastDataFeed ? 90 : 40;
 
   return useMemo(() => {
     const dataFeedConfig = new DataFeedConfigT();

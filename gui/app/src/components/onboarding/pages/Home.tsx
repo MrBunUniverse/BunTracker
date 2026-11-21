@@ -51,7 +51,7 @@ export function HomePage() {
       typeof window !== 'undefined' &&
       window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
-    if (prefersReducedMotion) {
+    if (config?.performanceMode || prefersReducedMotion) {
       setTypedChars(fullTitle.length);
       setCursorVisible(false);
       setDescVisible(true);
@@ -106,7 +106,7 @@ export function HomePage() {
     timeouts.push(startTimeout);
 
     return cleanup;
-  }, [fullTitle]);
+  }, [fullTitle, config?.performanceMode]);
 
   const start = () => {
     onboardingStarted();

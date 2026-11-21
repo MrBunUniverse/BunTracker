@@ -1,3 +1,6 @@
+import { useConfig } from '@/hooks/config';
+import { ReactElement } from 'react';
+
 export enum SlimeState {
   HAPPY,
   SAD,
@@ -8,10 +11,15 @@ export enum SlimeState {
 export function LoaderIcon({
   slimeState = SlimeState.HAPPY,
   size = 85,
+  staticFallback = null,
 }: {
   slimeState: SlimeState;
   size?: number | string;
+  staticFallback?: ReactElement | null;
 }) {
+  const { config } = useConfig();
+  if (config?.performanceMode) return staticFallback;
+
   return (
     <>
       <img

@@ -19,6 +19,8 @@ import { useBreakpoint } from '@/hooks/breakpoint';
 import { useMemo, useState, useEffect, CSSProperties } from 'react';
 import { ResetButtonIcon } from './home/ResetButton';
 import { useLocalization } from '@fluent/react';
+import { useConfig } from '@/hooks/config';
+import { CheckIcon } from './commons/icon/CheckIcon';
 
 function ButtonProgress({
   progress,
@@ -53,6 +55,7 @@ export function BasicResetButton(
   // Labels show from lg up; below that the tooltip carries the name.
   const { isLg } = useBreakpoint('lg');
   const { l10n } = useLocalization();
+  const { config } = useConfig();
   const {
     triggerReset,
     status,
@@ -69,11 +72,14 @@ export function BasicResetButton(
   const progress = status === 'counting' ? resetProress / duration : 0;
 
   const name = options.customName || resetName;
+  const counting = status === 'counting';
+  const finished = status === 'finished';
+  const staticCompletion = config?.performanceMode && finished;
 
   const skiReset =
     options.type === ResetType.Mounting && options.group === 'default';
 
-  return (
+  const button = (
     <Tooltip
       disabled={!error && !noTrackers && isLg}
       content={
@@ -100,7 +106,15 @@ export function BasicResetButton(
         }
         type="button"
         disabled={disabled}
-        aria-label={l10n.getString(name)}
+        aria-label={
+          counting
+            ? l10n.getString('reset-countdown-label', {
+                action: l10n.getString(name),
+                time: timer,
+              })
+            : l10n.getString(name)
+        }
+        aria-busy={counting}
         className={classNames(
           'toolbar-reset-button relative overflow-clip h-9 px-2 rounded-[8px] flex items-center justify-center gap-1.5 font-medium text-ui-2xs transition-all duration-150 select-none will-change-transform lg:px-3.5',
           {
@@ -126,15 +140,24 @@ export function BasicResetButton(
       >
         <div
           className={classNames('shrink-0', {
-            'animate-spin-ccw': !skiReset && status === 'finished',
-            'animate-skiing': skiReset && status === 'finished',
-            'opacity-0': status === 'counting',
+            'animate-spin-ccw': !skiReset && finished && !staticCompletion,
+            'animate-skiing': skiReset && finished && !staticCompletion,
+            'opacity-0': counting,
           })}
           style={{
             animationIterationCount: 1,
           }}
         >
-          <ResetButtonIcon {...options} />
+          {staticCompletion ? (
+            <span
+              aria-hidden="true"
+              className="flex h-4 w-4 items-center justify-center"
+            >
+              <CheckIcon size={14} />
+            </span>
+          ) : (
+            <ResetButtonIcon {...options} />
+          )}
         </div>
 
         <div
@@ -165,6 +188,20 @@ export function BasicResetButton(
         </div>
       </button>
     </Tooltip>
+  );
+
+  return (
+    <>
+      {button}
+      {config?.performanceMode && (
+        <span role="status" className="sr-only">
+          {finished &&
+            l10n.getString('reset-completed-label', {
+              action: l10n.getString(name),
+            })}
+        </span>
+      )}
+    </>
   );
 }
 

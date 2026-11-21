@@ -128,6 +128,7 @@ export function Home() {
   const navigate = useNavigate();
   // Quiet clouds behind the card grid only. The empty state has its own clouds, and the table has none.
   const cloudLayer =
+    !config?.performanceMode &&
     config?.homeLayout !== 'table' &&
     trackers.length + unassignedTrackers.length > 0;
 
@@ -137,15 +138,18 @@ export function Home() {
   useEffect(() => {
     const el = scrollContainerRef.current;
     const fade = fadeRef.current;
-    if (!el || !fade) return;
+    if (!el || !fade || config?.performanceMode) return;
 
     const onScroll = () => {
       const opacity = Math.min(el.scrollTop / 20, 1);
       fade.style.opacity = String(opacity);
     };
     el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, []);
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      fade.style.opacity = '0';
+    };
+  }, [config?.performanceMode]);
 
   const sendToSettings = (tracker: TrackerDataT) => {
     navigate(
@@ -874,7 +878,7 @@ export function Home() {
             onRequestClose={() => setShowSidebar(false)}
             closeable
             contentLabel={l10n.getString('home-view-preview')}
-            overlayClassName="fixed inset-0 z-[80] flex justify-end bg-background-90/80"
+            overlayClassName="modal-overlay fixed inset-0 z-[80] flex justify-end bg-background-90/80"
             className="m-2 flex h-[calc(100%-1rem)] w-[min(420px,calc(100vw-1rem))] max-w-none flex-col overflow-hidden rounded-xl border border-[var(--material-border-primary)] bg-background-70 p-2 text-background-10 shadow-xl outline-none"
           >
             <div className="flex min-h-10 items-center justify-between gap-3 px-2">

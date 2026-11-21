@@ -1,3 +1,4 @@
+import { useConfig } from '@/hooks/config';
 import classNames from 'classnames';
 import {
   Children,
@@ -19,6 +20,7 @@ export function SettingsPageLayout({
 } & React.HTMLAttributes<HTMLDivElement>) {
   const pageRef = useRef<HTMLDivElement | null>(null);
   const { state } = useLocation();
+  const { config } = useConfig();
 
   useEffect(() => {
     const typedState: { scrollTo: string; resumeSettings?: boolean } = state;
@@ -41,7 +43,10 @@ export function SettingsPageLayout({
         elem.getBoundingClientRect().top -
         panel.getBoundingClientRect().top +
         panel.scrollTop;
-      panel.scrollTo({ top, behavior: 'smooth' });
+      panel.scrollTo({
+        top,
+        behavior: config?.performanceMode ? 'auto' : 'smooth',
+      });
     }
   }, [state]);
 

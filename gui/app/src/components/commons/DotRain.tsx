@@ -35,7 +35,7 @@ export function DotRain({
 }) {
   const { config } = useConfig();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const shown = isPawTheme(config?.theme);
+  const shown = !config?.performanceMode && isPawTheme(config?.theme);
   const animate = config?.animations !== false;
 
   useEffect(() => {

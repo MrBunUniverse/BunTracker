@@ -64,30 +64,6 @@ function DropdownItem({
       'bg-accent-background-20 hover:bg-accent-background-40 focus:bg-accent-background-40 text-white rounded-[8px] mx-1 my-0.5 px-2 py-1.5 transition-colors',
   };
 
-  const ref = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    if (!innerFocusValue) {
-      return;
-    }
-    if (innerFocusValue === item.value) {
-      ref.current?.scrollIntoView({ block: 'nearest' });
-    }
-  }, [innerFocusValue]);
-
-  useLayoutEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    if (
-      innerFocusValue === item.value ||
-      (!innerFocusValue && item.value === value)
-    ) {
-      ref.current?.scrollIntoView({ block: 'nearest' });
-    }
-  }, [isOpen]);
-
   return (
     <div
       className={classNames(
@@ -100,7 +76,6 @@ function DropdownItem({
       tabIndex={-1}
       aria-hidden={!isOpen}
       data-checked={item.value === value}
-      ref={ref}
       id={`__dropdownList-${name}-item-${item.value}`}
     >
       {item.label}
@@ -140,6 +115,24 @@ const DropdownList = forwardRef<HTMLDivElement, DropdownListProps>(function (
   },
   ref
 ) {
+  const listRef = useRef<HTMLUListElement>(null);
+  const activeIndex = items.findIndex(
+    (item) => item.value === (innerFocusValue ?? value)
+  );
+
+  // Keep the scroll position during close, then reset before revealing the list.
+  useLayoutEffect(() => {
+    if (isOpen && listRef.current) listRef.current.scrollTop = 0;
+  }, [isOpen]);
+
+  useLayoutEffect(() => {
+    if (isOpen && activeIndex >= 0) {
+      listRef.current?.children[activeIndex]?.scrollIntoView({
+        block: 'nearest',
+      });
+    }
+  }, [isOpen, activeIndex, innerFocusValue]);
+
   const variantStyles = {
     primary: 'glass-popover shadow-2xl',
     secondary: 'glass-popover shadow-2xl',
@@ -181,15 +174,11 @@ const DropdownList = forwardRef<HTMLDivElement, DropdownListProps>(function (
         ...getDisplayStyle(),
         ...directionStyles[direction],
       }}
-      onTransitionEnd={(e) => {
-        if (!isOpen) {
-          (e.target as HTMLDivElement).scrollTo({ top: 0 });
-        }
-      }}
       ref={ref}
       id={`__dropdownList-${name}`}
     >
       <ul
+        ref={listRef}
         className="flex flex-col min-h-0 text-sm overflow-y-scroll dropdown-scroll overscroll-contain"
         style={{ maxHeight }}
       >
@@ -252,6 +241,8 @@ export function DropdownInside({
   const listRef = useRef<HTMLDivElement>(null);
 
   const [innerFocusIndex, setInnerFocusIndex] = useState<number | null>(null);
+  const focusedItem =
+    innerFocusIndex === null ? undefined : items[innerFocusIndex];
   const getCurrentActiveIndex = () => {
     return items.findIndex((item) => item.value === value);
   };
@@ -338,12 +329,12 @@ export function DropdownInside({
           } else {
             if (a11yClick(e)) {
               e.preventDefault();
-              if (innerFocusIndex === null) {
+              if (!focusedItem) {
                 setIsOpen(false);
                 return;
               }
 
-              onChange(items[innerFocusIndex].value);
+              onChange(focusedItem.value);
               setIsOpen(false);
             }
             switch (e.key) {
@@ -387,9 +378,9 @@ export function DropdownInside({
           ref={ref}
           aria-controls={`__dropdownList-${name}`}
           aria-activedescendant={
-            innerFocusIndex === null
-              ? ''
-              : `__dropdownList-${name}-item-${items[innerFocusIndex].value}`
+            focusedItem
+              ? `__dropdownList-${name}-item-${focusedItem.value}`
+              : undefined
           }
           role="combobox"
         >
@@ -420,9 +411,7 @@ export function DropdownInside({
             maxHeight={maxHeight}
             value={value}
             ref={listRef}
-            innerFocusValue={
-              innerFocusIndex === null ? null : items[innerFocusIndex].value
-            }
+            innerFocusValue={focusedItem?.value ?? null}
             name={name}
           />,
           document.body

@@ -93,6 +93,7 @@ export function ClaudeTrackerWindowCard({
   // irregular turns and lights the halo and rim from that same motion; holds go quiet. Each card has its own
   // strength, direction and phase. Animations off, offline or empty battery keep it still.
   const demoGesture =
+    !config?.performanceMode &&
     config?.animations !== false &&
     isDemo &&
     !isDisconnected &&

@@ -1,3 +1,4 @@
+import { useConfig } from '@/hooks/config';
 import classNames from 'classnames';
 import { CheckIcon } from './icon/CheckIcon';
 import { Typography } from './Typography';
@@ -23,6 +24,7 @@ export function VerticalStep({
   children: ReactNode;
   title: string;
 }) {
+  const { config } = useConfig();
   const ref = useRef<HTMLDivElement | null>(null);
   const refTop = useRef<HTMLLIElement | null>(null);
   const [shouldAnimate, setShouldAnimate] = useState(false);
@@ -36,7 +38,9 @@ export function VerticalStep({
     if (isSelected)
       setTimeout(() => {
         if (!refTop.current) return;
-        refTop.current.scrollIntoView({ behavior: 'smooth' });
+        refTop.current.scrollIntoView({
+          behavior: config?.performanceMode ? 'auto' : 'smooth',
+        });
       }, 300);
   }, [isSelected]);
 

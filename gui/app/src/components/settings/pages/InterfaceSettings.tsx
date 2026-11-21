@@ -26,6 +26,8 @@ interface InterfaceSettingsForm {
     fonts: string;
   };
   behavior: {
+    performanceMode: boolean;
+    fastPreviewRefresh: boolean;
     useTray: boolean;
     discordPresence: boolean;
     bvhDirectory: string | null;
@@ -64,6 +66,10 @@ export function InterfaceSettings() {
           defaultConfig.connectedTrackersWarning,
       },
       behavior: {
+        performanceMode:
+          config?.performanceMode ?? defaultConfig.performanceMode,
+        fastPreviewRefresh:
+          config?.fastPreviewRefresh ?? defaultConfig.fastPreviewRefresh,
         useTray: config?.useTray ?? defaultConfig.useTray ?? false,
         discordPresence:
           config?.discordPresence ?? defaultConfig.discordPresence,
@@ -136,6 +142,8 @@ export function InterfaceSettings() {
       textSize: values.appearance.textSize,
       animations: values.appearance.animations,
 
+      performanceMode: values.behavior.performanceMode,
+      fastPreviewRefresh: values.behavior.fastPreviewRefresh,
       useTray: values.behavior.useTray,
       discordPresence: values.behavior.discordPresence,
       bvhDirectory: values.behavior.bvhDirectory,
@@ -277,6 +285,39 @@ export function InterfaceSettings() {
               {l10n.getString('settings-interface-behavior')}
             </Typography>
             <div className="pt-2">
+              <Typography variant="section-title">
+                {l10n.getString('settings-interface-performance')}
+              </Typography>
+              <div className="flex flex-col gap-2 pt-1 pb-4">
+                <Typography>
+                  {l10n.getString('settings-interface-performance-description')}
+                </Typography>
+                <CheckBox
+                  variant="toggle"
+                  control={control}
+                  outlined
+                  name="behavior.performanceMode"
+                  label={l10n.getString('settings-interface-performance-label')}
+                />
+                {watch('behavior.performanceMode') && (
+                  <div className="flex flex-col gap-1 pl-4">
+                    <CheckBox
+                      variant="toggle"
+                      control={control}
+                      outlined
+                      name="behavior.fastPreviewRefresh"
+                      label={l10n.getString(
+                        'settings-interface-performance-fast_preview'
+                      )}
+                    />
+                    <Typography>
+                      {l10n.getString(
+                        'settings-interface-performance-fast_preview-description'
+                      )}
+                    </Typography>
+                  </div>
+                )}
+              </div>
               {electron.isElectron && (
                 <>
                   <Typography variant="section-title">

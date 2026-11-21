@@ -302,6 +302,8 @@ function PreviewSection({ open }: { open: boolean }) {
                 v.camera.zoom = 1 / scale;
               },
             });
+            context.toggleAutoFrame(isFraming);
+            context.toggleAutoOrbit(isOrbiting);
           }}
         />
       </div>
@@ -324,7 +326,7 @@ function PreviewSection({ open }: { open: boolean }) {
       <PreviewControls
         open={open}
         isOrbiting={isOrbiting}
-        onToggleOrbit={handleToggleOrbit}
+        onToggleOrbit={config?.performanceMode ? undefined : handleToggleOrbit}
         isFraming={isFraming}
         onToggleFrame={handleToggleFrame}
         docked

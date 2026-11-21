@@ -55,6 +55,8 @@ export interface Config {
   theme: string;
   textSize: number;
   animations: boolean;
+  performanceMode: boolean;
+  fastPreviewRefresh: boolean;
   pawEars: boolean;
   fonts: string[];
   useTray: boolean | null;
@@ -87,6 +89,8 @@ export const defaultConfig: Config = {
   theme: DEFAULT_THEME,
   textSize: 12,
   animations: true,
+  performanceMode: false,
+  fastPreviewRefresh: false,
   pawEars: true,
   fonts: [
     '-apple-system',

@@ -1,3 +1,4 @@
+import { useConfig } from '@/hooks/config';
 import { useOnboarding } from '@/hooks/onboarding';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
@@ -51,6 +52,7 @@ export function QuizButton({
 }
 
 export function QuizSlimeSetQuestion() {
+  const { config } = useConfig();
   const { applyProgress, setSlimeSet, slimeSet } = useOnboarding();
   const nav = useNavigate();
   const { l10n } = useLocalization();
@@ -95,7 +97,7 @@ export function QuizSlimeSetQuestion() {
       typeof window !== 'undefined' &&
       window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
-    if (prefersReducedMotion) {
+    if (config?.performanceMode || prefersReducedMotion) {
       setTypedChars(fullTitle.length);
       setCursorVisible(false);
       setDescVisible(true);
@@ -159,7 +161,7 @@ export function QuizSlimeSetQuestion() {
     timeouts.push(startTimeout);
 
     return cleanup;
-  }, [fullTitle]);
+  }, [fullTitle, config?.performanceMode]);
 
   const next = (type: typeof slimeSet) => {
     setSlimeSet(type);

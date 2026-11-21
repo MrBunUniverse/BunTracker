@@ -1,3 +1,4 @@
+import { useConfig } from '@/hooks/config';
 import { Control, Controller, useForm } from 'react-hook-form';
 import {
   ChangeSkeletonConfigRequestT,
@@ -418,6 +419,7 @@ function ButtonsControl({ control }: { control: ManualProportionControls }) {
 }
 
 export function ManualProportionsPage() {
+  const { config } = useConfig();
   const { applyProgress, state } = useOnboarding();
   const { useRPCPacket } = useWebsocketAPI();
   const { currentLocales } = useLocaleConfig();
@@ -622,36 +624,40 @@ export function ManualProportionsPage() {
           </div>
 
           <div className="absolute bottom-2 right-2 flex gap-2">
-            <button
-              type="button"
-              aria-pressed={isOrbiting}
-              title={l10n.getString(
-                isOrbiting ? 'preview-auto_orbit_stop' : 'preview-auto_orbit'
-              )}
-              className={classNames(
-                'flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-ui-2xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-background-20',
-                isOrbiting
-                  ? 'bg-accent-background-20/20 text-accent-background-10'
-                  : 'bg-background-50 hover:bg-background-40 text-background-10'
-              )}
-              onClick={() => {
-                if (previewRef.current)
-                  setIsOrbiting(previewRef.current.toggleAutoOrbit());
-              }}
-            >
-              <div
-                className={classNames('flex items-center justify-center', {
-                  'animate-[spin_4s_linear_infinite]': isOrbiting,
-                })}
-              >
-                <Rotate360Icon width={16} />
-              </div>
-              <span>
-                {l10n.getString(
+            {!config?.performanceMode && (
+              <button
+                type="button"
+                aria-pressed={isOrbiting}
+                title={l10n.getString(
                   isOrbiting ? 'preview-auto_orbit_stop' : 'preview-auto_orbit'
                 )}
-              </span>
-            </button>
+                className={classNames(
+                  'flex h-8 items-center gap-1.5 rounded-lg px-2.5 text-ui-2xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-background-20',
+                  isOrbiting
+                    ? 'bg-accent-background-20/20 text-accent-background-10'
+                    : 'bg-background-50 hover:bg-background-40 text-background-10'
+                )}
+                onClick={() => {
+                  if (previewRef.current)
+                    setIsOrbiting(previewRef.current.toggleAutoOrbit());
+                }}
+              >
+                <div
+                  className={classNames('flex items-center justify-center', {
+                    'animate-[spin_4s_linear_infinite]': isOrbiting,
+                  })}
+                >
+                  <Rotate360Icon width={16} />
+                </div>
+                <span>
+                  {l10n.getString(
+                    isOrbiting
+                      ? 'preview-auto_orbit_stop'
+                      : 'preview-auto_orbit'
+                  )}
+                </span>
+              </button>
+            )}
             <button
               type="button"
               aria-pressed={isFraming}

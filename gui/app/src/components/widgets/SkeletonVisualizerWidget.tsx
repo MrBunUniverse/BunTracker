@@ -72,7 +72,9 @@ export type SkeletonPreviewView = {
 
 function initializePreview(
   canvas: HTMLCanvasElement,
-  skeleton: (BoneKind | Bone)[]
+  skeleton: (BoneKind | Bone)[],
+  performanceMode: boolean,
+  fastPreviewRefresh: boolean
 ) {
   let lastRenderTimeRef = 0;
   let frameInterval = 0;
@@ -92,17 +94,21 @@ function initializePreview(
   renderer.setPixelRatio(
     Math.min(
       typeof window !== 'undefined' ? window.devicePixelRatio : 1,
-      MAX_RENDER_PIXEL_RATIO
+      performanceMode ? 1 : MAX_RENDER_PIXEL_RATIO
     )
   );
   renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
-  let dirtyFrames = 20;
+  let dirtyFrames = performanceMode ? 1 : 20;
   let animationFrameId: number | null = null;
   let waitTimer: number | null = null;
 
   const scheduleAnimationFrame = () => {
-    if (animationFrameId === null) {
+    if (
+      animationFrameId === null &&
+      waitTimer === null &&
+      !(performanceMode && document.hidden)
+    ) {
       animationFrameId = requestAnimationFrame(animate);
     }
   };
@@ -115,8 +121,8 @@ function initializePreview(
   const grid = new GridHelper(10, 20, GROUND_CENTER_COLOR, GROUND_COLOR);
   grid.position.set(0, 0, 0);
   if (!Array.isArray(grid.material)) {
-    grid.material.transparent = true;
-    grid.material.opacity = 0.5;
+    grid.material.transparent = !performanceMode;
+    grid.material.opacity = performanceMode ? 1 : 0.5;
   }
   scene.add(grid);
 
@@ -218,7 +224,8 @@ function initializePreview(
   let autoOrbit = false;
 
   const setAutoOrbit = (enable?: boolean) => {
-    autoOrbit = typeof enable === 'boolean' ? enable : !autoOrbit;
+    autoOrbit =
+      !performanceMode && (typeof enable === 'boolean' ? enable : !autoOrbit);
     views.forEach((v) => {
       v.controls.autoRotate = autoOrbit;
       // 1.0 gives a calm, smooth ~60-second 360-degree rotation
@@ -304,6 +311,10 @@ function initializePreview(
     smoothTime: number,
     dt: number
   ) => {
+    if (performanceMode) {
+      vel.v = 0;
+      return target;
+    }
     const omega = 2 / Math.max(0.0001, smoothTime);
     const x = omega * dt;
     const decay = 1 / (1 + x + 0.48 * x * x + 0.235 * x * x * x);
@@ -395,7 +406,7 @@ function initializePreview(
       frameUserZoom = 1;
       frameReady = true;
     }
-    const filter = 1 - Math.exp(-dt / FRAME_FILTER_TIME);
+    const filter = performanceMode ? 1 : 1 - Math.exp(-dt / FRAME_FILTER_TIME);
     frameGoal.lerp(frameTarget, filter);
     radiusGoal += (wantRadius - radiusGoal) * filter;
 
@@ -481,14 +492,14 @@ function initializePreview(
       Math.abs(frameRadiusVelocity) > 1e-3 ||
       Math.abs(wantRadius - frameRadius) > 1e-3 ||
       frameCenter.distanceToSquared(frameTarget) > 1e-6;
-    if (frameMoving) markDirty(2);
+    if (!performanceMode && frameMoving) markDirty(2);
   };
 
   const setAutoFrame = (enable?: boolean) => {
     autoFrame = typeof enable === 'boolean' ? enable : !autoFrame;
     // A view that was framed before glides back; the very first framing still jumps into place.
     if (autoFrame) {
-      frameGlide = frameReady;
+      frameGlide = !performanceMode && frameReady;
       frameReady = false;
     }
     markDirty(10);
@@ -544,13 +555,15 @@ function initializePreview(
   // Frame-rate independent, so it eases the same at 60 fps and at the 30 fps used while the window is in the background.
   let bonesMoving = false;
   const easeBones = (deltaSeconds: number) => {
-    const alpha = 1 - Math.exp(-deltaSeconds / BONE_SMOOTH_TIME);
+    const alpha = performanceMode
+      ? 1
+      : 1 - Math.exp(-deltaSeconds / BONE_SMOOTH_TIME);
     let moving = false;
     skeleton.forEach((bone) => {
       if (bone instanceof BoneKind && bone.ease(alpha)) moving = true;
     });
     bonesMoving = moving;
-    if (moving) markDirty(2);
+    if (!performanceMode && moving) markDirty(2);
   };
 
   // setSize clears the canvas, so the new size is redrawn in the same task (before paint) rather than waiting for a
@@ -579,6 +592,12 @@ function initializePreview(
     }
 
     const isHidden = typeof document !== 'undefined' && document.hidden;
+    if (performanceMode && isHidden) return;
+    if (dirtyFrames <= 0) {
+      previousFrameTime = performance.now();
+      return;
+    }
+
     const isFocused =
       typeof document !== 'undefined' &&
       document.hasFocus &&
@@ -597,9 +616,14 @@ function initializePreview(
     // Still scenes, unfocused windows and hidden tabs keep the lighter rates.
     const smoothFrame =
       ((autoFrame && frameMoving) || bonesMoving) && isFocused && !isHidden;
-    const effectiveInterval = smoothFrame
-      ? SMOOTH_FRAME_INTERVAL
-      : Math.max(adaptiveBaseInterval, autoOrbit ? 0 : frameInterval);
+    const effectiveInterval = performanceMode
+      ? Math.max(
+          adaptiveBaseInterval,
+          fastPreviewRefresh ? 1000 / BASE_FRAMERATE : 100
+        )
+      : smoothFrame
+        ? SMOOTH_FRAME_INTERVAL
+        : Math.max(adaptiveBaseInterval, autoOrbit ? 0 : frameInterval);
 
     const now = performance.now();
     const elapsed = now - lastRenderTimeRef;
@@ -613,10 +637,6 @@ function initializePreview(
           scheduleAnimationFrame();
         }, effectiveInterval - elapsed);
       }
-      return;
-    }
-    if (dirtyFrames <= 0) {
-      previousFrameTime = now;
       return;
     }
     dirtyFrames--;
@@ -733,7 +753,14 @@ function initializePreview(
   };
   // ResizeObserver can miss the final frame of the drawer width transition, so check the size once it
   // ends; reopening a zero-width preview then always restores rendering.
-  document.addEventListener('transitionend', syncCanvasSize);
+  const onVisibilityChange = () => {
+    if (!document.hidden) markDirty(1);
+  };
+  if (performanceMode) {
+    document.addEventListener('visibilitychange', onVisibilityChange);
+  } else {
+    document.addEventListener('transitionend', syncCanvasSize);
+  }
 
   return {
     resize: (width: number, height: number) => {
@@ -750,7 +777,7 @@ function initializePreview(
     // the heading is only re-synced on rebuild and after a reset.
     syncHeading: updateSkeletonHeading,
     updatesBones: (bones: Map<BodyPart, BoneT>) => {
-      markDirty(3);
+      markDirty(performanceMode ? 1 : 3);
       skeleton.forEach(
         (bone) => bone instanceof BoneKind && bone.updateData(bones)
       );
@@ -783,6 +810,7 @@ function initializePreview(
       canvas.removeEventListener('pointerup', handlePickUp);
       canvas.removeEventListener('pointermove', handlePickHover);
       document.removeEventListener('transitionend', syncCanvasSize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       views.forEach((view) => view.controls.dispose());
       views.length = 0;
       skeletonHelper.dispose();
@@ -823,7 +851,7 @@ function initializePreview(
       // Zoom is the lens (handleWheel), not a dolly.
       controls.enableZoom = false;
       controls.dampingFactor = 0.2;
-      controls.enableDamping = true;
+      controls.enableDamping = !performanceMode;
       controls.addEventListener('change', () => markDirty(4));
       controls.addEventListener('start', () => {
         userTurning = true;
@@ -891,6 +919,8 @@ function SkeletonVisualizer({
   disabled?: boolean;
 }) {
   const { config } = useConfig();
+  const performanceMode = !!config?.performanceMode;
+  const fastPreviewRefresh = performanceMode && !!config?.fastPreviewRefresh;
 
   const previewContext = useRef<PreviewContext | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -936,12 +966,15 @@ function SkeletonVisualizer({
     if (disabled) return;
     if (!canvasRef.current || !containerRef.current)
       throw 'invalid state - no canvas or container';
-    resizeObserver.observe(containerRef.current);
+    const container = containerRef.current;
+    resizeObserver.observe(container);
 
     const initialBones = boneMap(store.get(bonesAtom));
     previewContext.current = initializePreview(
       canvasRef.current,
-      createChildren(initialBones, BoneKind.root)
+      createChildren(initialBones, BoneKind.root),
+      performanceMode,
+      fastPreviewRefresh
     );
     if (!config?.devSettings.fastDataFeed)
       previewContext.current.setFrameInterval(1000 / LOW_FRAMERATE);
@@ -949,8 +982,10 @@ function SkeletonVisualizer({
     const rect = containerRef.current.getBoundingClientRect();
     previewContext.current.resize(rect.width, rect.height);
 
-    containerRef.current.addEventListener('mouseenter', onEnter);
-    containerRef.current.addEventListener('mouseleave', onLeave);
+    if (!performanceMode) {
+      container.addEventListener('mouseenter', onEnter);
+      container.addEventListener('mouseleave', onLeave);
+    }
 
     onInit(previewContext.current);
 
@@ -976,15 +1011,14 @@ function SkeletonVisualizer({
 
     return () => {
       unsubscribeBones();
-      if (!previewContext.current || !containerRef.current) return;
-      resizeObserver.unobserve(containerRef.current);
-      previewContext.current.destroy();
+      resizeObserver.unobserve(container);
+      previewContext.current?.destroy();
       previewContext.current = null;
 
-      containerRef.current.removeEventListener('mouseenter', onEnter);
-      containerRef.current.removeEventListener('mouseleave', onLeave);
+      container.removeEventListener('mouseenter', onEnter);
+      container.removeEventListener('mouseleave', onLeave);
     };
-  }, [disabled]);
+  }, [disabled, performanceMode, fastPreviewRefresh]);
 
   return (
     <div ref={containerRef} className={classNames('w-full h-full')}>
@@ -1020,7 +1054,10 @@ export function SkeletonVisualizerWidget({
   // Starts in the hidden pose even when mounted enabled, so opening the view slides it in too. Two frames give the browser
   // time to paint the hidden pose before the visible one, which is what makes the transition run.
   const [entered, setEntered] = useState(false);
+  const { config } = useConfig();
+  const performanceMode = !!config?.performanceMode;
   useEffect(() => {
+    if (performanceMode) return;
     let inner = 0;
     const outer = requestAnimationFrame(() => {
       inner = requestAnimationFrame(() => setEntered(true));
@@ -1029,8 +1066,8 @@ export function SkeletonVisualizerWidget({
       cancelAnimationFrame(outer);
       cancelAnimationFrame(inner);
     };
-  }, []);
-  const hidden = disabled || !entered;
+  }, [performanceMode]);
+  const hidden = disabled || (!performanceMode && !entered);
 
   return (
     <div className={classNames('w-full h-full relative')}>

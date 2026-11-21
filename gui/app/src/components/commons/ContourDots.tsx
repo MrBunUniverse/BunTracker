@@ -69,7 +69,7 @@ export function ContourDots({
   const { config } = useConfig();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animate = config?.animations !== false;
-  const shown = isPawTheme(config?.theme);
+  const shown = !config?.performanceMode && isPawTheme(config?.theme);
 
   useEffect(() => {
     const canvas = canvasRef.current;

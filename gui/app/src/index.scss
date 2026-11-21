@@ -2013,6 +2013,54 @@ $slider-rail-bg: linear-gradient(
   scroll-behavior: auto !important;
 }
 
+.performance-mode,
+.performance-mode *,
+.performance-mode *::before,
+.performance-mode *::after {
+  animation: none !important;
+  transition: none !important;
+  filter: none !important;
+  will-change: auto !important;
+  scroll-behavior: auto !important;
+}
+
+:root.performance-mode {
+  --material-tertiary: var(--material-secondary);
+  --material-tertiary-hover: rgb(var(--background-50));
+  --material-tertiary-active: rgb(var(--background-40));
+  --glass-pill-bg: var(--material-secondary);
+  --specular-rim: 0 0 transparent;
+  --specular-shadow: 0 0 transparent;
+  --glass-elevation: 0 0 transparent;
+}
+
+.performance-mode .modal-overlay {
+  background-color: rgb(var(--background-90));
+}
+
+.performance-mode .tracker-scan-busy {
+  cursor: wait;
+  color: rgb(var(--background-20));
+
+  svg {
+    visibility: hidden;
+  }
+}
+
+.performance-mode :is(.glass-panel-strong, .glass-popover, .glass-popup) {
+  background: var(--material-primary);
+  box-shadow: none;
+}
+
+.performance-mode
+  :is([class~='bg-background-70/70'], .stay-aligned-settings-panel) {
+  background-color: rgb(var(--background-70));
+}
+
+.performance-mode .tracker-motion-rim {
+  display: none;
+}
+
 /* Backdrop blur re-samples what is behind an element every frame it changes
    and is the most expensive effect for the macOS compositor. */
 *,

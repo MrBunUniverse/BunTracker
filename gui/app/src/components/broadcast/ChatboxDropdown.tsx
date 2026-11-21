@@ -16,6 +16,7 @@ import {
   TrackerStatus as TrackerStatusEnum,
   BodyPart,
 } from 'solarxr-protocol';
+import { useConfig } from '@/hooks/config';
 import { useWebsocketAPI } from '@/hooks/websocket-api';
 import classNames from 'classnames';
 import { useAtomValue } from 'jotai';
@@ -344,6 +345,7 @@ export function ChatboxDropdown({
   );
   const inputRef = useRef<HTMLInputElement>(null);
   const electron = useElectron();
+  const { config } = useConfig();
   const { sendRPCPacket, useRPCPacket } = useWebsocketAPI();
 
   const [targetIp, setTargetIp] = useState<string>('192.168.0.106');
@@ -594,12 +596,17 @@ export function ChatboxDropdown({
     setView('main');
     if (panelExitTimerRef.current !== null) {
       window.clearTimeout(panelExitTimerRef.current);
+      panelExitTimerRef.current = null;
+    }
+    if (config?.performanceMode) {
+      setIsPanelMounted(false);
+      return;
     }
     panelExitTimerRef.current = window.setTimeout(() => {
       setIsPanelMounted(false);
       panelExitTimerRef.current = null;
     }, CHATBOX_PANEL_EXIT_MS);
-  }, []);
+  }, [config?.performanceMode]);
 
   useEffect(() => {
     return () => {

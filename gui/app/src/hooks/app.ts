@@ -65,14 +65,7 @@ export function useProvideAppContext(): AppContext {
         : [dataFeedConfig];
       sendDataFeedPacket(DataFeedMessage.StartDataFeed, startDataFeed);
     }
-  }, [
-    isConnected,
-    config?.debug,
-    config?.devSettings?.fastDataFeed,
-    livePreviews,
-    trackerDetail,
-    bonesWanted,
-  ]);
+  }, [isConnected, dataFeedConfig, bonesDataFeedConfig, bonesWanted]);
 
   const flushPendingFeed = useCallback(() => {
     flushTimerRef.current = null;

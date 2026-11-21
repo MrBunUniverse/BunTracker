@@ -153,7 +153,8 @@ async function initializeIMUVisualizer(
   canvas: HTMLCanvasElement,
   modelPath: string,
   height = CANVAS_HEIGHT,
-  palette: IMUPalette = DEFAULT_PALETTE
+  palette: IMUPalette,
+  performanceMode: boolean
 ): Promise<IMUVisualizerContext> {
   const scene = new Scene();
 
@@ -172,7 +173,7 @@ async function initializeIMUVisualizer(
   renderer.setPixelRatio(
     Math.min(
       typeof window !== 'undefined' ? window.devicePixelRatio : 1,
-      MAX_RENDER_PIXEL_RATIO
+      performanceMode ? 1 : MAX_RENDER_PIXEL_RATIO
     )
   );
   renderer.setSize(width, height);
@@ -356,6 +357,7 @@ export function IMUVisualizerCanvas({
   const [error, setError] = useState<Error | null>(null);
 
   const { config } = useConfig();
+  const performanceMode = !!config?.performanceMode;
   const palette = PAW_PALETTES[config?.theme ?? ''] ?? DEFAULT_PALETTE;
 
   latestDataRef.current = { quat, vec, mag };
@@ -379,11 +381,18 @@ export function IMUVisualizerCanvas({
 
     let mounted = true;
 
-    initializeIMUVisualizer(canvasRef.current, model, height, palette)
+    initializeIMUVisualizer(
+      canvasRef.current,
+      model,
+      height,
+      palette,
+      performanceMode
+    )
       .then((ctx) => {
         if (mounted) {
           contextRef.current = ctx;
-          ctx.update(quat, vec, mag);
+          const latest = latestDataRef.current;
+          ctx.update(latest.quat, latest.vec, latest.mag);
         } else {
           ctx.dispose();
         }
@@ -399,7 +408,7 @@ export function IMUVisualizerCanvas({
       contextRef.current?.dispose();
       contextRef.current = null;
     };
-  }, [model, height, palette]);
+  }, [model, height, palette, performanceMode]);
 
   // Real trackers: ask for a faster data feed while this preview is on screen.
   const setLivePreviewCount = useSetAtom(livePreviewCountAtom);
@@ -415,6 +424,14 @@ export function IMUVisualizerCanvas({
   // nothing, and it pauses while the canvas is off screen or the window hidden.
   useEffect(() => {
     if (animateDemo) return;
+
+    if (performanceMode) {
+      smoothedReadyRef.current = false;
+      if (isVisibleRef.current && !document.hidden) {
+        contextRef.current?.update(quat, vec, mag);
+      }
+      return;
+    }
 
     const current = smoothedQuatRef.current;
     const target = targetQuatRef.current;
@@ -458,7 +475,7 @@ export function IMUVisualizerCanvas({
       lastUpdateTimeRef.current = performance.now() - 16;
       updateFrameRef.current = requestAnimationFrame(step);
     }
-  }, [quat, vec, mag, animateDemo]);
+  }, [quat, vec, mag, animateDemo, performanceMode]);
 
   useEffect(() => {
     return () => {
@@ -470,11 +487,11 @@ export function IMUVisualizerCanvas({
         updateFrameRef.current = null;
       }
     };
-  }, []);
+  }, [performanceMode, animateDemo]);
 
   // Realistic IMU simulation: natural human pose shifts, micro-tremors, sensor noise, and linear accel kicks
   useEffect(() => {
-    if (!animateDemo) return;
+    if (!animateDemo || performanceMode) return;
 
     const euler = new Euler();
     const demoQuat = new Quaternion();
@@ -550,7 +567,7 @@ export function IMUVisualizerCanvas({
         contextRef.current.trackerGroup.position.set(0, 0, 0);
       }
     };
-  }, [animateDemo, demoPhase]);
+  }, [animateDemo, demoPhase, performanceMode]);
 
   if (error) {
     throw error;

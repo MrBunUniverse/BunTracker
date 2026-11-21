@@ -30,7 +30,14 @@ function ButtonContent({
       </div>
       {loading && (
         <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center fill-background-10">
-          <LoaderIcon slimeState={SlimeState.JUMPY} />
+          <LoaderIcon
+            slimeState={SlimeState.JUMPY}
+            staticFallback={
+              <Localized id="button-working">
+                <span>Working…</span>
+              </Localized>
+            }
+          />
         </div>
       )}
     </>
@@ -108,6 +115,7 @@ export function Button({
       to={to}
       className={classes}
       state={state}
+      aria-busy={loading}
       onClick={(ev) => {
         if (disabled) {
           ev.preventDefault();
@@ -126,7 +134,13 @@ export function Button({
       </ButtonContent>
     </NavLink>
   ) : (
-    <button type="button" {...props} className={classes} disabled={disabled}>
+    <button
+      type="button"
+      aria-busy={loading}
+      {...props}
+      className={classes}
+      disabled={disabled}
+    >
       <ButtonContent icon={icon} loading={loading}>
         {id && (
           <Localized attrs={attrs} vars={vars} elems={elems} id={id}>
