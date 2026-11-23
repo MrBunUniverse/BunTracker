@@ -2214,10 +2214,6 @@ $slider-rail-bg: linear-gradient(
   background-color: rgb(var(--background-70));
 }
 
-.performance-mode .tracker-motion-rim {
-  display: none;
-}
-
 /* Backdrop blur re-samples what is behind an element every frame it changes
    and is the most expensive effect for the macOS compositor. */
 *,

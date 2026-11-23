@@ -176,7 +176,7 @@ const newGlow = () => ({
   demo: 0,
   live: false,
   still: false,
-  instant: false,
+  performanceMode: false,
   level: 0,
   shown: -1,
   at: 0,
@@ -191,9 +191,7 @@ function glowFrame(g: Glow) {
   const now = performance.now();
   const measured = g.live && meterFresh(g.meter, now) ? g.measured : 0;
   const target = g.live ? Math.max(measured, g.demo) : 0;
-  g.level = g.instant
-    ? target
-    : glowStep(g.level, target, g.at, now, !!g.timer || g.driven);
+  g.level = glowStep(g.level, target, g.at, now, !!g.timer || g.driven);
   g.at = now;
 
   const out = g.still || reducedMotionQuery?.matches ? staticLevel(g.level) : g.level;
@@ -209,9 +207,9 @@ function glowFrame(g: Glow) {
 
   const active = target > 0 || g.level > 0;
   // A demo scene's shared scheduler already ticks this card, so it needs no ticker of its own.
-  if (active && !g.timer && !g.driven && !g.instant) {
+  if (active && !g.timer && !g.driven) {
     g.timer = window.setInterval(() => glowFrame(g), GLOW_TICK_MS);
-  } else if ((!active || g.driven || g.instant) && g.timer) {
+  } else if ((!active || g.driven) && g.timer) {
     clearInterval(g.timer);
     g.timer = 0;
   }
@@ -233,8 +231,8 @@ export function useMotionGlow(
   const ref = useRef<Glow | null>(null);
   const g = (ref.current ??= newGlow());
   g.live = tracker.status !== TrackerStatus.DISCONNECTED;
-  g.instant = !!config?.performanceMode;
-  g.still = g.instant || config?.animations === false;
+  g.performanceMode = !!config?.performanceMode;
+  g.still = config?.animations === false;
   g.setMoving = setMoving;
 
   useEffect(() => {
@@ -258,7 +256,7 @@ export function useMotionGlow(
     glowFrame(g);
   }, [tracker.rotation]);
 
-  useEffect(() => glowFrame(g), [g.live, g.still, g.instant]);
+  useEffect(() => glowFrame(g), [g.live, g.still]);
 
   const demoId = demo?.id;
   const demoDeg = demo?.deg ?? 0;
@@ -272,14 +270,19 @@ export function useMotionGlow(
       const scene = reducedMotionQuery?.matches
         ? { rot: 0, shift: 0, activity: 0 }
         : sampleDemoScene(demoId, t, demoReach);
-      icon.current?.style.setProperty(
-        '--demo-rot',
-        `${(scene.rot * demoDeg).toFixed(2)}deg`
-      );
-      icon.current?.style.setProperty(
-        '--demo-shift',
-        `${(scene.shift * demoPx).toFixed(2)}px`
-      );
+      if (g.performanceMode) {
+        icon.current?.style.removeProperty('--demo-rot');
+        icon.current?.style.removeProperty('--demo-shift');
+      } else {
+        icon.current?.style.setProperty(
+          '--demo-rot',
+          `${(scene.rot * demoDeg).toFixed(2)}deg`
+        );
+        icon.current?.style.setProperty(
+          '--demo-shift',
+          `${(scene.shift * demoPx).toFixed(2)}px`
+        );
+      }
       g.demo = scene.activity;
       glowFrame(g);
     });
