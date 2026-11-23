@@ -1,7 +1,7 @@
 import { useLocalization } from '@fluent/react';
 import { useOnboarding } from '@/hooks/onboarding';
 import { Button } from '@/components/commons/Button';
-import { SlimeVRIcon } from '@/components/commons/icon/SimevrIcon';
+import { BunPawIcon } from '@/components/commons/icon/BunPawIcon';
 import { PixelIcon } from '@/components/commons/PixelIcon';
 import { PawEars } from '@/components/commons/PawEars';
 import { useConfig } from '@/hooks/config';
@@ -138,10 +138,10 @@ export function HomePage() {
           {/* Bun: the stylised pixel logo, a little bigger than the vector one. */}
           {bun ? (
             <PixelIcon size={64} grid={36}>
-              <SlimeVRIcon width={48} height={27} />
+              <BunPawIcon width={48} height={48} />
             </PixelIcon>
           ) : (
-            <SlimeVRIcon />
+            <BunPawIcon width={40} height={40} />
           )}
         </div>
 

@@ -18,7 +18,7 @@ import { useTrackerPresets } from '@/hooks/presets';
 import { BodyPartIcon } from '@/components/commons/BodyPartIcon';
 import { PawEars } from '@/components/commons/PawEars';
 import { PixelIcon } from '@/components/commons/PixelIcon';
-import { SlimeVRIcon } from '@/components/commons/icon/SimevrIcon';
+import { BunPawIcon } from '@/components/commons/icon/BunPawIcon';
 import { useConfig } from '@/hooks/config';
 import { isPawTheme } from '@/hooks/theme';
 import { CardIMUVisualizer } from '@/components/widgets/IMUVisualizerWidget';
@@ -462,7 +462,11 @@ function TrackerEmptyState({ onSimulateDemo }: { onSimulateDemo: () => void }) {
           <PawEars cell={34 / 28} on="badge" />
           {/* Bun: the logo is redrawn as pixel art, like the sidebar logo. */}
           <PixelIcon size={34} grid={28}>
-            <SlimeVRIcon width={26} height={15} className="home-accent" />
+            <BunPawIcon
+              width={28}
+              height={28}
+              className="home-accent text-accent-background-20"
+            />
           </PixelIcon>
         </span>
       </div>

@@ -10,7 +10,7 @@ import { LowerArmIcon } from './icon/LowerArmIcon';
 import { NeckIcon } from './icon/NeckIcon';
 import { PawIcon } from './icon/PawIcon';
 import { ShoulderIcon } from './icon/ShoulderIcon';
-import { SlimeVRIcon } from './icon/SlimeVRIcon';
+import { BunPawIcon } from './icon/BunPawIcon';
 import { UpperArmIcon } from './icon/UpperArmIcon';
 import { UpperLegIcon } from './icon/UpperLegIcon';
 import { WaistIcon } from './icon/WaistIcon';
@@ -48,7 +48,9 @@ export const mapPart: Record<
   [BodyPart.LEFT_UPPER_ARM]: ({ width }) => <UpperArmIcon width={width} />,
   [BodyPart.LEFT_UPPER_LEG]: ({ width }) => <UpperLegIcon width={width} />,
   [BodyPart.NECK]: ({ width }) => <NeckIcon width={width} />,
-  [BodyPart.NONE]: ({ width }) => <SlimeVRIcon width={width} />,
+  [BodyPart.NONE]: ({ width }) => (
+    <BunPawIcon width={width} className="text-current" />
+  ),
   [BodyPart.RIGHT_FOOT]: ({ width, currentLocales }) =>
     currentLocales.includes('en-x-owo') ? (
       <PawIcon />

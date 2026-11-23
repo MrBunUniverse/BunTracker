@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" stroke-miterlimit="10" clip-rule="evenodd" version="1.1" viewBox="0 0 380 380" xml:space="preserve"><style>svg{background-color:#D97757}</style><rect id="bg" width="100%" height="100%" fill="#D97757"/><g id="logo" fill="none" stroke="#fff"><path id="left" stroke-width="13.62" d="m72.867 191.74 37-39 39 36"/><path id="right" stroke-width="13.62" d="m208.87 187.74 38-35 36 38"/><path id="outer" stroke-linecap="square" stroke-width="17" d="m56.867 253.74s130.61-31.182 248 5c13.45 4.146 20.244 2.975 20-8s1.909-126.06-46-131"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12.8" fill="#33211b" />
+  <g fill="#efe6d6">
+    <ellipse cx="25.4" cy="17.4" rx="4.4" ry="8.9" transform="rotate(-5 25.4 17.4)" />
+    <ellipse cx="38.6" cy="17.4" rx="4.4" ry="8.9" transform="rotate(5 38.6 17.4)" />
+    <ellipse cx="13.2" cy="30.2" rx="4.2" ry="7.1" transform="rotate(-22 13.2 30.2)" />
+    <ellipse cx="50.8" cy="30.2" rx="4.2" ry="7.1" transform="rotate(22 50.8 30.2)" />
+  </g>
+  <path
+    fill="#e0907e"
+    d="M32 31.8C38.2 31.8 45.2 39.8 45.2 46.8C45.2 52.2 41.4 55 37.2 54.2C34.8 53.7 33.5 52.3 32 52.3C30.5 52.3 29.2 53.7 26.8 54.2C22.6 55 18.8 52.2 18.8 46.8C18.8 39.8 25.8 31.8 32 31.8Z"
+  />
+</svg>

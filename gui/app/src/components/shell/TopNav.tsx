@@ -12,7 +12,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { useIsMac } from '@/hooks/platform';
 import { PixelIcon } from '@/components/commons/PixelIcon';
-import { SlimeVRIcon } from '@/components/commons/icon/SimevrIcon';
+import { BunPawIcon } from '@/components/commons/icon/BunPawIcon';
 import { useTopBarPopover } from '@/hooks/top-bar-popover';
 import { NAV_ITEMS, NavItem } from './nav-items';
 import { isNavRouteActive, splitNavRoutes } from './nav-routes';
@@ -274,7 +274,7 @@ export function TopNav() {
         className="flex shrink-0"
       >
         <PixelIcon size={30} grid={24}>
-          <SlimeVRIcon />
+          <BunPawIcon />
         </PixelIcon>
       </span>
 
