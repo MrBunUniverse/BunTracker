@@ -76,9 +76,30 @@ tasks.shadowJar {
 
 		exclude(project(":solarxr-protocol"))
 	}
+	// Preserve per-dependency NOTICE and LICENSE files instead of dropping duplicates.
+	append("META-INF/NOTICE")
+	append("META-INF/NOTICE.txt")
+	append("META-INF/NOTICE.md")
+	append("META-INF/LICENSE")
+	append("META-INF/LICENSE.txt")
+	append("META-INF/LICENSE.md")
 	archiveBaseName.set("slimevr")
 	archiveClassifier.set("")
 	archiveVersion.set("")
+}
+
+tasks.register("printRuntimeClasspath") {
+	description = "Prints resolved runtimeClasspath artifacts for third-party notice generation."
+	doLast {
+		configurations.runtimeClasspath.get().resolvedConfiguration.resolvedArtifacts
+			.map { artifact ->
+				val id = artifact.moduleVersion.id
+				"${id.group}|${id.name}|${id.version}|${artifact.file.absolutePath}"
+			}
+			.distinct()
+			.sorted()
+			.forEach { println(it) }
+	}
 }
 application {
 	mainClass.set("dev.slimevr.desktop.Main")

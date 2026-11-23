@@ -30,12 +30,12 @@ The version lives in three files and must match across all of them:
 | Regular commits | Area prefix when helpful (`GUI:`, `Docs:`) | `GUI: add performance toggle` |
 | Release asset | `Bun-Tracker-vX.Y.Z-macos-<arch>.zip` | `Bun-Tracker-v0.4.0-macos-arm64.zip` |
 
-Check the built architecture with `lipo -archs "Bun Tracker.app/Contents/MacOS/"*` (currently `arm64`). Package the `.app` and license files with `ditto` so macOS bundle metadata is preserved (the `.app` also bundles the licenses under `Contents/Resources/licenses/`):
+Check the built architecture with `lipo -archs "Bun Tracker.app/Contents/MacOS/"*` (currently `arm64`). The release ZIP is a checkout-dependent GUI build and does **not** include `slimevr.jar`; the server jar is built from the repo checkout and ships with its own notices (`META-INF/THIRD-PARTY-NOTICES.txt` plus merged per-dependency `META-INF/NOTICE*` and `META-INF/LICENSE*` files). Package the `.app` and license files with `ditto` so macOS bundle metadata is preserved (the `.app` also bundles the licenses under `Contents/Resources/licenses/`):
 
 ```bash
 STAGE="$(mktemp -d)"
 cp -R "gui/tauri/target/release/bundle/macos/Bun Tracker.app" "$STAGE/"
-cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt gui/app/public/licenses/THIRD-PARTY-NOTICES.txt "$STAGE/"
+cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt gui/app/public/licenses/THIRD-PARTY-NOTICES.txt gui/app/public/licenses/SERVER-THIRD-PARTY-NOTICES.txt "$STAGE/"
 ditto -c -k "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
 rm -rf "$STAGE"
 ```
@@ -115,12 +115,12 @@ To update the local copy:
    ./gradlew :server:desktop:shadowJar && pnpm build
    ```
 
-9. Archive the bundle and license files with `ditto`:
+9. Archive the bundle and license files with `ditto` (note: this ZIP is a checkout-dependent GUI build and does not include `slimevr.jar`, which ships with its own embedded notices):
 
    ```bash
    STAGE="$(mktemp -d)"
    cp -R "gui/tauri/target/release/bundle/macos/Bun Tracker.app" "$STAGE/"
-   cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt gui/app/public/licenses/THIRD-PARTY-NOTICES.txt "$STAGE/"
+   cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt gui/app/public/licenses/THIRD-PARTY-NOTICES.txt gui/app/public/licenses/SERVER-THIRD-PARTY-NOTICES.txt "$STAGE/"
    ditto -c -k "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
    rm -rf "$STAGE"
    ```

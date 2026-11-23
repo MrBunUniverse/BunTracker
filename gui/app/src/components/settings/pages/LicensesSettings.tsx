@@ -78,6 +78,7 @@ const LICENSE_ENTRIES: LicenseEntry[] = [
 export function LicensesSettings() {
   const { l10n } = useLocalization();
   const [bundledNotices, setBundledNotices] = useState<string | null>(null);
+  const [serverNotices, setServerNotices] = useState<string | null>(null);
 
   const loadBundledNotices = () => {
     if (bundledNotices !== null) return;
@@ -88,6 +89,19 @@ export function LicensesSettings() {
       .catch(() =>
         setBundledNotices(
           'Unable to load bundled third-party notices. See licenses/THIRD-PARTY-NOTICES.txt in the application bundle.'
+        )
+      );
+  };
+
+  const loadServerNotices = () => {
+    if (serverNotices !== null) return;
+    setServerNotices('Loading...');
+    fetch('/licenses/SERVER-THIRD-PARTY-NOTICES.txt')
+      .then((res) => (res.ok ? res.text() : Promise.reject(res.status)))
+      .then((text) => setServerNotices(text))
+      .catch(() =>
+        setServerNotices(
+          'Unable to load JVM server third-party notices. See META-INF/THIRD-PARTY-NOTICES.txt in slimevr.jar.'
         )
       );
   };
@@ -138,6 +152,24 @@ export function LicensesSettings() {
               </summary>
               <pre className="px-4 py-3 border-t border-background-50 text-xs font-mono text-background-20 whitespace-pre-wrap break-words max-h-96 overflow-y-auto select-text">
                 {bundledNotices ?? ''}
+              </pre>
+            </details>
+            <details
+              onToggle={(e) => {
+                if (e.currentTarget.open) loadServerNotices();
+              }}
+              className="rounded-lg border border-background-50 bg-background-70 overflow-hidden"
+            >
+              <summary className="cursor-pointer select-none px-4 py-3 flex flex-col gap-0.5 hover:bg-background-60/50 transition-colors">
+                <Typography variant="section-title">
+                  {l10n.getString('settings-licenses-server_jvm-title')}
+                </Typography>
+                <Typography variant="vr-accessible" color="secondary">
+                  {l10n.getString('settings-licenses-server_jvm-subtitle')}
+                </Typography>
+              </summary>
+              <pre className="px-4 py-3 border-t border-background-50 text-xs font-mono text-background-20 whitespace-pre-wrap break-words max-h-96 overflow-y-auto select-text">
+                {serverNotices ?? ''}
               </pre>
             </details>
           </div>

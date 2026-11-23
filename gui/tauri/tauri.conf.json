@@ -26,6 +26,7 @@
       "../../docs/licenses/LICENSE-MIT": "licenses/LICENSE-MIT",
       "../../server/core/resources/ThirdPartyNotices.txt": "licenses/ThirdPartyNotices.txt",
       "../app/public/licenses/THIRD-PARTY-NOTICES.txt": "licenses/THIRD-PARTY-NOTICES.txt",
+      "../app/public/licenses/SERVER-THIRD-PARTY-NOTICES.txt": "licenses/SERVER-THIRD-PARTY-NOTICES.txt",
       "../app/public/fonts/OFL-Lexend.txt": "licenses/fonts/OFL-Lexend.txt",
       "../app/public/fonts/OFL-NotoSans.txt": "licenses/fonts/OFL-NotoSans.txt",
       "../app/public/fonts/OFL-OpenDyslexic.txt": "licenses/fonts/OFL-OpenDyslexic.txt",
