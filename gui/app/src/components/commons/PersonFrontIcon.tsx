@@ -44,14 +44,14 @@ export function PersonFrontIcon({ mirror = true }: { mirror?: boolean }) {
       <circle
         className="body-part-circle"
         cx="82"
-        cy="90"
+        cy="124"
         r={CIRCLE_RADIUS}
         id={BodyPart[BodyPart.UPPER_CHEST]}
       />
       <circle
         className="body-part-circle"
         cx="82"
-        cy="105"
+        cy="138"
         r={CIRCLE_RADIUS}
         id={BodyPart[BodyPart.CHEST]}
       />
@@ -72,7 +72,7 @@ export function PersonFrontIcon({ mirror = true }: { mirror?: boolean }) {
       <circle
         className="body-part-circle"
         cx="82"
-        cy="80"
+        cy="98"
         r={CIRCLE_RADIUS}
         id={BodyPart[BodyPart.NECK]}
       />
@@ -85,102 +85,102 @@ export function PersonFrontIcon({ mirror = true }: { mirror?: boolean }) {
       />
       <circle
         className="body-part-circle"
-        cx="149"
-        cy="207"
+        cx="134"
+        cy="197"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].hand]}
       />
       <circle
         className="body-part-circle"
-        cx="134"
-        cy="140"
+        cx="111"
+        cy="142"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].upperArm]}
       />
       <circle
         className="body-part-circle"
-        cx="120"
-        cy="90"
+        cx="104"
+        cy="121"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].shoulder]}
       />
       <circle
         className="body-part-circle"
-        cx="144"
-        cy="185"
+        cx="130"
+        cy="177"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].lowerArm]}
       />
       <circle
         className="body-part-circle"
-        cx="112"
-        cy="355"
+        cx="99"
+        cy="307"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].lowerLeg]}
       />
       <circle
         className="body-part-circle"
-        cx="101"
-        cy="267"
+        cx="98"
+        cy="230"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].upperLeg]}
       />
       <circle
         className="body-part-circle"
         cx="102"
-        cy="372"
+        cy="380"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[right].foot]}
       />
 
       <circle
         className="body-part-circle"
-        cx="15"
-        cy="207"
+        cx="30"
+        cy="197"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].hand]}
       />
 
       <circle
         className="body-part-circle"
-        cx="30"
-        cy="140"
+        cx="53"
+        cy="142"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].upperArm]}
       />
       <circle
         className="body-part-circle"
-        cx="44"
-        cy="90"
+        cx="60"
+        cy="121"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].shoulder]}
       />
       <circle
         className="body-part-circle"
-        cx="20"
-        cy="185"
+        cx="34"
+        cy="177"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].lowerArm]}
       />
       <circle
         className="body-part-circle"
-        cx="52"
-        cy="355"
+        cx="65"
+        cy="307"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].lowerLeg]}
       />
 
       <circle
         className="body-part-circle"
-        cx="63"
-        cy="267"
+        cx="66"
+        cy="230"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].upperLeg]}
       />
       <circle
         className="body-part-circle"
         cx="62"
-        cy="372"
+        cy="380"
         r={CIRCLE_RADIUS}
         id={BodyPart[SIDES[left].foot]}
       />
