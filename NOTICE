@@ -38,3 +38,11 @@ For the full feature inventory and change history, see:
 Translations:
 Non-English translations in gui/app/public/i18n/ are inherited from upstream
 SlimeVR and may still say "SlimeVR".
+
+Artwork and character:
+The Mr Bun character and pose illustrations are the owner's character. The
+current illustrations are AI-generated placeholders (made with an image model
+from the owner's own character photo, using upstream images only as pose
+references) and are intended to be replaced with commissioned art. The Mr Bun
+character and artwork are Copyright (c) MrBunUniverse, all rights reserved,
+and are not covered by the MIT or Apache-2.0 licenses of the code.
