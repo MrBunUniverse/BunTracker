@@ -1,6 +1,6 @@
 import { Localized, useLocalization } from '@fluent/react';
 import { Typography } from '@/components/commons/Typography';
-import { DotsLoader } from '@/components/commons/DotsLoader';
+import { BunLoader } from '@/components/commons/BunLoader';
 import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { useFirmwareTool } from '@/hooks/firmware-tool';
 import { useEffect, useMemo, useState } from 'react';
@@ -88,7 +88,7 @@ export function BuildStep({
         <div className="my-4">
           <div className="flex justify-center flex-col items-center gap-4 h-44">
             {buildStatus.status !== 'ERROR' ? (
-              <DotsLoader size="md" />
+              <BunLoader />
             ) : (
               <div className="flex h-12 w-12 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
                 <WarningIcon width={24} />

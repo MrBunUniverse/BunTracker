@@ -1,5 +1,5 @@
 import { Button } from '@/components/commons/Button';
-import { DotsLoader } from '@/components/commons/DotsLoader';
+import { BunLoader } from '@/components/commons/BunLoader';
 import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { Typography } from '@/components/commons/Typography';
 import { EmptyLayout } from '@/components/EmptyLayout';
@@ -68,7 +68,7 @@ export function ConnectionLost() {
           {isLoading && (
             <>
               <div className="py-4">
-                <DotsLoader size="lg" />
+                <BunLoader />
               </div>
               <div>
                 <Localized id="websocket-connecting">

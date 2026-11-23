@@ -8,7 +8,7 @@ import {
 import VerticalStepper, {
   VerticalStep,
 } from '@/components/commons/VerticalStepper';
-import { DotsLoader } from '@/components/commons/DotsLoader';
+import { BunLoader } from '@/components/commons/BunLoader';
 import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { Button } from '@/components/commons/Button';
 import { useMemo } from 'react';
@@ -123,7 +123,7 @@ function FirmwareToolContent() {
           )}
           {isLoading && (
             <div className="w-full flex flex-col justify-center items-center gap-4 h-full py-6">
-              <DotsLoader size="md" />
+              <BunLoader />
               <Localized id="firmware_tool-loading">
                 <Typography variant="section-title" />
               </Localized>

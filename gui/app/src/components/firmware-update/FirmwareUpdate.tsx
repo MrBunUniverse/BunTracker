@@ -30,7 +30,7 @@ import {
 } from '@/hooks/firmware-tool';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object } from 'yup';
-import { DotsLoader } from '@/components/commons/DotsLoader';
+import { BunLoader } from '@/components/commons/BunLoader';
 import { A } from '@/components/commons/A';
 import { useAtomValue } from 'jotai';
 import { devicesAtom } from '@/store/app-store';
@@ -372,7 +372,7 @@ export function FirmwareUpdate() {
                       'rounded-xl bg-background-60 justify-center flex-col items-center flex py-8 gap-4'
                     )}
                   >
-                    <DotsLoader size="md" />
+                    <BunLoader />
                     <Localized id="firmware_update-looking_for_devices">
                       <Typography />
                     </Localized>

@@ -1,6 +1,6 @@
 import { Localized } from '@fluent/react';
 import { Typography } from '@/components/commons/Typography';
-import { DotsLoader } from '@/components/commons/DotsLoader';
+import { BunLoader } from '@/components/commons/BunLoader';
 import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { useFirmwareTool } from '@/hooks/firmware-tool';
 import classNames from 'classnames';
@@ -317,7 +317,7 @@ export function SelectSourceSetep({
 
           {isFetching && (
             <div className="flex justify-center flex-col items-center gap-4 h-44">
-              <DotsLoader size="md" />
+              <BunLoader />
               <Localized id="firmware_tool-loading">
                 <Typography />
               </Localized>
