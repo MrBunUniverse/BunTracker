@@ -1,0 +1,34 @@
+Bun Tracker
+Copyright (c) MrBunUniverse and contributors
+
+Bun Tracker is a modified fork of SlimeVR-Server
+(https://github.com/SlimeVR/SlimeVR-Server),
+Copyright (c) 2020 Eiren Rain and SlimeVR Contributors,
+licensed under Apache-2.0 and MIT.
+
+Bun Tracker is not affiliated with or endorsed by SlimeVR B.V.
+SlimeVR is a trademark of SlimeVR B.V.
+
+Major modifications from upstream SlimeVR-Server:
+- Tauri desktop shell (gui/tauri/) replacing the upstream Electron host, with
+  one-time data migration from the earlier dev.slimevr.tauri-spike identifier.
+- Redesigned React interface (gui/app/src/) with top navigation, responsive
+  tracker cards, PawPad themes (Bun, Fox, Dog), User Agreement, and Open Source
+  Licenses screens.
+- Server tracking additions: adaptive drift compensation, pose stability
+  estimation, tracker recovery states, UDP connection registry, playout buffer,
+  automatic full reset, lying yaw reset, zero-slide foot clamp, tracker
+  telemetry logging, and a loopback-default WebSocket API boundary.
+- SolarXR protocol extensions (sj-custom branch) for osc_rate, tracker recovery,
+  adaptive drift, and filter health.
+- ESP32 USB dongle receiver and bridge (tools/esp32-dongle/), macOS launcher
+  (Start SlimeVR.command), VRChat chatbox tools (Apple Music, BPM, dictation),
+  and Quest StreamCast remote control.
+
+For the full feature inventory and change history, see:
+- docs/fork/CUSTOM.md
+- CHANGELOG.md
+
+Translations:
+Non-English translations in gui/app/public/i18n/ are inherited from upstream
+SlimeVR and may still say "SlimeVR".

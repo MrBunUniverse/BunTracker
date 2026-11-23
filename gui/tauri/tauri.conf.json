@@ -19,6 +19,16 @@
   "bundle": {
     "active": true,
     "targets": ["app"],
-    "icon": ["icons/icon.icns", "icons/icon.png"]
+    "icon": ["icons/icon.icns", "icons/icon.png"],
+    "resources": {
+      "../../NOTICE": "licenses/NOTICE",
+      "../../LICENSE": "licenses/LICENSE",
+      "../../docs/licenses/LICENSE-MIT": "licenses/LICENSE-MIT",
+      "../../server/core/resources/ThirdPartyNotices.txt": "licenses/ThirdPartyNotices.txt",
+      "../app/public/fonts/OFL-Lexend.txt": "licenses/fonts/OFL-Lexend.txt",
+      "../app/public/fonts/OFL-NotoSans.txt": "licenses/fonts/OFL-NotoSans.txt",
+      "../app/public/fonts/OFL-OpenDyslexic.txt": "licenses/fonts/OFL-OpenDyslexic.txt",
+      "../app/public/fonts/UFL-Ubuntu.txt": "licenses/fonts/UFL-Ubuntu.txt"
+    }
   }
 }

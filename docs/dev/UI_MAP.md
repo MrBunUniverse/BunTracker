@@ -58,7 +58,7 @@ Routes are defined in `src/App.tsx`. Design direction is in `docs/dev/DESIGN.md`
 | Element | File | Notes |
 | --- | --- | --- |
 | Layout and sidebar | `src/components/settings/SettingsLayout.tsx` (+ `.scss`), `SettingsPageLayout.tsx`, `SettingsSidebar.tsx` | |
-| Pages | `src/components/settings/pages/{GeneralSettings,InterfaceSettings,HomeScreenSettings,VRCOSCSettings,OSCRouterSettings,VMCSettings,Serial,AdvancedSettings}.tsx` | `GeneralSettings` is very long; `rg` the section. `HomeScreenSettings` holds only Tracking checklist; the Home layout picker lives on Home |
+| Pages | `src/components/settings/pages/{GeneralSettings,InterfaceSettings,HomeScreenSettings,VRCOSCSettings,OSCRouterSettings,VMCSettings,Serial,AdvancedSettings,UserAgreementSettings,LicensesSettings}.tsx` | `GeneralSettings` is very long; `rg` the section. `HomeScreenSettings` holds only Tracking checklist; the Home layout picker lives on Home |
 | Stay Aligned | `src/components/settings/pages/components/StayAlignedSettings.tsx`, `StayAlignedPoseModal.tsx` | |
 | Magnetometer toggle | `src/components/settings/pages/MagnetometerToggleSetting.tsx` | |
 | Modals | `src/components/settings/SettingsResetModal.tsx`, `HandsWarningModal.tsx` | |

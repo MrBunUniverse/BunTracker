@@ -509,6 +509,7 @@ settings-sidebar-firmware-tool = DIY Firmware Tool
 settings-sidebar-vrc_warnings = VRChat Config Warnings
 settings-sidebar-advanced = Advanced
 settings-sidebar-user_agreement = User Agreement
+settings-sidebar-licenses = Open source licenses
 
 ## SteamVR settings
 settings-general-steamvr = SteamVR
@@ -1868,3 +1869,21 @@ dongle-bridge-restart = Restart
 dongle-bridge-restarting = Restarting…
 dongle-bridge-restart-aria = Restart ESP32 dongle bridge
 dongle-bridge-restarted = Restarted on { $port }. Trackers reconnect in a moment.
+
+## Open source licenses settings
+settings-licenses = Open source licenses
+settings-licenses-description = Notices, software licenses, third-party attributions, and bundled font licenses for Bun Tracker and upstream SlimeVR Server.
+settings-licenses-notice-title = NOTICE
+settings-licenses-notice-subtitle = Fork attribution, trademark disclaimer, and summary of modifications
+settings-licenses-apache-title = Apache License 2.0
+settings-licenses-apache-subtitle = Root LICENSE
+settings-licenses-mit-title = MIT License
+settings-licenses-mit-subtitle = Copyright (c) 2020 Eiren Rain and SlimeVR Contributors
+settings-licenses-third_party-title = Third-party notices
+settings-licenses-third_party-subtitle = Upstream SlimeVR Server third-party dependency attributions
+settings-licenses-font_lexend-title = Lexend
+settings-licenses-font_noto_sans-title = Noto Sans
+settings-licenses-font_opendyslexic-title = OpenDyslexic
+settings-licenses-font_ofl-subtitle = SIL Open Font License 1.1
+settings-licenses-font_ubuntu-title = Ubuntu
+settings-licenses-font_ufl-subtitle = Ubuntu Font Licence 1.0

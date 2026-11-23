@@ -30,10 +30,14 @@ The version lives in three files and must match across all of them:
 | Regular commits | Area prefix when helpful (`GUI:`, `Docs:`) | `GUI: add performance toggle` |
 | Release asset | `Bun-Tracker-vX.Y.Z-macos-<arch>.zip` | `Bun-Tracker-v0.4.0-macos-arm64.zip` |
 
-Check the built architecture with `lipo -archs "Bun Tracker.app/Contents/MacOS/"*` (currently `arm64`). Package the `.app` with `ditto` so macOS bundle metadata is preserved:
+Check the built architecture with `lipo -archs "Bun Tracker.app/Contents/MacOS/"*` (currently `arm64`). Package the `.app` and license files with `ditto` so macOS bundle metadata is preserved (the `.app` also bundles the licenses under `Contents/Resources/licenses/`):
 
 ```bash
-ditto -c -k --keepParent "gui/tauri/target/release/bundle/macos/Bun Tracker.app" Bun-Tracker-vX.Y.Z-macos-arm64.zip
+STAGE="$(mktemp -d)"
+cp -R "gui/tauri/target/release/bundle/macos/Bun Tracker.app" "$STAGE/"
+cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt "$STAGE/"
+ditto -c -k "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
+rm -rf "$STAGE"
 ```
 
 ### Dev build vs full build
@@ -111,10 +115,14 @@ To update the local copy:
    ./gradlew :server:desktop:shadowJar && pnpm build
    ```
 
-9. Archive the bundle with `ditto`:
+9. Archive the bundle and license files with `ditto`:
 
    ```bash
-   ditto -c -k --keepParent "gui/tauri/target/release/bundle/macos/Bun Tracker.app" Bun-Tracker-vX.Y.Z-macos-arm64.zip
+   STAGE="$(mktemp -d)"
+   cp -R "gui/tauri/target/release/bundle/macos/Bun Tracker.app" "$STAGE/"
+   cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt "$STAGE/"
+   ditto -c -k "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
+   rm -rf "$STAGE"
    ```
 
 10. Create the release on `MrBunUniverse/BunTracker`:

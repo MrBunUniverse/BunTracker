@@ -557,6 +557,12 @@ export function SettingsSidebar() {
         iconName: 'agreement',
         category: 'utils',
       },
+      {
+        id: 'settings-sidebar-licenses',
+        to: '/settings/licenses',
+        iconName: 'agreement',
+        category: 'utils',
+      },
     ],
     [vrcConfigState, isQuestStandalone]
   );

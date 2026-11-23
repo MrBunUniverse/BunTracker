@@ -72,6 +72,12 @@ export default defineConfig(({ command }) => {
       alias: {
         '@': path.resolve(__dirname, 'src'),
         '@shared': path.resolve(__dirname, '../shared'),
+        '@repo': path.resolve(__dirname, '../..'),
+      },
+    },
+    server: {
+      fs: {
+        allow: [path.resolve(__dirname, '../..')],
       },
     },
     css: {

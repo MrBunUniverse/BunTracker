@@ -51,6 +51,7 @@ import { ResetRequestT, ResetType, RpcMessage } from 'solarxr-protocol';
 import { ScaledProportionsPage } from './components/onboarding/pages/body-proportions/ScaledProportions';
 import { AdvancedSettings } from './components/settings/pages/AdvancedSettings';
 import { UserAgreementSettings } from './components/settings/pages/UserAgreementSettings';
+import { LicensesSettings } from './components/settings/pages/LicensesSettings';
 import { FirmwareUpdate } from './components/firmware-update/FirmwareUpdate';
 import { ConnectionLost } from './components/onboarding/pages/ConnectionLost';
 import { VRCWarningsPage } from './components/vrc/VRCWarningsPage';
@@ -184,6 +185,7 @@ function Layout() {
                 path="user-agreement"
                 element={<UserAgreementSettings />}
               />
+              <Route path="licenses" element={<LicensesSettings />} />
             </Route>
             <Route
               path="/onboarding"
