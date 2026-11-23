@@ -34,49 +34,52 @@ export function i18nHotReload(): PluginOption {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  define: {
-    __COMMIT_HASH__: JSON.stringify(commitHash),
-    __VERSION_TAG__: JSON.stringify(versionTag),
-    __GIT_CLEAN__: gitClean,
-  },
-  plugins: [
-    react({ babel: { plugins: [jotaiReactRefresh] } }),
-    i18nHotReload(),
-    visualizer() as PluginOption,
-  ],
-  build: {
-    target: 'es2022',
-    emptyOutDir: true,
-
-    commonjsOptions: {
-      include: [/solarxr-protocol/, /node_modules/],
+export default defineConfig(({ command }) => {
+  const isDev = command === 'serve';
+  return {
+    define: {
+      __COMMIT_HASH__: JSON.stringify(commitHash),
+      __VERSION_TAG__: JSON.stringify(versionTag),
+      __GIT_CLEAN__: gitClean,
     },
-
-    sourcemap: true,
-  },
-  optimizeDeps: {
-    // The protocol is a linked workspace package. Rebuild its prebundle when
-    // generated FlatBuffers exports change so the renderer cannot load a stale
-    // enum table after a protocol update.
-    force: true,
-    esbuildOptions: {
+    plugins: [
+      react(isDev ? { babel: { plugins: [jotaiReactRefresh] } } : undefined),
+      ...(isDev ? [i18nHotReload()] : []),
+      visualizer() as PluginOption,
+    ],
+    build: {
       target: 'es2022',
+      emptyOutDir: true,
+
+      commonjsOptions: {
+        include: [/solarxr-protocol/, /node_modules/],
+      },
+
+      sourcemap: false,
     },
-    needsInterop: ['solarxr-protocol'],
-    include: ['solarxr-protocol'],
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@shared': path.resolve(__dirname, '../shared'),
+    optimizeDeps: {
+      // The protocol is a linked workspace package. Rebuild its prebundle when
+      // generated FlatBuffers exports change so the renderer cannot load a stale
+      // enum table after a protocol update.
+      force: true,
+      esbuildOptions: {
+        target: 'es2022',
+      },
+      needsInterop: ['solarxr-protocol'],
+      include: ['solarxr-protocol'],
     },
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern',
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+        '@shared': path.resolve(__dirname, '../shared'),
       },
     },
-  },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern',
+        },
+      },
+    },
+  };
 });

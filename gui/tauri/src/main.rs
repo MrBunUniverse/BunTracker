@@ -106,7 +106,7 @@ async fn apple_music() -> String {
     tauri::async_runtime::spawn_blocking(|| {
         use std::io::Read;
         use std::process::{Command, Stdio};
-        let Ok(mut child) = Command::new("osascript")
+        let Ok(mut child) = Command::new("/usr/bin/osascript")
             .args(["-e", MUSIC_SCRIPT])
             .stdout(Stdio::piped())
             .stderr(Stdio::null())
@@ -134,32 +134,8 @@ async fn apple_music() -> String {
 async fn restart_server(app: AppHandle) -> Result<(), String> {
     let log = app.path().app_log_dir().map_err(|e| e.to_string())?;
     tauri::async_runtime::spawn_blocking(move || {
-        use std::os::unix::process::CommandExt;
-        use std::process::{Command, Stdio};
         let root = server_process::main_checkout()?;
-        let jar = root.join("server/desktop/build/libs/slimevr.jar");
-        if !jar.is_file() {
-            return Err(format!("No server jar at {}", jar.display()));
-        }
-
-        server_process::stop_server(&root)?;
-
-        fs::create_dir_all(&log).map_err(|e| e.to_string())?;
-        let out = fs::File::create(log.join("server.log")).map_err(|e| e.to_string())?;
-        let err = out.try_clone().map_err(|e| e.to_string())?;
-        Command::new("java")
-            .args(["-Xmx128M", "-jar"])
-            .arg(&jar)
-            .arg("run")
-            .current_dir(&root)
-            .stdin(Stdio::null())
-            .stdout(out)
-            .stderr(err)
-            // Own process group, so quitting the Spike (or Ctrl+C on tauri dev) leaves the server running.
-            .process_group(0)
-            .spawn()
-            .map(|_| ())
-            .map_err(|e| format!("Couldn't start the server: {e}"))
+        server_process::start_server(&root, &log, true).map(|_| ())
     })
     .await
     .map_err(|e| e.to_string())?
@@ -169,52 +145,96 @@ async fn restart_server(app: AppHandle) -> Result<(), String> {
 
 const BRIDGE_MATCH: &str = "esp32-dongle/bridge.py";
 
+enum BridgeStart {
+    Started(String),
+    AlreadyRunning,
+    NotPluggedIn,
+}
+
+fn spawn_dongle_bridge(log: &Path) -> Result<BridgeStart, String> {
+    use std::os::unix::process::CommandExt;
+    use std::process::{Command, Stdio};
+    let root = server_process::main_checkout()?;
+    let bridge = root.join("tools/esp32-dongle/bridge.py");
+    if !bridge.is_file() {
+        return Err(format!("No bridge at {}", bridge.display()));
+    }
+    let running = Command::new("/usr/bin/pgrep")
+        .args(["-f", BRIDGE_MATCH])
+        .stdout(Stdio::null())
+        .status();
+    if matches!(running, Ok(s) if s.success()) {
+        return Ok(BridgeStart::AlreadyRunning);
+    }
+    // The ESP32's USB serial chip shows up as cu.usbserial* (CH340, Apple driver), cu.wchusbserial* (WCH driver) or cu.usbmodem*.
+    let mut ports: Vec<String> = fs::read_dir("/dev")
+        .map_err(|e| e.to_string())?
+        .filter_map(|e| e.ok()?.file_name().into_string().ok())
+        .filter(|n| n.starts_with("cu.usbserial") || n.starts_with("cu.usbmodem") || n.starts_with("cu.wchusbserial"))
+        .map(|n| format!("/dev/{n}"))
+        .collect();
+    ports.sort();
+    let Some(port) = ports.into_iter().next() else {
+        return Ok(BridgeStart::NotPluggedIn);
+    };
+    let python = bridge_python::find()?;
+
+    fs::create_dir_all(log).map_err(|e| e.to_string())?;
+    let out = fs::File::create(log.join("bridge.log")).map_err(|e| e.to_string())?;
+    let err = out.try_clone().map_err(|e| e.to_string())?;
+    Command::new(python)
+        .arg("-u")
+        .arg(&bridge)
+        .args(["--port", &port])
+        .current_dir(&root)
+        .stdin(Stdio::null())
+        .stdout(out)
+        .stderr(err)
+        // Own process group, so quitting the app leaves the bridge running.
+        .process_group(0)
+        .spawn()
+        .map(|_| BridgeStart::Started(port))
+        .map_err(|e| format!("Couldn't start the bridge: {e}"))
+}
+
 /// Starts tools/esp32-dongle/bridge.py on the plugged-in dongle and returns its serial port.
 #[tauri::command]
 async fn start_dongle_bridge(app: AppHandle) -> Result<String, String> {
     let log = app.path().app_log_dir().map_err(|e| e.to_string())?;
-    tauri::async_runtime::spawn_blocking(move || {
-        use std::os::unix::process::CommandExt;
-        use std::process::{Command, Stdio};
-        let root = server_process::main_checkout()?;
-        let bridge = root.join("tools/esp32-dongle/bridge.py");
-        if !bridge.is_file() {
-            return Err(format!("No bridge at {}", bridge.display()));
-        }
-        let running = Command::new("pgrep").args(["-f", BRIDGE_MATCH]).stdout(Stdio::null()).status();
-        if matches!(running, Ok(s) if s.success()) {
-            return Err("The bridge is already running.".into());
-        }
-        // The ESP32's USB serial chip shows up as cu.usbserial* (CH340, Apple driver), cu.wchusbserial* (WCH driver) or cu.usbmodem*.
-        let mut ports: Vec<String> = fs::read_dir("/dev")
-            .map_err(|e| e.to_string())?
-            .filter_map(|e| e.ok()?.file_name().into_string().ok())
-            .filter(|n| n.starts_with("cu.usbserial") || n.starts_with("cu.usbmodem") || n.starts_with("cu.wchusbserial"))
-            .map(|n| format!("/dev/{n}"))
-            .collect();
-        ports.sort();
-        let port = ports.into_iter().next().ok_or("Dongle not plugged in.")?;
-        let python = bridge_python::find()?;
-
-        fs::create_dir_all(&log).map_err(|e| e.to_string())?;
-        let out = fs::File::create(log.join("bridge.log")).map_err(|e| e.to_string())?;
-        let err = out.try_clone().map_err(|e| e.to_string())?;
-        Command::new(python)
-            .arg("-u")
-            .arg(&bridge)
-            .args(["--port", &port])
-            .current_dir(&root)
-            .stdin(Stdio::null())
-            .stdout(out)
-            .stderr(err)
-            // Own process group, so quitting the Spike leaves the bridge running.
-            .process_group(0)
-            .spawn()
-            .map(|_| port)
-            .map_err(|e| format!("Couldn't start the bridge: {e}"))
+    tauri::async_runtime::spawn_blocking(move || match spawn_dongle_bridge(&log)? {
+        BridgeStart::Started(port) => Ok(port),
+        BridgeStart::AlreadyRunning => Err("The bridge is already running.".into()),
+        BridgeStart::NotPluggedIn => Err("Dongle not plugged in.".into()),
     })
     .await
     .map_err(|e| e.to_string())?
+}
+
+#[cfg(not(debug_assertions))]
+fn start_release_services(app: AppHandle) {
+    tauri::async_runtime::spawn_blocking(move || {
+        let log = match app.path().app_log_dir() {
+            Ok(dir) => dir,
+            Err(e) => {
+                eprintln!("Couldn't resolve log dir: {e}");
+                return;
+            }
+        };
+        let server_result = server_process::main_checkout()
+            .and_then(|root| server_process::start_server(&root, &log, false));
+        if let Err(err) = server_result {
+            let _ = fs::create_dir_all(&log)
+                .and_then(|_| fs::write(log.join("server.log"), format!("{err}\n")));
+            app.dialog()
+                .message(&err)
+                .title("Bun Tracker")
+                .kind(tauri_plugin_dialog::MessageDialogKind::Error)
+                .show(|_| {});
+        }
+        if let Err(err) = spawn_dongle_bridge(&log) {
+            eprintln!("Dongle bridge startup skipped: {err}");
+        }
+    });
 }
 
 // ---- storage (replaces Electron's settings and cache stores) ----
@@ -679,6 +699,10 @@ fn main() {
                 ],
             )?;
             handle.set_menu(menu)?;
+
+            #[cfg(not(debug_assertions))]
+            start_release_services(handle.clone());
+
             Ok(())
         })
         .on_menu_event(|app, event| {
