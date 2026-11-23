@@ -6,7 +6,7 @@ What this fork adds to or changes from upstream SlimeVR. Check this list before 
 
 | Feature | Location | Notes |
 | --- | --- | --- |
-| Tauri shell | `gui/tauri/` | Replaces the upstream Electron host. Keeps the bundle identifier `dev.slimevr.tauri-spike` and its storage location. |
+| Tauri shell | `gui/tauri/` | Replaces the upstream Electron host. Uses the bundle identifier `io.github.mrbununiverse.buntracker` and copies settings, logs, and WebKit data from `dev.slimevr.tauri-spike` on first launch. |
 | Native API contract | `gui/shared/electron-api.ts`, `gui/tauri/shim/electron-shim.js` | The name `window.electronAPI` is kept on purpose, so the frontend matches upstream. |
 | Redesigned interface | `gui/app/src/` | Navy, gray and amber theme, top bar, tracker cards, settings and broadcast controls. See `docs/dev/DESIGN.md`. |
 | Special themes | `gui/app/src/index.scss`, `docs/dev/THEMES.md` | Bun, Fox and Dog share the PawPad layout. |

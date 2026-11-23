@@ -28,12 +28,12 @@ for line in rows:
     if len(p) < 7:
         continue
     parsed.append((p[0], datetime.datetime.strptime(' '.join(p[1:6]), fmt), p[6]))
-app = [r for r in parsed if 'slimevr-tauri-spike' in r[2]]
+app = [r for r in parsed if 'bun-tracker' in r[2]]
 if not app:
     print('')
 else:
     t0 = app[0][1]
-    pids = [r[0] for r in parsed if ('WebKit' in r[2] or 'slimevr-tauri-spike' in r[2]) and abs((r[1] - t0).total_seconds()) < 30]
+    pids = [r[0] for r in parsed if ('WebKit' in r[2] or 'bun-tracker' in r[2]) and abs((r[1] - t0).total_seconds()) < 30]
     print(','.join(pids))
 EOF
 )

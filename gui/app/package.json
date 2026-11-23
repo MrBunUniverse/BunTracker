@@ -1,8 +1,12 @@
 {
-  "name": "slimevr-gui",
+  "name": "bun-tracker-gui",
   "version": "0.4.0",
-  "author": "SlimeVR Team <contact@slimevr.dev>",
-  "homepage": "https://slimevr.dev",
+  "author": "MrBunUniverse",
+  "homepage": "https://github.com/MrBunUniverse/BunTracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrBunUniverse/BunTracker.git"
+  },
   "type": "module",
   "scripts": {
     "start": "vite --force --port 5173 --strictPort",

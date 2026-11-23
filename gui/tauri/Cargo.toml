@@ -1,7 +1,10 @@
 [package]
-name = "slimevr-tauri-spike"
+name = "bun-tracker"
 version = "0.0.0"
-description = "Spike: Tauri shell around the existing SlimeVR React GUI"
+description = "Tauri desktop shell for Bun Tracker"
+authors = ["MrBunUniverse"]
+homepage = "https://github.com/MrBunUniverse/BunTracker"
+repository = "https://github.com/MrBunUniverse/BunTracker"
 edition = "2021"
 publish = false
 

@@ -38,7 +38,7 @@ ditto -c -k --keepParent "gui/tauri/target/release/bundle/macos/Bun Tracker.app"
 
 ### Dev build vs full build
 
-- **Dev build**: started with `bash "Start SlimeVR.command"` (Vite on port `5173` with hot reload, `tauri dev`, debug binary `gui/tauri/target/debug/slimevr-tauri-spike`). It has no version of its own and is identified by commit hash. `gui/app/vite.config.ts` injects `__COMMIT_HASH__` (8-character `HEAD`), `__VERSION_TAG__` (tag pointing at `HEAD`, if any), and `__GIT_CLEAN__`. When debug mode is enabled (`config.debug`), `VersionTag` shows `(__VERSION_TAG__ || __COMMIT_HASH__)` plus `-dirty` if the working tree has uncommitted changes.
+- **Dev build**: started with `bash "Start SlimeVR.command"` (Vite on port `5173` with hot reload, `tauri dev`, debug binary `gui/tauri/target/debug/bun-tracker`). It has no version of its own and is identified by commit hash. `gui/app/vite.config.ts` injects `__COMMIT_HASH__` (8-character `HEAD`), `__VERSION_TAG__` (tag pointing at `HEAD`, if any), and `__GIT_CLEAN__`. When debug mode is enabled (`config.debug`), `VersionTag` shows `(__VERSION_TAG__ || __COMMIT_HASH__)` plus `-dirty` if the working tree has uncommitted changes.
 - **Full build**: `Bun Tracker.app`, built with `tauri build`. Launching it without a terminal auto-starts the server and the ESP32 dongle bridge.
 
 ## Dev update

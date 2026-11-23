@@ -84,7 +84,7 @@ git diff --name-status --diff-filter=A "$(git merge-base HEAD <commit>)" <commit
 
 The server's config is at `~/Library/Application Support/dev.slimevr.SlimeVR/vrconfig.yml`. The launcher copies it to `~/Library/Logs/SlimeVR-launcher/vrconfig.backup.yml` before each server start, but that copy is overwritten every time. Before running any other build, make your own dated copy. A jar that does not know a custom field rewrites the config without it.
 
-The Spike's settings are in `~/Library/Application Support/dev.slimevr.tauri-spike/` (`settings.json`, `cache.json`). They depend on the bundle identifier, so keep it unchanged.
+Bun Tracker's settings are in `~/Library/Application Support/io.github.mrbununiverse.buntracker/` (`settings.json`, `cache.json`), with a one-time copy from the older `dev.slimevr.tauri-spike` directory on first launch. They depend on the bundle identifier, so keep it unchanged.
 
 To roll back code, check out the earlier commit, rebuild with `./gradlew :server:desktop:shadowJar`, restore your dated config copy, and start the launcher. Tag `checkpoint/pre-restructure` is the last commit with the `tauri-spike/` layout.
 

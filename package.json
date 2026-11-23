@@ -1,6 +1,12 @@
 {
-  "name": "slimevr",
+  "name": "bun-tracker",
   "version": "0.4.0",
+  "author": "MrBunUniverse",
+  "homepage": "https://github.com/MrBunUniverse/BunTracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrBunUniverse/BunTracker.git"
+  },
   "private": true,
   "packageManager": "pnpm@10.33.0",
   "workspaces": [

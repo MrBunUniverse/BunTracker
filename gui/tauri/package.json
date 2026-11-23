@@ -1,6 +1,12 @@
 {
-  "name": "slimevr-tauri-spike",
+  "name": "bun-tracker-tauri",
   "version": "0.0.0",
+  "author": "MrBunUniverse",
+  "homepage": "https://github.com/MrBunUniverse/BunTracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrBunUniverse/BunTracker.git"
+  },
   "private": true,
   "scripts": {
     "tauri": "tauri",

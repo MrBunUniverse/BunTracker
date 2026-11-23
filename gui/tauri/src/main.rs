@@ -19,6 +19,7 @@ const SHIM: &str = include_str!("../shim/electron-shim.js");
 
 mod audio_input;
 mod bridge_python;
+mod migration;
 mod server_process;
 mod streamcast;
 
@@ -734,6 +735,7 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .manage(StoreLock(Mutex::new(())))
         .setup(|app| {
+            migration::migrate_legacy_dirs(app.handle());
             let index = saved_zoom(app.handle());
             app.manage(ZoomIndex(Mutex::new(index)));
 
