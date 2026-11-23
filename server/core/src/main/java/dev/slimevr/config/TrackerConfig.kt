@@ -17,6 +17,9 @@ class TrackerConfig {
 	var mountingResetOrientation: ObjectQuaternion? = null
 	var allowDriftCompensation: Boolean? = null
 
+	/** Set once [DriftCompensationConfig.migrateTrackerOptIn] has run for this tracker. */
+	var driftOptInMigrated: Boolean = false
+
 	/**
 	 * Only checked if [ServerConfig.useMagnetometerOnAllTrackers] enabled
 	 */

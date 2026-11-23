@@ -3,6 +3,7 @@ package dev.slimevr.unit
 import dev.slimevr.VRServer.Companion.getNextLocalTrackerId
 import dev.slimevr.config.DriftCompensationConfig
 import dev.slimevr.config.TrackerConfig
+import dev.slimevr.config.VRConfig
 import dev.slimevr.config.config
 import dev.slimevr.tracking.trackers.Tracker
 import dev.slimevr.tracking.trackers.YawDriftModel
@@ -182,13 +183,14 @@ class GlobalDriftCompensationTests {
 		assertTrue(tracker.getRotation().w.isFinite())
 	}
 
-	private fun imuTracker(name: String) = Tracker(
+	private fun imuTracker(name: String, userEditable: Boolean = false) = Tracker(
 		null,
 		getNextLocalTrackerId(),
 		name,
 		name,
 		null,
 		hasRotation = true,
+		userEditable = userEditable,
 		imuType = IMUType.MPU6050,
 		allowReset = true,
 		allowMounting = true,
@@ -209,6 +211,40 @@ class GlobalDriftCompensationTests {
 			assertTrue(t.config.allowDriftCompensation == true)
 		}
 		assertFalse(nonImu.config.allowDriftCompensation == true)
+	}
+
+	@Test
+	fun loadOptsInExistingImuTrackersOnceWhenGloballyEnabled() {
+		val vrConfig = VRConfig().apply { driftCompensation.enabled = true }
+		val imu = imuTracker("gdc-f", userEditable = true)
+		val nonImu = Tracker(null, getNextLocalTrackerId(), "gdc-g", "gdc-g", null, hasRotation = true, userEditable = true)
+		// Saved before the global switch opted trackers in.
+		for (t in listOf(imu, nonImu)) vrConfig.getTracker(t).allowDriftCompensation = false
+
+		for (t in listOf(imu, nonImu)) vrConfig.readTrackerConfig(t)
+		assertTrue(imu.resetsHandler.allowDriftCompensation)
+		assertTrue(vrConfig.getTracker(imu).allowDriftCompensation == true)
+		assertTrue(vrConfig.getTracker(imu).driftOptInMigrated)
+		assertFalse(vrConfig.getTracker(nonImu).allowDriftCompensation == true)
+
+		// Runs once: a later per-tracker opt-out survives a reload.
+		vrConfig.getTracker(imu).allowDriftCompensation = false
+		vrConfig.readTrackerConfig(imu)
+		assertFalse(imu.resetsHandler.allowDriftCompensation)
+	}
+
+	@Test
+	fun loadWithGlobalOffKeepsTrackerSetting() {
+		val config = DriftCompensationConfig()
+		val t = imuTracker("gdc-h")
+		val saved = TrackerConfig().apply { allowDriftCompensation = false }
+		t.readConfig(saved)
+		assertTrue(config.migrateTrackerOptIn(t, saved))
+		assertFalse(saved.allowDriftCompensation == true)
+		assertFalse(t.resetsHandler.allowDriftCompensation)
+		// Turning the switch on later still opts it in.
+		config.enableForAllTrackers(listOf(t))
+		assertTrue(t.resetsHandler.allowDriftCompensation)
 	}
 
 	@Test

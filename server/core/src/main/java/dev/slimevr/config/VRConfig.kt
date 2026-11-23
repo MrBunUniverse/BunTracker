@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers
 import com.github.jonpeterson.jackson.module.versioning.JsonVersionedModel
+import dev.slimevr.VRServer
 import dev.slimevr.config.serializers.BridgeConfigMapDeserializer
 import dev.slimevr.config.serializers.TrackerConfigMapDeserializer
 import dev.slimevr.tracking.trackers.Tracker
@@ -129,6 +130,9 @@ class VRConfig {
 		if (tracker.userEditable) {
 			val config = getTracker(tracker)
 			tracker.readConfig(config)
+			if (driftCompensation.migrateTrackerOptIn(tracker, config) && VRServer.instanceInitialized) {
+				VRServer.instance.configManager.saveConfig()
+			}
 			if (tracker.isImu()) tracker.resetsHandler.readDriftCompensationConfig(driftCompensation)
 			tracker.resetsHandler.readResetConfig(resetsConfig)
 			if (tracker.allowReset) {

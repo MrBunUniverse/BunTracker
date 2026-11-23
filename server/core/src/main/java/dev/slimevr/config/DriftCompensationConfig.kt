@@ -32,6 +32,22 @@ class DriftCompensationConfig {
 		}
 	}
 
+	/**
+	 * One-time opt-in on load. Configs saved before the global switch opted trackers
+	 * in (only an off->on toggle ran [enableForAllTrackers]) kept `false` on body IMU
+	 * trackers. After this runs once per tracker, a per-tracker opt-out sticks.
+	 * @return true when [config] changed and should be saved
+	 */
+	fun migrateTrackerOptIn(tracker: Tracker, config: TrackerConfig): Boolean {
+		if (!tracker.isImu() || config.driftOptInMigrated) return false
+		config.driftOptInMigrated = true
+		if (enabled && config.allowDriftCompensation != true) {
+			tracker.resetsHandler.allowDriftCompensation = true
+			config.allowDriftCompensation = true
+		}
+		return true
+	}
+
 	fun updateTrackersDriftCompensation() {
 		for (t in VRServer.instance.allTrackers) {
 			if (t.isImu()) {
