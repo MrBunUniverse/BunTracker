@@ -46,7 +46,6 @@ test('normalizing a loaded config changes only the theme', () => {
     theme: 'claude',
     lang: 'de',
     textSize: 14,
-    pawEars: false,
     animations: false,
     devSettings: { highContrast: true },
   };

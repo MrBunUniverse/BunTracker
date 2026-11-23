@@ -1840,8 +1840,6 @@ settings-special-themes-fox-title = Fox
 settings-special-themes-fox-description = PawPad's red fox: deep umber with orange fur and cream accents.
 settings-special-themes-dog-title = Dog
 settings-special-themes-dog-description = PawPad's golden dog: warm brown with golden fur and a pink paw.
-settings-special-themes-ears-label = Ears on the logo
-settings-special-themes-ears-description = Fox and Dog only: pixel ears on the logo on the welcome screen and while waiting for trackers.
 
 ## User Agreement settings
 settings-user_agreement = User Agreement

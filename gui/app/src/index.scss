@@ -1107,7 +1107,7 @@ body {
   box-shadow: none;
 }
 
-/* Pixel icons (PixelIcon, PawEars) share one glow in the theme's accent: a tight halo plus a soft outer one. */
+/* Pixel icons (PixelIcon) share one glow in the theme's accent: a tight halo plus a soft outer one. */
 .pixel-icon {
   filter: drop-shadow(0 0 2px rgba(var(--accent-background-30), 0.7))
     drop-shadow(0 0 8px rgba(var(--accent-background-30), 0.35));

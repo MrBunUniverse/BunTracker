@@ -57,7 +57,6 @@ export interface Config {
   animations: boolean;
   performanceMode: boolean;
   fastPreviewRefresh: boolean;
-  pawEars: boolean;
   fonts: string[];
   useTray: boolean | null;
   mirrorView: boolean;
@@ -91,7 +90,6 @@ export const defaultConfig: Config = {
   animations: true,
   performanceMode: false,
   fastPreviewRefresh: false,
-  pawEars: true,
   fonts: [
     '-apple-system',
     'BlinkMacSystemFont',
@@ -128,7 +126,9 @@ const store: CrossStorage = window.electronAPI
   : localStore;
 
 function fallbackToDefaults(loadedConfig: any): Config {
-  return withNormalizedTheme(Object.assign({}, defaultConfig, loadedConfig) as Config);
+  const merged = Object.assign({}, defaultConfig, loadedConfig);
+  delete merged.pawEars;
+  return withNormalizedTheme(merged as Config);
 }
 
 // Move the load of the config ouside of react

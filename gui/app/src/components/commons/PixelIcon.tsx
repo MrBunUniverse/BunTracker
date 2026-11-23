@@ -4,7 +4,7 @@ import { useConfig } from '@/hooks/config';
 import { isPawTheme } from '@/hooks/theme';
 
 // Redraws an icon on a small pixel grid, so it reads as PawPad-style pixel art.
-// Only in the Bun theme. Other themes get the original icon back, unchanged.
+// Active on PawPad themes (Bun, Fox, Dog). Other themes get the original icon back, unchanged.
 // The colour comes from the theme (text-accent-background-30) and the glow from `.pixel-icon` in index.scss.
 export function PixelIcon({
   children,
@@ -29,8 +29,9 @@ export function PixelIcon({
     const svg = holderRef.current?.querySelector('svg');
     if (!pixel || !canvas || !svg) return;
     const markup = svg.outerHTML;
-    const key = `${grid}:${markup}`;
-    // The key lives on the canvas, so a canvas that is remounted (for example after a theme change) is drawn again.
+    const color = getComputedStyle(canvas).color;
+    const key = `${grid}:${color}:${markup}`;
+    // Include the computed colour in the key so switching between paw themes (which keeps the canvas mounted) redraws it.
     if (canvas.dataset.drawn === key) return;
     canvas.dataset.drawn = key;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -48,12 +49,13 @@ export function PixelIcon({
     });
     const img = new Image();
     img.onload = () => {
+      if (canvas.dataset.drawn !== key) return;
       ctx.clearRect(0, 0, grid, grid);
       ctx.drawImage(img, 0, 0, grid, grid);
       const { data } = ctx.getImageData(0, 0, grid, grid);
-      const [r, g, b] = (
-        getComputedStyle(canvas).color.match(/\d+/g) ?? ['224', '144', '126']
-      ).map(Number);
+      const [r, g, b] = (color.match(/\d+/g) ?? ['224', '144', '126']).map(
+        Number
+      );
       ctx.clearRect(0, 0, grid, grid);
       ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
       for (let y = 0; y < grid; y++) {

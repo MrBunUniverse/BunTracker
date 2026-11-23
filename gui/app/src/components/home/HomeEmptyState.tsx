@@ -16,7 +16,6 @@ import { demoModeAtom, toggleDemoModeAtom } from '@/store/demo-trackers';
 import { useMotionGlow, useTracker } from '@/hooks/tracker';
 import { useTrackerPresets } from '@/hooks/presets';
 import { BodyPartIcon } from '@/components/commons/BodyPartIcon';
-import { PawEars } from '@/components/commons/PawEars';
 import { PixelIcon } from '@/components/commons/PixelIcon';
 import { BunPawIcon } from '@/components/commons/icon/BunPawIcon';
 import { useConfig } from '@/hooks/config';
@@ -458,8 +457,6 @@ function TrackerEmptyState({ onSimulateDemo }: { onSimulateDemo: () => void }) {
             bun && animate && 'tracker-logo-hop'
           )}
         >
-          {/* Fox and Dog: pixel ears on the logo, so they hop with it. */}
-          <PawEars cell={34 / 28} on="badge" />
           {/* Bun: the logo is redrawn as pixel art, like the sidebar logo. */}
           <PixelIcon size={34} grid={28}>
             <BunPawIcon
