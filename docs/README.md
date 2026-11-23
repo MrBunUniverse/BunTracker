@@ -12,6 +12,7 @@ Use this page as the index for project documentation. Runtime source belongs in 
 - [Development runbook skill](../.agents/skills/slimevr-dev/SKILL.md)
 - [Custom feature inventory](fork/CUSTOM.md)
 - [Tracking upstream](fork/UPSTREAM.md)
+- [Releasing Bun Tracker](fork/RELEASING.md)
 - [ESP32 USB dongle](../tools/esp32-dongle/README.md)
 - [Changelog](../CHANGELOG.md)
 
