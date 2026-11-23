@@ -24,6 +24,11 @@ import { Tooltip } from '@/components/commons/Tooltip';
 import classNames from 'classnames';
 import { SkeletonVisualizerWidget } from '@/components/widgets/SkeletonVisualizerWidget';
 import { CheckIcon } from '@/components/commons/icon/CheckIcon';
+import { ControllerIcon } from '@/components/commons/icon/ControllerIcon';
+import { HeadsetIcon } from '@/components/commons/icon/HeadsetIcon';
+import { HumanIcon } from '@/components/commons/icon/HumanIcon';
+import { WarningIcon } from '@/components/commons/icon/WarningIcon';
+import { PosePlaceholder } from '@/components/commons/PosePlaceholder';
 import { useDebouncedEffect } from '@/hooks/timeout';
 import { restartAndPlay, scaledProportionsClick } from '@/sounds/sounds';
 import { CrossIcon } from '@/components/commons/icon/CrossIcon';
@@ -56,24 +61,24 @@ const errorSteps = [
   UserHeightCalibrationStatus.ERROR_TOO_SMALL,
 ];
 
-const statusToImage: Record<UserHeightCalibrationStatus, string | null> = {
-  [UserHeightCalibrationStatus.NONE]: null,
-  [UserHeightCalibrationStatus.DONE]: '/images/user-height/done.webp',
-  [UserHeightCalibrationStatus.RECORDING_FLOOR]:
-    '/images/user-height/touch-floor.webp',
-  [UserHeightCalibrationStatus.WAITING_FOR_RISE]:
-    '/images/user-height/stand-still.webp',
-  [UserHeightCalibrationStatus.WAITING_FOR_CONTROLLER_PITCH]: null,
-  [UserHeightCalibrationStatus.WAITING_FOR_FW_LOOK]: null,
-  [UserHeightCalibrationStatus.RECORDING_HEIGHT]:
-    '/images/user-height/stand-still.webp',
-  [UserHeightCalibrationStatus.ERROR_TIMEOUT]:
-    '/images/user-height/timeout.webp',
-  [UserHeightCalibrationStatus.ERROR_TOO_HIGH]:
-    '/images/user-height/wrong-height.webp',
-  [UserHeightCalibrationStatus.ERROR_TOO_SMALL]:
-    '/images/user-height/wrong-height.webp',
-};
+// TODO(art): replace placeholder pose illustration
+function renderStatusPoseIcon(status: UserHeightCalibrationStatus) {
+  switch (status) {
+    case UserHeightCalibrationStatus.DONE:
+      return <CheckIcon size={32} className="fill-status-success" />;
+    case UserHeightCalibrationStatus.RECORDING_FLOOR:
+      return <ControllerIcon width={44} />;
+    case UserHeightCalibrationStatus.WAITING_FOR_RISE:
+    case UserHeightCalibrationStatus.RECORDING_HEIGHT:
+      return <HumanIcon width={44} />;
+    case UserHeightCalibrationStatus.ERROR_TIMEOUT:
+    case UserHeightCalibrationStatus.ERROR_TOO_HIGH:
+    case UserHeightCalibrationStatus.ERROR_TOO_SMALL:
+      return <WarningIcon width={36} className="text-status-critical" />;
+    default:
+      return null;
+  }
+}
 
 function Stepper({ status }: { status: UserHeightRecordingStatusResponseT }) {
   const stepIndex = progressSteps.indexOf(status.status);
@@ -149,48 +154,51 @@ function UserHeightStatus({
       </div>
 
       <div className="flex flex-grow justify-center h-full min-h-0 items-center">
-        {statusToImage[status.status] && (
-          <div className="h-full w-full flex justify-center max-h-[950px]">
-            <img
-              className="object-contain h-full"
-              src={statusToImage[status.status]!}
+        {renderStatusPoseIcon(status.status) && (
+          // TODO(art): replace placeholder pose illustration
+          <div className="h-full w-full flex justify-center items-center p-2 max-h-[950px]">
+            <PosePlaceholder
+              icon={renderStatusPoseIcon(status.status)}
+              labelId={`onboarding-user_height-calibration-${UserHeightCalibrationStatus[status.status]}`}
+              className="h-full w-full max-w-md"
             />
           </div>
         )}
         {status.status === UserHeightCalibrationStatus.WAITING_FOR_FW_LOOK && (
+          // TODO(art): replace placeholder pose illustration
           <div className="h-full w-full flex p-2">
             <div className="grid grid-rows-3 h-full w-full gap-1 xs:gap-3 max-h-[950px]">
-              <div className="bg-background-70 rounded-md flex gap-4 items-center px-4 relative">
-                <CheckIcon className="sm:w-8 w-5 h-auto absolute xs:top-2 xs:left-2 -top-1 tall:w-8 tall:left-2 tall:top-2 -left-2 fill-status-success" />
-                <img
-                  className="object-cover h-full aspect-square"
-                  src={'/images/user-height/look-forward-ok.webp'}
-                />
+              <div className="bg-background-70 border border-[var(--material-border-subtle)] rounded-md flex gap-4 items-center px-4 relative">
+                <CheckIcon className="sm:w-6 w-4 h-auto shrink-0 fill-status-success" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[var(--material-border-primary)] bg-background-60/60 text-background-20">
+                  <HeadsetIcon width={26} />
+                </div>
                 <Typography
                   variant={isXs ? 'section-title' : 'standard'}
                   whitespace="whitespace-pre-wrap"
                   id="onboarding-user_height-calibration-WAITING_FOR_FW_LOOK-ok"
                 />
               </div>
-              <div className="bg-background-70 rounded-md flex gap-4 items-center px-4 relative">
-                <CrossIcon className="sm:w-8 w-6 h-auto absolute xs:top-2 xs:left-2 -top-1 -left-2 tall:w-9 tall:left-1 tall:top-2 fill-status-critical" />
-
-                <img
-                  className="object-cover h-full aspect-square"
-                  src={'/images/user-height/look-forward-low.webp'}
-                />
+              <div className="bg-background-70 border border-[var(--material-border-subtle)] rounded-md flex gap-4 items-center px-4 relative">
+                <CrossIcon className="sm:w-6 w-5 h-auto shrink-0 fill-status-critical" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[var(--material-border-primary)] bg-background-60/60 text-background-20">
+                  <span className="inline-flex rotate-[24deg]">
+                    <HeadsetIcon width={26} />
+                  </span>
+                </div>
                 <Typography
                   variant={isXs ? 'section-title' : 'standard'}
                   whitespace="whitespace-pre-wrap"
                   id="onboarding-user_height-calibration-WAITING_FOR_FW_LOOK-low"
                 />
               </div>
-              <div className="bg-background-70 rounded-md flex gap-4 items-center px-4 relative">
-                <CrossIcon className="sm:w-8 w-6 h-auto absolute xs:top-2 xs:left-2 -top-1 -left-2 tall:w-9 tall:left-1 tall:top-2 fill-status-critical" />
-                <img
-                  className="object-cover h-full aspect-square"
-                  src={'/images/user-height/look-forward-high.webp'}
-                />
+              <div className="bg-background-70 border border-[var(--material-border-subtle)] rounded-md flex gap-4 items-center px-4 relative">
+                <CrossIcon className="sm:w-6 w-5 h-auto shrink-0 fill-status-critical" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[var(--material-border-primary)] bg-background-60/60 text-background-20">
+                  <span className="inline-flex -rotate-[24deg]">
+                    <HeadsetIcon width={26} />
+                  </span>
+                </div>
                 <Typography
                   variant={isXs ? 'section-title' : 'standard'}
                   whitespace="whitespace-pre-wrap"
@@ -202,28 +210,26 @@ function UserHeightStatus({
         )}
         {status.status ===
           UserHeightCalibrationStatus.WAITING_FOR_CONTROLLER_PITCH && (
+          // TODO(art): replace placeholder pose illustration
           <div className="h-full w-full flex p-2">
-            <div className="flex tall:grid grid-cols-2 grid-rows-2 h-full w-full gap-3 max-h-[950px]">
-              <div className="bg-background-70 rounded-md flex gap-4 justify-between items-end px-4 relative  overflow-clip">
-                <CheckIcon className="sm:w-9 w-5 h-auto absolute top-2 left-2 justify-center fill-status-success" />
-                <img
-                  className="object-bottom object-cover w-full"
-                  src={'/images/user-height/controller-ok.webp'}
-                />
+            <div className="grid grid-cols-3 h-full w-full gap-3 max-h-[950px]">
+              <div className="bg-background-70 border border-[var(--material-border-primary)] rounded-md flex flex-col gap-2 justify-center items-center p-3 relative overflow-clip">
+                <CheckIcon className="sm:w-6 w-4 h-auto absolute top-2 left-2 fill-status-success" />
+                <div className="fill-background-20 text-background-20 rotate-[180deg]">
+                  <ControllerIcon width={36} />
+                </div>
               </div>
-              <div className="bg-background-70 rounded-md flex gap-4 justify-between items-end px-4 relative  overflow-clip">
-                <CrossIcon className="sm:w-10 w-6 h-auto absolute top-2 left-2 fill-status-critical" />
-                <img
-                  className="object-bottom object-cover w-full"
-                  src={'/images/user-height/controller-wrong-1.webp'}
-                />
+              <div className="bg-background-70 border border-[var(--material-border-primary)] rounded-md flex flex-col gap-2 justify-center items-center p-3 relative overflow-clip">
+                <CrossIcon className="sm:w-7 w-5 h-auto absolute top-2 left-2 fill-status-critical" />
+                <div className="fill-background-20 text-background-20 rotate-[90deg]">
+                  <ControllerIcon width={36} />
+                </div>
               </div>
-              <div className="bg-background-70 rounded-md flex gap-4 justify-between items-end px-4 relative  overflow-clip">
-                <CrossIcon className="sm:w-10 w-6 h-auto absolute top-2 left-2 fill-status-critical" />
-                <img
-                  className="object-bottom object-cover w-full"
-                  src={'/images/user-height/controller-wrong-2.webp'}
-                />
+              <div className="bg-background-70 border border-[var(--material-border-primary)] rounded-md flex flex-col gap-2 justify-center items-center p-3 relative overflow-clip">
+                <CrossIcon className="sm:w-7 w-5 h-auto absolute top-2 left-2 fill-status-critical" />
+                <div className="fill-background-20 text-background-20">
+                  <ControllerIcon width={36} />
+                </div>
               </div>
             </div>
           </div>

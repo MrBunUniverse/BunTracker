@@ -1,6 +1,7 @@
 import { Localized, useLocalization } from '@fluent/react';
 import { Typography } from '@/components/commons/Typography';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
+import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { useFirmwareTool } from '@/hooks/firmware-tool';
 import { useEffect, useMemo, useState } from 'react';
 import { firmwareToolBaseUrl } from '@/firmware-tool-api/firmwareToolFetcher';
@@ -85,14 +86,14 @@ export function BuildStep({
           </Typography>
         </div>
         <div className="my-4">
-          <div className="flex justify-center flex-col items-center gap-3 h-44">
-            <LoaderIcon
-              slimeState={
-                buildStatus.status !== 'ERROR'
-                  ? SlimeState.JUMPY
-                  : SlimeState.SAD
-              }
-            />
+          <div className="flex justify-center flex-col items-center gap-4 h-44">
+            {buildStatus.status !== 'ERROR' ? (
+              <DotsLoader size="md" />
+            ) : (
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
+                <WarningIcon width={24} />
+              </div>
+            )}
             <Typography variant="section-title">
               {l10n.getString('firmware_tool-build-' + buildStatus.status)}
             </Typography>

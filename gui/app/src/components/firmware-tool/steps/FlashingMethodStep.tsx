@@ -27,7 +27,7 @@ import { ObjectSchema, object, string } from 'yup';
 import { useAtomValue } from 'jotai';
 import { devicesAtom } from '@/store/app-store';
 import { DeviceCardControl } from '@/components/firmware-tool/DeviceCard';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
 import { TipBox } from '@/components/commons/TipBox';
 
 interface FlashingMethodForm {
@@ -190,8 +190,8 @@ function SerialDevicesList({
         <Typography variant="section-title" />
       </Localized>
       {Object.keys(devices).length === 0 && !loading ? (
-        <div className="flex justify-center items-center flex-col gap-4 py-4">
-          <LoaderIcon slimeState={SlimeState.SAD} />
+        <div className="flex justify-center items-center flex-col gap-4 py-6">
+          <DotsLoader size="md" static filledCount={0} />
           <Localized id="firmware_tool-flash_method_serial-no_devices">
             <Typography variant="standard" />
           </Localized>
@@ -312,8 +312,8 @@ function OTADevicesList({
         <Typography variant="section-title" />
       </Localized>
       {devices.length === 0 && (
-        <div className="flex justify-center items-center flex-col gap-4 py-4">
-          <LoaderIcon slimeState={SlimeState.SAD} />
+        <div className="flex justify-center items-center flex-col gap-4 py-6">
+          <DotsLoader size="md" static filledCount={0} />
           <Localized id="firmware_tool-flash_method_ota-no_devices">
             <Typography variant="standard" />
           </Localized>

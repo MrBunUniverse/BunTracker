@@ -5,6 +5,7 @@ import { HumanIcon } from '@/components/commons/icon/HumanIcon';
 import { HeadsetIcon } from '@/components/commons/icon/HeadsetIcon';
 import { useState } from 'react';
 import { SittingIcon } from '@/components/commons/icon/SittingIcon';
+import { PosePlaceholder } from '@/components/commons/PosePlaceholder';
 import { VMCFileUpload } from '@/components/settings/pages/VMCSettings';
 import { QuizButton } from './SlimeSetQuestion';
 import { useNavigate } from 'react-router-dom';
@@ -120,14 +121,20 @@ export function QuizMocapPosQuestion() {
                     id="onboarding-quiz-mocap_preferences-head_tracker_location-title"
                   />
                 </div>
+                {/* TODO(art): replace placeholder pose illustration */}
                 <div className="grid grid-cols-2 gap-4">
                   <QuizButton
                     active={mocapPos === 'forehead'}
                     onClick={() => setMocapPos('forehead')}
                     icon={
-                      <img
-                        src="/images/quiz/quiz_mocap-pos_forehead.webp"
-                        className="w-44"
+                      <PosePlaceholder
+                        icon={
+                          <div className="flex flex-col items-center">
+                            <HeadsetIcon width={44} />
+                            <span className="mt-1.5 h-4 w-8 rounded-b-full border border-t-0 border-background-10/25" />
+                          </div>
+                        }
+                        className="w-36 h-28 py-3 px-3"
                       />
                     }
                     name="onboarding-quiz-mocap_preferences-head_tracker_location-forehead"
@@ -136,9 +143,15 @@ export function QuizMocapPosQuestion() {
                     active={mocapPos === 'face'}
                     onClick={() => setMocapPos('face')}
                     icon={
-                      <img
-                        src="/images/quiz/quiz_mocap-pos_face.webp"
-                        className="w-44"
+                      <PosePlaceholder
+                        icon={
+                          <div className="flex flex-col items-center">
+                            <span className="mb-1 h-2.5 w-8 rounded-t-full border border-b-0 border-background-10/25" />
+                            <HeadsetIcon width={44} />
+                            <span className="mt-1 h-2 w-6 rounded-b-full border border-t-0 border-background-10/25" />
+                          </div>
+                        }
+                        className="w-36 h-28 py-3 px-3"
                       />
                     }
                     name="onboarding-quiz-mocap_preferences-head_tracker_location-face"

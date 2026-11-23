@@ -163,6 +163,157 @@ body {
   transform-origin: left center;
 }
 
+/* Calm loading indicator built from the home empty state's tracker-count ring dots.
+   Rings fill left to right over 1.8s, hold briefly when full, then dissolve together and loop. */
+@keyframes dots-loader-fill {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  8% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70.5% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  71.5%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes dots-loader-gate {
+  0%,
+  61% {
+    opacity: 1;
+  }
+  70%,
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dots-loader {
+  --dots-size: 8px;
+  --dots-gap: 6px;
+  --dots-stroke: 1px;
+  --dots-cycle: 1.8s;
+  --dots-ring: rgba(var(--background-10), 0.25);
+  --dots-fill: rgb(var(--background-10));
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dots-gap);
+  line-height: 0;
+  vertical-align: middle;
+}
+
+.dots-loader--tone-accent {
+  --dots-fill: rgb(var(--accent-background-30));
+}
+
+.dots-loader--tone-success {
+  --dots-fill: rgb(var(--success));
+}
+
+.dots-loader--tone-warning {
+  --dots-fill: rgb(var(--warning));
+}
+
+.dots-loader--tone-critical {
+  --dots-fill: rgb(var(--critical));
+}
+
+.dots-loader--tone-current {
+  --dots-ring: transparent;
+  --dots-fill: currentColor;
+}
+
+.dots-loader__dot {
+  position: relative;
+  display: inline-block;
+  width: var(--dots-size);
+  height: var(--dots-size);
+  border-radius: 9999px;
+  border: var(--dots-stroke) solid var(--dots-ring);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.dots-loader--tone-current .dots-loader__dot::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--dots-stroke) * -1);
+  border-radius: 9999px;
+  border: var(--dots-stroke) solid currentColor;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.dots-loader__gate {
+  position: absolute;
+  inset: calc(var(--dots-stroke) * -1);
+  border-radius: 9999px;
+  animation: dots-loader-gate var(--dots-cycle) ease-out infinite;
+}
+
+.dots-loader__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: var(--dots-fill);
+  opacity: 0;
+  transform: scale(0.5);
+  animation: dots-loader-fill var(--dots-cycle) ease-out infinite both;
+}
+
+.is-page-hidden .dots-loader__gate,
+.is-page-hidden .dots-loader__fill {
+  animation-play-state: paused;
+}
+
+.dots-loader--static .dots-loader__gate,
+.performance-mode .dots-loader__gate {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+.dots-loader--static .dots-loader__fill,
+.performance-mode .dots-loader__fill {
+  animation: none !important;
+  opacity: 0 !important;
+  transform: scale(1) !important;
+}
+
+.dots-loader--static
+  .dots-loader__dot[data-static-filled='true']
+  .dots-loader__fill,
+.performance-mode
+  .dots-loader__dot[data-static-filled='true']
+  .dots-loader__fill {
+  opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots-loader__gate {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .dots-loader__fill {
+    animation: none !important;
+    opacity: 0 !important;
+    transform: scale(1) !important;
+  }
+  .dots-loader__dot[data-static-filled='true'] .dots-loader__fill {
+    opacity: 1 !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-search-pulse,
   .animate-found-pop {
@@ -1988,6 +2139,8 @@ $slider-rail-bg: linear-gradient(
   .animate-spin-ccw,
   .animate-search-pulse,
   .animate-found-pop,
+  .dots-loader__gate,
+  .dots-loader__fill,
   .skeleton-slide,
   .panel-slide
 ),
@@ -1996,6 +2149,8 @@ $slider-rail-bg: linear-gradient(
   .animate-spin-ccw,
   .animate-search-pulse,
   .animate-found-pop,
+  .dots-loader__gate,
+  .dots-loader__fill,
   .skeleton-slide,
   .panel-slide
 )::before,
@@ -2004,6 +2159,8 @@ $slider-rail-bg: linear-gradient(
   .animate-spin-ccw,
   .animate-search-pulse,
   .animate-found-pop,
+  .dots-loader__gate,
+  .dots-loader__fill,
   .skeleton-slide,
   .panel-slide
 )::after {

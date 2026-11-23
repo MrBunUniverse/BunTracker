@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { ReactNode, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LoaderIcon, SlimeState } from './icon/LoaderIcon';
+import { DotsLoader } from './DotsLoader';
 import { Localized, LocalizedProps } from '@fluent/react';
 
 function ButtonContent({
@@ -29,15 +29,8 @@ function ButtonContent({
         {children}
       </div>
       {loading && (
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center fill-background-10">
-          <LoaderIcon
-            slimeState={SlimeState.JUMPY}
-            staticFallback={
-              <Localized id="button-working">
-                <span>Working…</span>
-              </Localized>
-            }
-          />
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
+          <DotsLoader size="sm" tone="current" />
         </div>
       )}
     </>

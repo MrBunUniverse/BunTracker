@@ -15,7 +15,9 @@ import { useOnboarding } from '@/hooks/onboarding';
 import { useWebsocketAPI } from '@/hooks/websocket-api';
 import { ArrowLink } from '@/components/commons/ArrowLink';
 import { Button } from '@/components/commons/Button';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
+import { CheckIcon } from '@/components/commons/icon/CheckIcon';
+import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { ProgressBar } from '@/components/commons/ProgressBar';
 import { TipBox, WarningBox } from '@/components/commons/TipBox';
 import { Typography } from '@/components/commons/Typography';
@@ -165,20 +167,34 @@ export function ConnectTrackersPage() {
     }
   }, [provisioningStatus]);
 
-  const slimeStatus = useMemo(() => {
+  const statusIndicator = useMemo(() => {
     if (isError) {
-      return SlimeState.SAD;
+      return (
+        <WarningIcon width={20} className="text-status-critical shrink-0" />
+      );
     }
 
     switch (provisioningStatus) {
       case WifiProvisioningStatus.DONE:
-        return SlimeState.HAPPY;
+        return <CheckIcon size={16} className="fill-status-success shrink-0" />;
       case WifiProvisioningStatus.NONE:
-        return SlimeState.CURIOUS;
+        return (
+          <DotsLoader
+            size="sm"
+            static
+            filledCount={0}
+            label={l10n.getString(statusLabelMap[provisioningStatus])}
+          />
+        );
       default:
-        return SlimeState.JUMPY;
+        return (
+          <DotsLoader
+            size="sm"
+            label={l10n.getString(statusLabelMap[provisioningStatus])}
+          />
+        );
     }
-  }, [provisioningStatus, isError]);
+  }, [provisioningStatus, isError, l10n]);
 
   const currentTip = useMemo(
     () =>
@@ -277,24 +293,18 @@ export function ConnectTrackersPage() {
           )}
           <div
             className={classNames(
-              'rounded-xl h-24 flex gap-2 p-3 lg:w-full mt-4 relative',
+              'rounded-xl min-h-24 flex gap-2 p-3 lg:w-full mt-4 relative',
               state.alonePage ? 'bg-background-60' : 'bg-background-70',
               isError && 'border-2 border-status-critical'
             )}
           >
-            <div
-              className={classNames(
-                'flex flex-col justify-center fill-background-10 absolute',
-                'right-5 bottom-8'
-              )}
-            >
-              <LoaderIcon slimeState={slimeStatus} />
-            </div>
-
-            <div className="flex flex-col grow self-center">
-              <Typography bold>
-                {l10n.getString('onboarding-connect_tracker-usb')}
-              </Typography>
+            <div className="flex flex-col grow self-center gap-1">
+              <div className="flex items-center justify-between gap-2">
+                <Typography bold>
+                  {l10n.getString('onboarding-connect_tracker-usb')}
+                </Typography>
+                <div className="flex items-center">{statusIndicator}</div>
+              </div>
               <div className="flex fill-background-10 gap-1">
                 <Typography>
                   {l10n.getString(statusLabelMap[provisioningStatus])}

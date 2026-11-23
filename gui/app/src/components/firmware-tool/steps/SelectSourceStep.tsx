@@ -1,6 +1,7 @@
 import { Localized } from '@fluent/react';
 import { Typography } from '@/components/commons/Typography';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
+import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { useFirmwareTool } from '@/hooks/firmware-tool';
 import classNames from 'classnames';
 import { Button } from '@/components/commons/Button';
@@ -315,8 +316,8 @@ export function SelectSourceSetep({
           )}
 
           {isFetching && (
-            <div className="flex justify-center flex-col items-center gap-3 h-44">
-              <LoaderIcon slimeState={SlimeState.JUMPY} />
+            <div className="flex justify-center flex-col items-center gap-4 h-44">
+              <DotsLoader size="md" />
               <Localized id="firmware_tool-loading">
                 <Typography />
               </Localized>
@@ -324,7 +325,9 @@ export function SelectSourceSetep({
           )}
           {isError && (
             <div className="flex justify-center flex-col items-center gap-3 h-44">
-              <LoaderIcon slimeState={SlimeState.SAD} />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
+                <WarningIcon width={24} />
+              </div>
               <Localized id="firmware_tool-select_source-error">
                 <Typography />
               </Localized>

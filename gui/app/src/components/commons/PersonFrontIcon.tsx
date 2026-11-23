@@ -26,9 +26,21 @@ export function PersonFrontIcon({ mirror = true }: { mirror?: boolean }) {
   const left = +!mirror;
   const right = +mirror;
 
+  // TODO(art): replace placeholder pose illustration
   return (
     <svg width="100%" viewBox="0 0 163 392" xmlns="http://www.w3.org/2000/svg">
-      <image className="h-full w-full" href="/images/assignment-pose.webp" />
+      <g
+        fill="rgba(var(--background-50), 0.35)"
+        stroke="rgba(var(--background-10), 0.28)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {/* Neutral front body silhouette aligned to the tracker anchor points */}
+        <ellipse cx="82" cy="36" rx="20" ry="24" />
+        <path d="M74 59 L74 79 L90 79 L90 59 Z" />
+        <path d="M46 84 C58 78 106 78 118 84 C126 88 131 96 134 110 L149 182 C152 195 154 208 151 216 C148 221 141 219 138 211 L126 150 L118 116 L112 154 C115 170 116 184 114 202 L113 272 L116 356 L118 374 C118 380 107 383 97 381 C92 380 91 374 92 368 L94 352 L90 272 L86 212 L78 212 L74 272 L70 352 L72 368 C73 374 72 380 67 381 C57 383 46 380 46 374 L48 356 L51 272 L50 202 C48 184 49 170 52 154 L46 116 L38 150 L26 211 C23 219 16 221 13 216 C10 208 12 195 15 182 L30 110 C33 96 38 88 46 84 Z" />
+      </g>
       <circle
         className="body-part-circle"
         cx="82"

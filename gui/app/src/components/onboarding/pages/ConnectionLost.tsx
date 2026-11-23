@@ -1,5 +1,6 @@
 import { Button } from '@/components/commons/Button';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
+import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { Typography } from '@/components/commons/Typography';
 import { EmptyLayout } from '@/components/EmptyLayout';
 import { useConfig } from '@/hooks/config';
@@ -29,7 +30,9 @@ function Error({ title, desc }: { title: string; desc: string }) {
 
   return (
     <>
-      <LoaderIcon slimeState={SlimeState.SAD} size={200} />
+      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
+        <WarningIcon width={32} />
+      </div>
       <div>
         <Localized id={title}>
           <Typography variant="main-title" />
@@ -64,7 +67,9 @@ export function ConnectionLost() {
         <div className="flex flex-col items-center gap-4 -mt-12">
           {isLoading && (
             <>
-              <LoaderIcon slimeState={SlimeState.JUMPY} size={200} />
+              <div className="py-4">
+                <DotsLoader size="lg" />
+              </div>
               <div>
                 <Localized id="websocket-connecting">
                   <Typography variant="main-title" />

@@ -8,7 +8,8 @@ import {
 import VerticalStepper, {
   VerticalStep,
 } from '@/components/commons/VerticalStepper';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
+import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { Button } from '@/components/commons/Button';
 import { useMemo } from 'react';
 import {
@@ -102,8 +103,10 @@ function FirmwareToolContent() {
         </div>
         <div className="m-4 h-full">
           {isError && (
-            <div className="w-full flex flex-col justify-center items-center gap-3 h-full">
-              <LoaderIcon slimeState={SlimeState.SAD} />
+            <div className="w-full flex flex-col justify-center items-center gap-3 h-full py-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
+                <WarningIcon width={24} />
+              </div>
               {!isCompatible ? (
                 <Localized id="firmware_tool-not_compatible">
                   <Typography variant="section-title" />
@@ -119,8 +122,8 @@ function FirmwareToolContent() {
             </div>
           )}
           {isLoading && (
-            <div className="w-full flex flex-col justify-center items-center gap-3 h-full">
-              <LoaderIcon slimeState={SlimeState.JUMPY} />
+            <div className="w-full flex flex-col justify-center items-center gap-4 h-full py-6">
+              <DotsLoader size="md" />
               <Localized id="firmware_tool-loading">
                 <Typography variant="section-title" />
               </Localized>

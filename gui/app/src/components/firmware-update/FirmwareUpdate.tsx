@@ -30,7 +30,7 @@ import {
 } from '@/hooks/firmware-tool';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object } from 'yup';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { DotsLoader } from '@/components/commons/DotsLoader';
 import { A } from '@/components/commons/A';
 import { useAtomValue } from 'jotai';
 import { devicesAtom } from '@/store/app-store';
@@ -369,10 +369,10 @@ export function FirmwareUpdate() {
                 {devices.length === 0 && statusKeys.length === 0 && (
                   <div
                     className={classNames(
-                      'rounded-xl bg-background-60 justify-center flex-col items-center flex pb-10 py-5 gap-5'
+                      'rounded-xl bg-background-60 justify-center flex-col items-center flex py-8 gap-4'
                     )}
                   >
-                    <LoaderIcon slimeState={SlimeState.JUMPY} />
+                    <DotsLoader size="md" />
                     <Localized id="firmware_update-looking_for_devices">
                       <Typography />
                     </Localized>

@@ -17,13 +17,14 @@ import {
   TrackingChecklistSteamVRDisconnectedT,
   TrackingChecklistStepId,
 } from 'solarxr-protocol';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { CheckIcon } from '@/components/commons/icon/CheckIcon';
 import { Typography } from '@/components/commons/Typography';
 import { Button } from '@/components/commons/Button';
 import { ResetButton } from '@/components/home/ResetButton';
 import { A } from '@/components/commons/A';
-import { LoaderIcon, SlimeState } from '@/components/commons/icon/LoaderIcon';
+import { PosePlaceholder } from '@/components/commons/PosePlaceholder';
+import { SkiIcon } from '@/components/commons/icon/SkiIcon';
 import { ProgressBar } from '@/components/commons/ProgressBar';
 import { CrossIcon } from '@/components/commons/icon/CrossIcon';
 import {
@@ -389,11 +390,12 @@ const stepContentLookup: Record<
       <div className="space-y-2.5">
         <Typography id="onboarding-automatic_mounting-mounting_reset-step-0" />
         <Typography id="onboarding-automatic_mounting-mounting_reset-step-1" />
+        {/* TODO(art): replace placeholder pose illustration */}
         <div className="flex w-full justify-center">
-          <img
-            src="/images/mounting-reset-pose.webp"
-            className="h-44"
-            alt="mounting reset ski pose"
+          <PosePlaceholder
+            icon={<SkiIcon size={56} />}
+            labelId="onboarding-automatic_mounting-mounting_reset-title"
+            className="w-full h-44"
           />
         </div>
         <div className="flex justify-between sm:items-center gap-1 flex-col sm:flex-row">
@@ -529,13 +531,6 @@ export function TrackingChecklist({
   const context = useTrackingChecklist();
   const { visibleSteps, progress, completion, warnings } = context;
 
-  const slimeState = useMemo(() => {
-    if (completion === 'complete') return SlimeState.HAPPY;
-    if (completion === 'incomplete') return SlimeState.CURIOUS;
-    if (completion === 'partial') return SlimeState.SAD;
-    return SlimeState.HAPPY;
-  }, [completion]);
-
   const settingsOpenState = useState(false);
   const [, setSettingsOpen] = settingsOpenState;
 
@@ -652,7 +647,7 @@ export function TrackingChecklist({
           </div>
         </div>
         <div
-          className={classNames('w-full flex relative p-3 pr-12', {
+          className={classNames('w-full flex relative p-3', {
             'pt-0': closed,
           })}
         >
@@ -668,12 +663,6 @@ export function TrackingChecklist({
               }
             />
           )}
-
-          <div className="absolute bottom-0 right-0 w-20 h-20 overflow-clip pointer-events-none">
-            <div className="-rotate-45 translate-x-3.5 translate-y-3.5">
-              <LoaderIcon slimeState={slimeState} />
-            </div>
-          </div>
         </div>
       </div>
       <TrackingChecklistModal open={settingsOpenState} />
