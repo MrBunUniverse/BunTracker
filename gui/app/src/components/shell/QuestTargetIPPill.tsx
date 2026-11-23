@@ -14,7 +14,7 @@ import { Tooltip } from '@/components/commons/Tooltip';
 
 export function QuestTargetIPPill() {
   const { sendRPCPacket, useRPCPacket } = useWebsocketAPI();
-  const [questIp, setQuestIp] = useState<string>('192.168.0.106');
+  const [questIp, setQuestIp] = useState<string>('');
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [saved, setSaved] = useState(false);
@@ -87,7 +87,7 @@ export function QuestTargetIPPill() {
           onKeyDown={handleKeyDown}
           onBlur={handleSave}
           className="w-28 bg-transparent text-ui-2xs font-mono font-semibold text-background-10 focus:outline-none border-b border-status-success px-1 py-0"
-          placeholder="192.168.0.xxx"
+          placeholder="192.168.x.x"
         />
         <button
           type="button"
@@ -110,7 +110,7 @@ export function QuestTargetIPPill() {
       content={
         <Typography className="text-ui-2xs font-medium">
           Click to change Quest / VRChat target network address (Currently:{' '}
-          {questIp})
+          {questIp || 'not set'})
         </Typography>
       }
     >
@@ -128,7 +128,9 @@ export function QuestTargetIPPill() {
         <span className="text-ui-2xs uppercase font-semibold text-background-30 tracking-wide">
           Quest:
         </span>
-        <span className="font-medium text-background-10">{questIp}</span>
+        <span className="font-medium text-background-10">
+          {questIp || 'Not set'}
+        </span>
       </div>
     </Tooltip>
   );

@@ -348,7 +348,7 @@ export function ChatboxDropdown({
   const { config } = useConfig();
   const { sendRPCPacket, useRPCPacket } = useWebsocketAPI();
 
-  const [targetIp, setTargetIp] = useState<string>('192.168.0.106');
+  const [targetIp, setTargetIp] = useState<string>('');
   const [isEditingIp, setIsEditingIp] = useState(false);
   const [inputIpValue, setInputIpValue] = useState('');
 
@@ -1498,7 +1498,7 @@ export function ChatboxDropdown({
                         }}
                         onBlur={() => saveTargetIp(inputIpValue)}
                         autoFocus
-                        placeholder="192.168.0.106"
+                        placeholder="192.168.x.x"
                         aria-label="Headset IP address"
                         className={classNames(textInput, 'w-36 font-mono')}
                       />
@@ -1512,7 +1512,7 @@ export function ChatboxDropdown({
                         className={classNames(ghostButton, 'font-mono')}
                         title="Edit Quest OSC target IP address"
                       >
-                        {targetIp}
+                        {targetIp || 'Not set'}
                       </button>
                     )}
                   </SettingRow>
