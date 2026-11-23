@@ -23,8 +23,6 @@ import { Typography } from '@/components/commons/Typography';
 import { Button } from '@/components/commons/Button';
 import { ResetButton } from '@/components/home/ResetButton';
 import { A } from '@/components/commons/A';
-import { PosePlaceholder } from '@/components/commons/PosePlaceholder';
-import { SkiIcon } from '@/components/commons/icon/SkiIcon';
 import { ProgressBar } from '@/components/commons/ProgressBar';
 import { CrossIcon } from '@/components/commons/icon/CrossIcon';
 import {
@@ -390,12 +388,11 @@ const stepContentLookup: Record<
       <div className="space-y-2.5">
         <Typography id="onboarding-automatic_mounting-mounting_reset-step-0" />
         <Typography id="onboarding-automatic_mounting-mounting_reset-step-1" />
-        {/* TODO(art): replace placeholder pose illustration */}
         <div className="flex w-full justify-center">
-          <PosePlaceholder
-            icon={<SkiIcon size={56} />}
-            labelId="onboarding-automatic_mounting-mounting_reset-title"
-            className="w-full h-44"
+          <img
+            src="/images/mounting-reset-pose.webp"
+            className="h-44"
+            alt="mounting reset ski pose"
           />
         </div>
         <div className="flex justify-between sm:items-center gap-1 flex-col sm:flex-row">

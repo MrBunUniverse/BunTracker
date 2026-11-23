@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Button } from '@/components/commons/Button';
-import { PosePlaceholder } from '@/components/commons/PosePlaceholder';
-import { SkiIcon } from '@/components/commons/icon/SkiIcon';
 import { Typography } from '@/components/commons/Typography';
 import { ResetType } from 'solarxr-protocol';
 import { ResetButton } from '@/components/home/ResetButton';
@@ -35,23 +33,21 @@ export function VerifyMountingStep({
         </div>
 
         {isMobile && (
-          // TODO(art): replace placeholder pose illustration
-          <div className="flex flex-col items-center justify-center py-4">
-            <PosePlaceholder
-              icon={<SkiIcon size={72} />}
-              labelId="onboarding-automatic_mounting-mounting_reset-title"
-              className="w-full max-w-sm min-h-[200px]"
+          <div className="flex flex-col items-center fill-background-50 justify-center">
+            <img
+              src="/images/mounting-reset-pose.webp"
+              width={450}
+              alt="mounting reset ski pose"
             />
           </div>
         )}
 
         {!isMobile && (
-          // TODO(art): replace placeholder pose illustration
-          <div className="flex flex-col py-4 items-center justify-center">
-            <PosePlaceholder
-              icon={<SkiIcon size={96} />}
-              labelId="onboarding-automatic_mounting-mounting_reset-title"
-              className="w-80 min-h-[240px]"
+          <div className="flex flex-col pt-1 items-center fill-background-50 justify-center">
+            <img
+              src="/images/mounting-reset-pose.webp"
+              width={600}
+              alt="mounting reset ski pose"
             />
           </div>
         )}
