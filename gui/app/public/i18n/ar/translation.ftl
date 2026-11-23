@@ -18,7 +18,6 @@ websocket-error-logs = افتح مجلد السجلات
 ## Update notification
 
 version_update-title = نسخة جديدة متوفرة: { $version }
-version_update-description = سيؤدي النقر على "{ version_update-update }" إلى تنزيل مثبت SlimeVR نيابة عنك.
 version_update-update = تحديث
 version_update-close = أغلق
 
@@ -676,9 +675,6 @@ settings-osc-router-enable-description = تبديل إعادة توجيه الر
 settings-osc-router-enable-label = تمكين
 settings-osc-router-network = منافذ الشبكة
 # This cares about multilines
-settings-osc-router-network-description =
-    اضبط المنافذ للاستماع وإرسال البيانات.
-        يمكن أن تكون هذه هي نفس المنافذ الأخرى المستخدمة في خادم سلايم في ار.
 settings-osc-router-network-port_in =
     .label = منفذ الدخول
     .placeholder = منفذ الدخول (الإفتراضي: 9002)
@@ -730,9 +726,6 @@ settings-osc-vrchat-network-trackers-elbows = الكوعين
 
 settings-osc-vmc = التقاط الحركة الافتراضية
 # This cares about multilines
-settings-osc-vmc-description =
-    قم بتغيير الإعدادات الخاصة ببروتوكول التقاط الحركة الافتراضية
-    لإرسال بيانات عظام سلايم في ار وتلقي بيانات العظام من تطبيقات أخرى.
 settings-osc-vmc-enable = تمكين
 settings-osc-vmc-enable-description = تبديل إرسال واستقبال البيانات.
 settings-osc-vmc-enable-label = تمكين
@@ -804,9 +797,6 @@ onboarding-skip = تخطى الإعداد
 onboarding-continue = ‏‏متابعة
 onboarding-wip = جاري العمل
 onboarding-previous_step = الخطوة السابقة
-onboarding-setup_warning =
-    <b>تحذير:<b> الإعداد ضروري للتعقب الجيد،
-    إنه مطلوب إذا كانت هذه هي المرة الأولى التي تستخدم سلايم في ار.
 onboarding-setup_warning-skip = تخطى الإعداد
 onboarding-setup_warning-cancel = متابعة الإعداد
 
@@ -855,7 +845,6 @@ onboarding-reset_tutorial-2 =
 
 ## Setup start
 
-onboarding-home = مرحبا بكم في سلايم في ار
 onboarding-home-start = هيا نتجهز!
 
 ## Setup done

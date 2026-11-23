@@ -18,7 +18,6 @@ websocket-error-logs = Mở thư mục nhật ký logs
 ## Update notification
 
 version_update-title = Phiên bản mới có thể cập nhật:
-version_update-description = Nhấp vào "{ version_update-update }" sẽ tải xuống trình cài đặt SlimeVR cho bạn.
 version_update-update = Cập nhật
 version_update-close = Đóng
 
@@ -552,7 +551,6 @@ settings-osc-router-network-port_out =
     .label = Cổng ra
     .placeholder = Cổng ra (Mặc định: 9000)
 settings-osc-router-network-address = Địa chỉ mạng
-settings-osc-router-network-address-description = Địa chỉ mạng mà SlimeVR sẽ gửi dữ liệu OSC đến
 settings-osc-router-network-address-placeholder = Địa chỉ IPv4
 
 ## OSC VRChat settings
@@ -580,7 +578,6 @@ settings-osc-vrchat-network-address = Địa chỉ mạng
 settings-osc-vrchat-network-address-description-v1 = Chọn địa chỉ để gửi dữ liệu đến. Có thể giữ nguyên cho VRChat.
 settings-osc-vrchat-network-address-placeholder = Địa chỉ IP của thiết bị chơi VRChat
 settings-osc-vrchat-network-trackers = Cấu hình Tracker
-settings-osc-vrchat-network-trackers-description = Chọn các tracker mà SlimeVR sẽ gửi dữ liệu OSC đến VRChat
 settings-osc-vrchat-network-trackers-chest = Ngực
 settings-osc-vrchat-network-trackers-hip = Hông
 settings-osc-vrchat-network-trackers-knees = Đầu gối
@@ -716,7 +713,6 @@ onboarding-connect_tracker-connection_status-connecting = Đang gửi thông tin
 onboarding-connect_tracker-connection_status-looking_for_server = Đang tìm máy chủ
 onboarding-connect_tracker-connection_status-connection_error = Không thể kết nối đến Wi-Fi
 onboarding-connect_tracker-connection_status-could_not_find_server = Không thể tìm thấy máy chủ
-onboarding-connect_tracker-connection_status-done = Đã kết nối đến máy chủ SlimeVR
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",
@@ -898,7 +894,6 @@ onboarding-automatic_mounting-mounting_reset-step-0 = 1. Đứng khom người n
 onboarding-automatic_mounting-mounting_reset-step-1 = 2. Nhấn nút đặt lại và chờ 3 giây trước khi hệ thống cân chỉnh hướng gắn tracker
 onboarding-automatic_mounting-preparation-title = Chuẩn bị tư thế
 onboarding-automatic_mounting-put_trackers_on-title = Đeo tracker lên người
-onboarding-automatic_mounting-put_trackers_on-description = Để cân chỉnh hướng gắn của tracker, SlimeVR sẽ tiến hành đo góc nghiêng của tracker khi đang đeo để cân chỉnh hướng gắn, hãy đeo tracker theo đúng vị trí đã thiết lập
 onboarding-automatic_mounting-put_trackers_on-next = Tiếp tục
 
 ## Tracker manual proportions setupa
@@ -913,7 +908,6 @@ onboarding-automatic_proportions-description = Để tracker có vị trí chín
 onboarding-automatic_proportions-manual = Đo kích thước cơ thể thủ công
 onboarding-automatic_proportions-prev_step = Quay lại
 onboarding-automatic_proportions-put_trackers_on-title = Đeo tracker lên người
-onboarding-automatic_proportions-put_trackers_on-description = Để đo kích thước cơ thể, SlimeVR sẽ sử dụng một thuật toán để dự đoán kích thước của các bộ phận, hãy đeo tracker theo đúng vị trí đã thiết lập như hình bên
 onboarding-automatic_proportions-put_trackers_on-next = Tiếp tục
 onboarding-automatic_proportions-requirements-title = Yêu cầu
 # Each line of text is a different list item

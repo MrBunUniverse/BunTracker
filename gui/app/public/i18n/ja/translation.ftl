@@ -13,7 +13,6 @@ websocket-connection_lost = サーバーへの接続が失われました。再�
 ## Update notification
 
 version_update-title = 新しいバージョンが利用可能です：{ $version }
-version_update-description = { version_update-update }をクリックすると、SlimeVRインストーラーがダウンロードされます。
 version_update-update = アップデート
 version_update-close = 閉じる
 
@@ -257,7 +256,6 @@ tracker-settings-name_section = トラッカー名称
 tracker-settings-name_section-description = 自由に名称をつけてください
 tracker-settings-name_section-placeholder = NightyBeast's left leg
 tracker-settings-forget = フォーゲット・トラッカー
-tracker-settings-forget-description = スライムVRサーバーからトラッカーを削除し、サーバーが再起動するまで接続できないようにします。トラッカーの設定は失われません。
 tracker-settings-forget-label = フォーゲット・トラッカー
 
 ## Tracker part card info
@@ -341,9 +339,6 @@ settings-general-steamvr-subtitle = SteamVRのトラッカー
 # split it in lines (that also means you can split in lines however you want in those).
 # The first spaces (not tabs) for indentation will be ignored, just to make the file look nice when writing.
 # This one is one of this cases that cares about multilines
-settings-general-steamvr-description =
-    有効化したい部位にチャックを入れてください。
-    SlimeVRが行うことをよりコントロールしたい場合に便利です。
 settings-general-steamvr-trackers-waist = 腰
 settings-general-steamvr-trackers-chest = 胸
 settings-general-steamvr-trackers-tracker_toggling-description = 現在のトラッカー割り当てに応じて、SteamVRトラッカーのオン・オフを自動的に切り替えます。

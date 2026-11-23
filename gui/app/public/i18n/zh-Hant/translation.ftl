@@ -18,7 +18,6 @@ websocket-error-logs = 開啟日誌資料夾
 ## Update notification
 
 version_update-title = 有可用的新版本：{ $version }
-version_update-description = 按下「{ version_update-update }」將為你下載 SlimeVR 安裝程式。
 version_update-update = 更新
 version_update-close = 關閉
 
@@ -1042,12 +1041,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = 無法透�
 onboarding-connect_serial-error-modal-no_serial_log = 追蹤器電源開了嗎？
 onboarding-connect_serial-error-modal-no_serial_log-desc = 請確認追蹤器電源已開啟，並連接到這台電腦上
 onboarding-connect_serial-error-modal-no_serial_device_found = 找不到追蹤器
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    請使用隨附的 USB 傳輸線將追蹤器連接到你的電腦後，再打開追蹤器電源。
-    如果還是不行，請嘗試以下操作：
-      - 使用另一條 USB 傳輸線
-      - 使用另一個 USB 插座
-      - 重新安裝 SlimeVR 伺服器程式，然後在安裝元件部分將「USB drivers」打勾
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",
@@ -1544,7 +1537,6 @@ tray_or_exit_modal-description =
     你可以選擇在關閉視窗時，一併退出伺服器程式，或是將視窗最小化到系統列圖示中。
     
     本設定之後也可以在使用者介面設定中更改。
-tray_or_exit_modal-radio-exit = 退出 SlimeVR
 tray_or_exit_modal-radio-tray = 最小化到系統列
 tray_or_exit_modal-submit = 儲存
 tray_or_exit_modal-cancel = 取消
@@ -1628,7 +1620,6 @@ tracking_checklist-TRACKERS_REST_CALIBRATION-desc = 追蹤器尚未進行校正�
 tracking_checklist-TRACKER_ERROR = 追蹤器出現錯誤
 tracking_checklist-TRACKER_ERROR-desc = 有追蹤器發生錯誤，請重啟黃色標記的追蹤器。
 tracking_checklist-VRCHAT_SETTINGS = 調整 VRChat 設定
-tracking_checklist-VRCHAT_SETTINGS-desc = VRChat 的設定有問題，這會影響到在 VRChat 使用 SlimeVR 的體驗。
 tracking_checklist-VRCHAT_SETTINGS-open = 前往 VRChat 警告
 tracking_checklist-UNASSIGNED_HMD = VR 頭戴裝置尚未分配給頭部
 tracking_checklist-UNASSIGNED_HMD-desc = VR 頭戴顯示器應被分配為頭部追蹤器。

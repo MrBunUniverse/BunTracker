@@ -18,7 +18,6 @@ websocket-error-logs = 打开日志文件夹
 ## Update notification
 
 version_update-title = 新版本可用：{ $version }
-version_update-description = 点击“{ version_update-update }”将为您下载 SlimeVR 安装程序。
 version_update-update = 更新
 version_update-close = 关闭
 
@@ -725,7 +724,6 @@ settings-interface-appearance-font-slime_font = 默认字体
 settings-interface-appearance-font_size = 字体缩放
 settings-interface-appearance-font_size-description = 这会影响除此设置面板外所有界面的字体大小。
 settings-interface-appearance-decorations = 使用系统原生窗口标题栏
-settings-interface-appearance-decorations-description = 这个选项开启后，将不会显示SlimeVR的标题栏，而是显示使用系统原生标题栏。
 settings-interface-appearance-decorations-label = 使用系统原生窗口标题栏
 
 ## Notification settings
@@ -969,7 +967,6 @@ onboarding-quiz-slimeset-answer-regular = SlimeVR V1.0 和 V1.2
 onboarding-quiz-slimeset-answer-butterfly = Butterfly (蝴蝶)
 onboarding-quiz-slimeset-answer-wifi = 通过ESP/WiFi连接的追踪器
 onboarding-quiz-slimeset-answer-dongle = 通过USB接收器连接的追踪器
-onboarding-quiz-usage-title = 将使用SlimeVR进行何种应用？
 onboarding-quiz-usage-description = 如果打算将Bun Tracker用至不同用途，可之后在设置中进行修改。
 onboarding-quiz-usage-answer-VRC = VR游戏（如VRChat）
 onboarding-quiz-usage-answer-mocap_vtubing = 动作捕捉与虚拟偶像直播
@@ -1080,12 +1077,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = 无法通�
 onboarding-connect_serial-error-modal-no_serial_log = 追踪器开关是否打开？
 onboarding-connect_serial-error-modal-no_serial_log-desc = 请确保追踪器已经开启并连接到电脑
 onboarding-connect_serial-error-modal-no_serial_device_found = 未检测到追踪器
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    请使用附带的USB线将追踪器连接到电脑并打开追踪器开关。
-    若仍无法工作：
-     - 尝试其他的USB线
-     - 尝试其他的USB接口
-     - 尝试重新安装SlimeVR服务端并在安装时勾选“USB驱动”
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",
@@ -1572,16 +1563,11 @@ firmware_update-exit = 退出
 
 tray_menu-show = 显示窗口
 tray_menu-hide = 隐藏窗口
-tray_menu-quit = 退出 SlimeVR
 
 ## First exit modal
 
 tray_or_exit_modal-title = 选择关闭按钮的功能
 # Multiline text
-tray_or_exit_modal-description =
-    你可以选择在按下关闭按钮时，是退出 SlimeVR 服务器，还是仅将窗口最小化至任务栏图标。
-    你也可以在设置-交互界面中修改这个选项
-tray_or_exit_modal-radio-exit = 退出 SlimeVR
 tray_or_exit_modal-radio-tray = 最小化至任务栏
 tray_or_exit_modal-submit = 保存
 tray_or_exit_modal-cancel = 取消
@@ -1668,7 +1654,6 @@ tracking_checklist-TRACKERS_REST_CALIBRATION-desc = 您尚未执行追踪器校�
 tracking_checklist-TRACKER_ERROR = 追踪器出现错误
 tracking_checklist-TRACKER_ERROR-desc = 有追踪器发生错误，请重启黄色高亮标记的追踪器。
 tracking_checklist-VRCHAT_SETTINGS = 调整 VRChat 设置
-tracking_checklist-VRCHAT_SETTINGS-desc = VRChat 的设置有问题！这会影响到在 VRChat 中使用 SlimeVR 的体验。
 tracking_checklist-VRCHAT_SETTINGS-open = 前往 VRChat 警告页面
 tracking_checklist-UNASSIGNED_HMD = VR 头戴显示器未分配给头部
 tracking_checklist-UNASSIGNED_HMD-desc = VR 头戴显示器应该被分配为头部追踪器。

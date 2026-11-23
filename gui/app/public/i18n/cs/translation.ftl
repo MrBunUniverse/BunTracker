@@ -18,7 +18,6 @@ websocket-error-logs = Otevření složku s záznamy protokolů
 ## Update notification
 
 version_update-title = K dispozici je nová verze: { $version }
-version_update-description = Kliknutím na "{ version_update-update }", stáhnete instalační program SlimeVR.
 version_update-update = Aktualizace
 version_update-close = Zavřít
 

@@ -13,7 +13,6 @@ websocket-connection_lost = Ühendus serveriga on kaotatud. Ühenduse taastamine
 ## Update notification
 
 version_update-title = Uus versioon olemas: { $version }
-version_update-description = Vajutades "{ version_update-update }" tõmbab programm alla SlimeVR installeri.
 version_update-update = Värskenda
 version_update-close = Sulge
 

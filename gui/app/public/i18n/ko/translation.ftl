@@ -1197,7 +1197,6 @@ tray_or_exit_modal-description =
     이 옵션은 닫기 버튼을 누를 때 서버를 종료할지 또는 시스템 트레이로 최소화할지를 결정합니다.
     
     언제든지 설정의 인터페이스 탭에서 변경하실 수 있어요!
-tray_or_exit_modal-radio-exit = SlimeVR 종료하기
 tray_or_exit_modal-radio-tray = 작업 표시줄로 최소화
 tray_or_exit_modal-submit = 저장
 tray_or_exit_modal-cancel = 취소

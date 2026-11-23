@@ -18,7 +18,6 @@ websocket-error-logs = Open het logboek.
 ## Update notification
 
 version_update-title = Nieuwe versie beschikbaar: { $version }
-version_update-description = Als je op "{ version_update-update }" klikt, wordt het SlimeVR-installatieprogramma voor je gedownload.
 version_update-update = Bijwerken
 version_update-close = Sluiten
 
@@ -1047,12 +1046,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = Kon geen t
 onboarding-connect_serial-error-modal-no_serial_log = Staat de tracker aan?
 onboarding-connect_serial-error-modal-no_serial_log-desc = Zorg dat de tracker aan staat en verbonden is met je computer.
 onboarding-connect_serial-error-modal-no_serial_device_found = Geen trackers gedetecteerd
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    Sluit een tracker met de meegeleverde USB-kabel aan op je computer en zet de tracker aan.
-    Als dit niet werkt:
-      -probeer een andere USB-kabel
-      -probeer een andere USB-poort
-      -probeer de SlimeVR-server opnieuw te installeren en selecteer "USB Drivers" in het onderdeelkeuze-menu
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",

@@ -18,7 +18,6 @@ websocket-error-logs = Öppna logg-mappen
 ## Update notification
 
 version_update-title = Ny version tillgänglig: { $version }
-version_update-description = Att trycka på "{ version_update-update }" kommer ladda ner SlimeVR installatorn för dig
 version_update-update = Updatera
 version_update-close = Stäng
 
@@ -680,12 +679,6 @@ settings-general-interface-discord_presence = Dela aktivitet på Discord
 settings-general-interface-discord_presence-description = Berättar för din Discord-klient att du använder Bun Tracker tillsammans med antalet IMU-trackers du använder.
 settings-general-interface-discord_presence-label = Dela aktivitet på Discord
 settings-interface-behavior-error_tracking = Error samling via Sentry.io
-settings-interface-behavior-error_tracking-description_v2 =
-    <h1>Tillåter du samlingen av anonym error-data?</h1>
-    
-    <b>Vi samlar inte personlig information</b> så som din IP adress eller trådlösa referenser. Slimevr värdesätter din integritet!
-    
-    För att tillhandhålla den bästa användarupplevelsen, så samlar vi anonyma error-raporter, prestandamått och operativsystems-info. Detta hjälper oss upptäcka buggar och problem med Slimevr. Dessa rapporterna samlas via Sentry.io.
 settings-interface-behavior-error_tracking-label = Skicka errors till utväcklare
 
 ## Serial settings
@@ -901,12 +894,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = Kunde inte
 onboarding-connect_serial-error-modal-no_serial_log = Är trackern påslagen?
 onboarding-connect_serial-error-modal-no_serial_log-desc = Säkerställ att trackern är på och är kopplad till din dator.
 onboarding-connect_serial-error-modal-no_serial_device_found = Inga trackers upptäckta
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    Var vänlig och koppla en tracker med inkluderade USB kabeln till din dator och slå på trackern.
-    Om detta inte fungerar:
-    -Testa med an annan USB sladd
-    -Testa med en annan USB-port
-    -Testa installera om SlimeVR servern och välj "USB Drivers" i komponentsektionen.
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",

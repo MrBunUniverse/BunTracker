@@ -18,7 +18,6 @@ websocket-error-logs = Открыть папку логов
 ## Update notification
 
 version_update-title = Доступна новая версия: { $version }
-version_update-description = Нажав «{ version_update-update }», вы загрузите установщик SlimeVR.
 version_update-update = Обновить
 version_update-close = Закрыть
 
@@ -244,9 +243,6 @@ reset-reset_all_warning-v2 =
     Вы уверены, что хотите это сделать?
 reset-reset_all_warning-reset = Сброс пропорций
 reset-reset_all_warning-cancel = Отмена
-reset-reset_all_warning_default-v2 =
-    <b>Внимание:</b> Вы не настроили свой рост в SlimeVR, ваши пропорции будут сброшены до дефолтных вместе с ростом.
-    Вы уверены, что хотите это сделать?
 reset-full = Полный сброс
 reset-mounting = Сбросить крепление
 reset-yaw = Горизонтальный сброс
@@ -992,12 +988,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = Не уд�
 onboarding-connect_serial-error-modal-no_serial_log = Включен ли трекер?
 onboarding-connect_serial-error-modal-no_serial_log-desc = Убедитесь, что трекер включен и подключен к компьютеру
 onboarding-connect_serial-error-modal-no_serial_device_found = Трекеры не обнаружены
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    Подключите трекер с помощью прилагаемого USB-кабеля к компьютеру и включите трекер.
-    Если это не помогло:
-      - Попробуйте использовать другой USB-кабель
-      - Попробуйте использовать другой USB-порт
-      - Попробуйте переустановить сервер SlimeVR и выберите «USB-драйверы» в разделе компонентов
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",

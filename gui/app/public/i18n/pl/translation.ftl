@@ -18,7 +18,6 @@ websocket-error-logs = Otwórz folder dzienników
 ## Update notification
 
 version_update-title = Dostępna jest nowa wersja: { $version }
-version_update-description = Kliknięcie "{ version_update-update }" spowoduje pobranie instalatora SlimeVR.
 version_update-update = Aktualizacja
 version_update-close = Zamknij
 
@@ -521,9 +520,6 @@ settings-general-steamvr-subtitle = Trackery SteamVR
 # split it in lines (that also means you can split in lines however you want in those).
 # The first spaces (not tabs) for indentation will be ignored, just to make the file look nice when writing.
 # This one is one of this cases that cares about multilines
-settings-general-steamvr-description =
-    Włącz lub Wyłącz specyficzne pozycje trackowania.
-    Przydatne jeżeli chcesz więcej kontroli nad SlimeVR.
 settings-general-steamvr-trackers-waist = Talia
 settings-general-steamvr-trackers-chest = Klatka Piersiowa
 settings-general-steamvr-trackers-left_foot = Lewa stopa
@@ -1034,12 +1030,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = Nie można
 onboarding-connect_serial-error-modal-no_serial_log = Czy tracker jest włączony?
 onboarding-connect_serial-error-modal-no_serial_log-desc = Upewnij się, że tracker jest włączony i podłączony do komputera
 onboarding-connect_serial-error-modal-no_serial_device_found = Nie wykryto trackerów
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    Podłącz tracker za pomocą dostarczonego USB do komputera i włącz tracker.
-    Jeśli to nie zadziała:
-      - Spróbuj użyć innego USB
-      - Spróbuj użyć innego portu USB
-      - spróbuj ponownie zainstalować serwer SlimeVR i wybierz "Sterowniki USB" w sekcji komponentów
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",

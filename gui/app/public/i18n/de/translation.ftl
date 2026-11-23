@@ -18,7 +18,6 @@ websocket-error-logs = Öffne den Logs-Ordner
 ## Update notification
 
 version_update-title = Neue Version verfügbar: { $version }
-version_update-description = Wenn Sie auf "{ version_update-update }" klicken, wird das SlimeVR-Installationsprogramm heruntergeladen.
 version_update-update = Aktualisieren
 version_update-close = Schließen
 

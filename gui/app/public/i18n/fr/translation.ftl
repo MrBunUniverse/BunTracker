@@ -18,7 +18,6 @@ websocket-error-logs = Ouvrir le dossier des logs
 ## Update notification
 
 version_update-title = Nouvelle version disponible: { $version }
-version_update-description = Cliquer sur « { version_update-update } » téléchargera l'installateur SlimeVR pour vous.
 version_update-update = Mettre à jour
 version_update-close = Fermer
 
@@ -1056,12 +1055,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = Aucun capt
 onboarding-connect_serial-error-modal-no_serial_log = Le capteur est-il allumé ?
 onboarding-connect_serial-error-modal-no_serial_log-desc = Assurez-vous que le capteur est allumé et connecté à votre ordinateur
 onboarding-connect_serial-error-modal-no_serial_device_found = Aucun capteur détecté
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    Veuillez connecter un capteur avec le câble USB fourni à votre ordinateur et l'allumer.
-    Si cela ne fonctionne pas :
-      - Essayez avec un autre câble USB
-      - Essayez avec un autre port USB
-      - Essayez de réinstaller le serveur SlimeVR et cochez « USB Drivers » dans la section des composants
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",

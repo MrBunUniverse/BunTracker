@@ -18,7 +18,6 @@ websocket-error-logs = เปิดโฟลเดอร์ไฟล์บัน
 ## Update notification
 
 version_update-title = มีเวอร์ชันใหม่พร้อมแล้ว: { $version }
-version_update-description = คลิกที่ "{ version_update-update }" เพื่อดาวน์โหลดตัวติดตั้ง SlimeVR ให้คุณ
 version_update-update = อัปเดต
 version_update-close = ปิด
 
@@ -1037,12 +1036,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = ไม่�
 onboarding-connect_serial-error-modal-no_serial_log = แทร็กเกอร์คุณเปิดอยู่หรือเปล่า?
 onboarding-connect_serial-error-modal-no_serial_log-desc = ตรวจสอบให้แน่ใจว่าแทร็กเกอร์เปิดอยู่และเชื่อมต่อกับคอมพิวเตอร์ของคุณ
 onboarding-connect_serial-error-modal-no_serial_device_found = ไม่พบแทร็กเกอร์
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    โปรดเชื่อมต่อแทร็กเกอร์ด้วยสาย USB เข้ากับคอมพิวเตอร์ของคุณและเปิดแทร็กเกอร์
-    หากยังไม่ได้ผล:
-      - ลองใช้สาย USB อื่น
-      - ลองใช้พอร์ต USB อื่น
-      - ลองติดตั้ง SlimeVR Server ใหม่และเลือก "USB Drivers" ในส่วน Components
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",
@@ -1426,7 +1419,6 @@ firmware_tool-loading = กำลังโหลด...
 firmware_tool = เครื่องมือเฟิร์มแวร์ DIY
 firmware_tool-description = ช่วยให้คุณกำหนดค่าและลงเฟิร์มแวร์แทร็กเกอร์ DIY ของคุณ
 firmware_tool-not_available = ขออภัย เครื่องมือเฟิร์มแวร์ยังไม่พร้อมใช้งานในขณะนี้ โปรดกลับมาในภายหลัง!
-firmware_tool-not_compatible = เครื่องมือเฟิร์มแวร์ไม่เข้ากันกับ SlimeVR Server เวอร์ชันนี้ โปรดอัปเดต SlimeVR Server ของคุณ!
 firmware_tool-select_source = เลือกเฟิร์มแวร์ที่คุณจะติดตั้ง
 firmware_tool-select_source-description = เลือกเฟิร์มแวร์ที่คุณต้องการลงบนบอร์ดของคุณ
 firmware_tool-select_source-error = ไม่สามารถโหลดแหล่งที่มาได้

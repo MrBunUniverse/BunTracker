@@ -18,7 +18,6 @@ websocket-error-logs = Kayıtlar klasörünü aç
 ## Update notification
 
 version_update-title = Yeni sürüm mevcut: { $version }
-version_update-description = "{ version_update-update }" seçeneğine tıklamak SlimeVR kurulum uygulamasını indirir.
 version_update-update = Güncelle
 version_update-close = Kapat
 

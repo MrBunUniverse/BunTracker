@@ -18,7 +18,6 @@ websocket-error-logs = Åpne opp "logs" mappen.
 ## Update notification
 
 version_update-title = Ny versjon tilgjengelig: { $version }
-version_update-description = Å klikke "{ version_update-update }" laster ned SlimeVR installatøren for deg.
 version_update-update = Oppdater
 version_update-close = Lukk
 

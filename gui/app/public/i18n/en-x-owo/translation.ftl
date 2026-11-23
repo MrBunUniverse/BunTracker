@@ -9,16 +9,12 @@
 
 websocket-connecting = connyecting to teh sewvew
 websocket-connection_lost = oopsie woopsie~ connyection wost to teh sewvew ;m;... uwu am twying to weconnyect owo!
-websocket-connection_lost-desc = uh ohs! it look like da swimevr serber cwashed... check ur logs and stuffs and maybe westawt da pwogwam.
 websocket-timedout = could nawt connec to da serwer
-websocket-timedout-desc = it look like da swimevr serwer cwashed ow time out, omg!! check da log and westawt da pwogwam.
-websocket-error-close = Exit SwimeVR
 websocket-error-logs = open da logs fowder
 
 ## Update notification
 
 version_update-title = mew vewsion avaiwabwe: { $version }
-version_update-description = cwicking "{ version_update-update }" will downwoad da SwimeVR instawlew fow u.
 version_update-update = pupdate
 version_update-close = cwose
 
@@ -301,7 +297,6 @@ tracker-settings-name_section-description = owo whats dis?
 tracker-settings-name_section-placeholder = ewimewl's weft pawb
 tracker-settings-name_section-label = twackaw name
 tracker-settings-forget = *forgors the tracker*
-tracker-settings-forget-description = remooves teh twackew fwom da SwimeVR sewvew n pwevent it frum conecting to it til fhe sewvew iz westawtied. the cowonfigyuwatsin of da twackew woant b wost.
 tracker-settings-forget-label = *forgors the tracker*
 tracker-settings-update-up_to_date = up to dayte!! ^w^
 tracker-settings-update = uwupdate meow!
@@ -390,9 +385,6 @@ settings-general-steamvr-subtitle = steawmvr twayckaws~
 # split it in lines (that also means you can split in lines however you want in those).
 # The first spaces (not tabs) for indentation will be ignored, just to make the file look nice when writing.
 # This one is one of this cases that cares about multilines
-settings-general-steamvr-description =
-    enyable or dysabywe specific twacking pawts.
-    usefuw if yew want mowwe contwoww owew what swimevr does.
 settings-general-steamvr-trackers-waist = wyayst~
 settings-general-steamvr-trackers-chest = chwest~
 settings-general-steamvr-trackers-left_foot = weft lower pawb
@@ -572,17 +564,14 @@ settings-general-interface-feedback_sound-description = dis awptshun wiww pway a
 settings-general-interface-feedback_sound-label = feeback sownd
 settings-general-interface-feedback_sound-volume = feedback sownd volyume
 settings-general-interface-connected_trackers_warning = Connected twackews wawning
-settings-general-interface-connected_trackers_warning-description = This option wiww show a pop-up evewy time you twy exiting SwimeVR whiwe having one ow mowe connected twackews. It weminds you to tuwn off youw twackews when you awe done to pwesewve battewy wife.
 settings-general-interface-connected_trackers_warning-label = Connected twackews wawning on exit
 
 ## Behavior settings
 
 settings-interface-behavior = behavur
 settings-general-interface-use_tray = minimaize to systewm tway
-settings-general-interface-use_tray-description = wets u cwose the wimdOwOw wifhout cwosing da SwimeVR Sewvew so uou can keep using it withowt da GUI bohtewing u.
 settings-general-interface-use_tray-label = minimaize to systewm tway
 settings-general-interface-discord_presence = shaer activitey on discowd
-settings-general-interface-discord_presence-description = tewws ur discoard cwient dat ur using SlyimeVR awong wif teh nuhmbew of IMU twackewrz u r using.
 settings-general-interface-discord_presence-label = shaer activitey on discowd
 settings-general-interface-discord_presence-message =
     { $amount ->
@@ -626,9 +615,6 @@ settings-osc-router-enable-description = toggle teh fowwawding of data
 settings-osc-router-enable-label = enaybwe
 settings-osc-router-network = network pawts
 # This cares about multilines
-settings-osc-router-network-description =
-    set the pawts fow wistening awnd sending data
-    these can be the same as othew powts uwsed in the swimevr sewvew
 settings-osc-router-network-port_in =
     .label = pawt in
     .placeholder = pawt in (defawwt: 9002)
@@ -667,9 +653,6 @@ settings-osc-vrchat-network-trackers-elbows = ewbows~
 
 settings-osc-vmc = viwtuaw motion captuwe
 # This cares about multilines
-settings-osc-vmc-description =
-    change settings specific to the vmc (viwtuaw motion captuwe) pwotocow
-            to send SwimeVR's twacking data and weceive twacking data fwom othew apps.
 settings-osc-vmc-enable = enaybwe
 settings-osc-vmc-enable-description = toggle teh sending awnd wweceiving of data
 settings-osc-vmc-enable-label = enaybwe
@@ -714,10 +697,8 @@ settings-utils-advanced-reset_warning =
 settings-utils-advanced-reset_warning-reset = weset setings
 settings-utils-advanced-reset_warning-cancel = cancew :o
 settings-utils-advanced-open_data-v1 = config fowdew
-settings-utils-advanced-open_data-description-v1 = open swimevr's config fowdew in da fiwe explowew, containing teh configuwation
 settings-utils-advanced-open_data-label = open fowdew
 settings-utils-advanced-open_logs = logs fowdew
-settings-utils-advanced-open_logs-description = open swimevr's logs fowdew in da fiwe explowew, containing teh logs of da app
 settings-utils-advanced-open_logs-label = open fowdew
 
 ## Home Screen
@@ -732,9 +713,6 @@ onboarding-skip = skipy setup
 onboarding-continue = continyue
 onboarding-wip = wowwk in pwowgress
 onboarding-previous_step = pwevious stwep
-onboarding-setup_warning =
-    <b>Wawning:</b> The inyitiaw setup is wequiwed fow good twacking,
-    it is nyeeded if this is youw fiwst time using SwimeVR.
 onboarding-setup_warning-skip = skipy setup
 onboarding-setup_warning-cancel = continu setup
 
@@ -783,7 +761,6 @@ onboarding-reset_tutorial-2 =
 
 ## Setup start
 
-onboarding-home = wewcome to SwimeVR
 onboarding-home-start = wets get set up!
 
 ## Setup done
@@ -1015,12 +992,6 @@ onboarding-automatic_proportions-put_trackers_on-description = to cawybwate yowu
 onboarding-automatic_proportions-put_trackers_on-next = i have awl my twackaws on
 onboarding-automatic_proportions-requirements-title = wequiyements
 # Each line of text is a different list item
-onboarding-automatic_proportions-requirements-descriptionv2 =
-    You have at weast enough twackews to twack youw pawbs (genewawwy 5 twackews).
-    You have youw twackews and headset on and awe weawing them.
-    Youw twackews and headset awe connected to the SwimeVR sewvew and awe wowking pwopewwy (ex. no stuttewing, disconnecting, etc).
-    Youw headset is wepowting positionaw data to the SwimeVR sewvew (this genewawwy means having SteamVR wunning and connected to SwimeVR using SwimeVR's SteamVR dwivew).
-    Youw twacking is wowking and is accuwatewy wepwesenting youw movements (ex. you have pewfowmed a fuww weset and they move the wight diwection when kicking, bending ovew, sitting, etc).
 onboarding-automatic_proportions-requirements-next = i have wed da wequiwemens
 onboarding-automatic_proportions-check_height-title-v3 = measuwe youw headset heit
 onboarding-automatic_proportions-check_height-description-v2 = youw hedset heit shuld be swightwy less than youw fuww heit, becoz hedsets measuwe youw eye heit. dis measuwement wiww be used az a basewine fow youw body pwopowtions.
@@ -1101,10 +1072,6 @@ home-no_trackers = no twackaws detecyted owo wowigned
 ## Trackers Still On notification
 
 trackers_still_on-modal-title = Twackews stiww on
-trackers_still_on-modal-description =
-    One ow mowe twackews awe stiww on.
-    Do you stiww want to exit SwimeVR?
-trackers_still_on-modal-confirm = Exit SwimeVR
 trackers_still_on-modal-cancel = Howd on...
 
 ## Status system
@@ -1215,9 +1182,6 @@ tray_or_exit_modal-cancel = cancew :o
 ## Unknown device modal
 
 unknown_device-modal-title = da twackew was find owo
-unknown_device-modal-description =
-    therwe is a nyew twackew wif MAC addwess <b>{ $deviceId }</b>..
-    d-do u wanna conect it to SwimeVR?
 unknown_device-modal-confirm = sure!!
 unknown_device-modal-forget = ignowe it
 

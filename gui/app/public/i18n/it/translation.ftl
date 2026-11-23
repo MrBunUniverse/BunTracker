@@ -18,7 +18,6 @@ websocket-error-logs = Apri la cartella dei log
 ## Update notification
 
 version_update-title = Nuova versione disponibile: { $version }
-version_update-description = Cliccando su "{ version_update-update }" si scaricherà il programma di installazione di SlimeVR.
 version_update-update = Aggiorna
 version_update-close = Chiudi
 
@@ -706,7 +705,6 @@ settings-general-interface-feedback_sound-description = Questa opzione riprodurr
 settings-general-interface-feedback_sound-label = Suono di feedback
 settings-general-interface-feedback_sound-volume = Volume del suono di feedback
 settings-general-interface-connected_trackers_warning = Avviso di tracker connessi
-settings-general-interface-connected_trackers_warning-description = Questa opzione mostrerà un pop-up ogni volta che proverai ad uscire da SmileVR mentre uno o più tracker sono connessi. Ció ti permetterà di ricordarti di spegnere i tuoi tracker per preservarne la durata delle batterie.
 settings-general-interface-connected_trackers_warning-label = Avviso di tracker connessi alla chiusura dell'applicazione
 
 ## Behavior settings
@@ -982,12 +980,6 @@ onboarding-connect_tracker-connection_status-no_serial_device_found = Impossibil
 onboarding-connect_serial-error-modal-no_serial_log = Il tracker è acceso?
 onboarding-connect_serial-error-modal-no_serial_log-desc = Assicurati che il tracker sia acceso e connesso al computer
 onboarding-connect_serial-error-modal-no_serial_device_found = Nessun tracker rilevato
-onboarding-connect_serial-error-modal-no_serial_device_found-desc =
-    Con il cavo USB in dotazione collega un tracker al computer e accendilo.
-    Se questo non funziona:
-      - Prova con un altro cavo USB
-      - Prova con un'altra porta USB
-      - Prova a reinstallare il server SlimeVR e seleziona "Driver USB" nella sezione componenti
 # $amount (Number) - Amount of trackers connected (this is a number, but you can use CLDR plural rules for your language)
 # More info on https://www.unicode.org/cldr/cldr-aux/charts/22/supplemental/language_plural_rules.html
 # English in this case only has 2 plural rules, which are "one" and "other",
@@ -1323,9 +1315,6 @@ home-no_trackers = Nessun tracker rilevato o assegnato
 ## Trackers Still On notification
 
 trackers_still_on-modal-title = I tracker sono ancora accesi
-trackers_still_on-modal-description =
-    Uno o più tracker ancora accesi.
-    Vuoi uscire comunque da SmileVR?
 trackers_still_on-modal-confirm = Chiudi Bun Tracker
 trackers_still_on-modal-cancel = Attendi un momento...
 
