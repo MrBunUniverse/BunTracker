@@ -27,9 +27,9 @@ Measured on the first board (CH340 USB chip) with six trackers, on 2026-10-17:
 
 | Baud | Link load | Full round trip (median) | Wi-Fi leg | USB + bridge | Bad frames |
 |---|---|---|---|---|---|
-| 460800 | 37% | 55 ms | 18 ms | 37 ms | 0% |
+| 460800 (default) | 37% | 55 ms | 18 ms | 37 ms | 0% |
 | 921600 | n/a | n/a | n/a | n/a | 100% |
-| 2000000 (default) | 9% | 40 ms | 16 ms | 24 ms | 1.1% |
+| 2000000 | 9% | 40 ms | 16 ms | 24 ms | 1.1% (~40% in later use) |
 
 Even at 9% load, the USB path adds about 24 ms. The CH340 and its macOS driver hold bytes before passing them on. A board with native USB, such as the ESP32-S3 or C3, avoids that chip entirely.
 

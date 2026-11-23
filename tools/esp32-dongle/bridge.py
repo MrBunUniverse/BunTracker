@@ -6,7 +6,7 @@ localhost. Each tracker gets its own local socket, so the server, which tells
 trackers apart by address and port, still sees one connection per tracker.
 Server replies on that socket go back down the serial link to the same tracker.
 
-Run:  python3 bridge.py [--port /dev/cu.usbserial-1110] [--baud 2000000]
+Run:  python3 bridge.py [--port /dev/cu.usbserial-1110] [--baud 460800]
 Test: python3 bridge.py --self-test
 Baud switch at runtime (falls back by itself): python3 bridge.py --ctl "baud 1000000"
 Flash mode (OTA for trackers, see README): python3 bridge.py --ctl "flash on" | "flash target <ip>" | "flash off" | status
@@ -446,7 +446,7 @@ def self_test():
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--port", help="serial port (default: first /dev/cu.usbserial*, /dev/cu.usbmodem* or /dev/cu.wchusbserial*)")
-    ap.add_argument("--baud", type=int, default=2000000, help="must match DONGLE_BAUD in platformio.ini")
+    ap.add_argument("--baud", type=int, default=460800, help="must match DONGLE_BAUD in platformio.ini")
     ap.add_argument("--server", default="127.0.0.1:6969")
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--ctl", metavar="CMD", help='send a command to the running bridge: status, "flash on", "flash target <ip>", "flash off"')

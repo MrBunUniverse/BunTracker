@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Compare dongle<->bridge serial baud rates while trackers stream (stdlib only).
 
-python3 baud_sweep.py [--rates 2000000 1500000 1000000 921600] [--secs 180] [--end-rate N]
+python3 baud_sweep.py [--rates 460800 1000000 1500000 2000000] [--secs 180] [--end-rate N]
 Needs the running bridge (stats on 127.0.0.1:6970, control via bridge.py --ctl). Appends the table to /tmp/baud-sweep.log.
-Ctrl+C switches back to 2000000 before exiting.
+Ctrl+C switches back to 460800 before exiting.
 """
 import argparse
 import json
@@ -16,7 +16,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOG = "/tmp/baud-sweep.log"
-DEFAULT = 2000000
+DEFAULT = 460800
 
 
 def stats():
@@ -64,7 +64,7 @@ def measure(rate, secs):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--rates", type=int, nargs="+", default=[2000000, 1500000, 1000000, 921600])
+    ap.add_argument("--rates", type=int, nargs="+", default=[460800, 1000000, 1500000, 2000000])
     ap.add_argument("--secs", type=int, default=180)
     ap.add_argument("--end-rate", type=int, help="default: the best rate")
     args = ap.parse_args()

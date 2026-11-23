@@ -18,7 +18,7 @@
 #define DONGLE_CHANNEL 6
 #endif
 #ifndef DONGLE_BAUD
-#define DONGLE_BAUD 921600
+#define DONGLE_BAUD 460800
 #endif
 
 static const uint16_t SLIME_PORT = 6969;
