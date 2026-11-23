@@ -46,7 +46,7 @@ class VRCOSCQueryHandler(
 		}
 		val httpPort = randomFreePort()
 		oscQueryServer = OSCQueryServer(
-			"SlimeVR-Server-$httpPort",
+			"BunTracker-Server-$httpPort",
 			OscTransport.UDP,
 			localIp,
 			vrcOscHandler.portIn.toUShort(),
@@ -54,7 +54,7 @@ class VRCOSCQueryHandler(
 		)
 		oscQueryServer.rootNode.addNode(OSCQueryNode(queryPath))
 		oscQueryServer.init()
-		LogManager.info("[VRCOSCQueryHandler] SlimeVR OSCQueryServer started at http://$localIp:$httpPort")
+		LogManager.info("[VRCOSCQueryHandler] Bun Tracker OSCQueryServer started at http://$localIp:$httpPort")
 
 		try {
 			// Add service listener for both added and resolved events

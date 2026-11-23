@@ -6,8 +6,8 @@
         "action_manifest_path": "action_manifest.json",
         "strings": {
             "en_us": {
-                "name": "SlimeVR Bindings Provider",
-                "description": "SlimeVR Bindings Provider"
+                "name": "Bun Tracker Bindings Provider",
+                "description": "Bun Tracker Bindings Provider"
             }
         }
     }]
