@@ -2,10 +2,15 @@ package dev.slimevr.unit
 
 import dev.slimevr.config.DriftCompensationConfig
 import dev.slimevr.tracking.processor.HumanPoseManager
+import dev.slimevr.tracking.trackers.ResetPosture
+import dev.slimevr.tracking.trackers.ResetPostureClassifier
 import dev.slimevr.tracking.trackers.Tracker
+import dev.slimevr.tracking.trackers.TrackerPosition
 import dev.slimevr.tracking.trackers.TrackerStatus
 import io.github.axisangles.ktmath.Quaternion
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -277,5 +282,47 @@ class LyingResetTests {
 		rig.pose(Quaternion.IDENTITY, rx(50.0))
 		rig.hpm.resetTrackersFull(src)
 		for (t in rig.set.set) assertNear(Quaternion.IDENTITY, t.getRotation(), "upright full reset ${t.name}")
+	}
+
+	/** Head built like VRCOSCHandler's `VRChat head`: not isHmd, no reset, but a real headset pose. */
+	private fun headTracker(name: String, headsetPose: Boolean, rot: Quaternion) = Tracker(
+		device = null,
+		id = 900 + name.length,
+		name = name,
+		trackerPosition = TrackerPosition.HEAD,
+		hasPosition = true,
+		hasRotation = true,
+		userEditable = true,
+		isComputed = true,
+		allowReset = false,
+		trackRotDirection = false,
+		isHeadsetPose = headsetPose,
+	).apply {
+		status = TrackerStatus.OK
+		setRotation(rot)
+	}
+
+	@Test
+	fun lyingClassifierAcceptsVrchatOscHeadOnly() {
+		val rig = Rig()
+		val supine = lying(30.0, 90.0)
+		rig.pose(supine, supine)
+		val torso = listOf(rig.set.chest, rig.set.hip)
+		val legs = listOf(rig.set.leftThigh, rig.set.leftCalf, rig.set.rightThigh, rig.set.rightCalf)
+		val osc = headTracker("VRChat head", true, supine)
+		assertTrue(!osc.isHmd && osc.isHeadsetPose)
+
+		val snap = ResetPostureClassifier.classify(osc, torso, legs) { true }
+		assertEquals(ResetPosture.SUPINE, snap.posture, snap.reason)
+		assertEquals(30.0, deg(snap.heading), 1e-2)
+
+		val untrusted = headTracker("IMU head", false, supine)
+		for (head in listOf(null, untrusted)) {
+			assertEquals(ResetPosture.UNSAFE, ResetPostureClassifier.classify(head, torso, legs) { true }.posture)
+		}
+
+		// The lying full-reset guard follows the same head rule.
+		assertNotNull(ResetPostureClassifier.fullResetBlockReason(osc, torso))
+		assertNull(ResetPostureClassifier.fullResetBlockReason(untrusted, torso))
 	}
 }

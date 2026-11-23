@@ -42,7 +42,8 @@ data class ResetPostureSnapshot(
  * reset mutates anything. Frame: X right, Y up, Z back; a calibrated torso/leg
  * tracker's +Y is the segment's headward axis and -Z its front.
  *
- * Thresholds are first guesses for MPU6050 trackers + SteamVR HMD; tune on hardware.
+ * Thresholds are first guesses for MPU6050 trackers + a headset head reference
+ * ([Tracker.isHeadsetPose]: SteamVR HMD or VRChat OSC head); tune on hardware.
  */
 object ResetPostureClassifier {
 	/** Lying: torso/leg long axes and HMD crown within 25° of horizontal. */
@@ -85,7 +86,7 @@ object ResetPostureClassifier {
 	 * @param isStill rotation-based rest signal (Stay Aligned's 2° / 1 s detector in production)
 	 */
 	fun classify(head: Tracker?, torso: List<Tracker>, legs: List<Tracker>, isStill: (Tracker) -> Boolean): ResetPostureSnapshot {
-		val headRot = head?.takeIf { it.isHmd }?.getRotation()?.takeIf { finite(it) && it.lenSq() > 0.5f }?.unit()
+		val headRot = head?.takeIf { it.isHeadsetPose }?.getRotation()?.takeIf { finite(it) && it.lenSq() > 0.5f }?.unit()
 		// An upright HMD is a sound yaw reference whatever the torso does: keep the legacy path.
 		if (headRot != null && headRot.sandwichUnitY().y >= UPRIGHT_MIN_ELEVATION) return ResetPostureSnapshot.UPRIGHT
 		// Uncalibrated trackers can't tell their tilt; judge upright from the calibrated ones.
@@ -100,7 +101,7 @@ object ResetPostureClassifier {
 		}
 
 		// Lying candidate: every input must be trustworthy.
-		if (head == null || !head.isHmd) return ResetPostureSnapshot.unsafe("lying reset needs an HMD head reference")
+		if (head == null || !head.isHeadsetPose) return ResetPostureSnapshot.unsafe("lying reset needs a headset head reference")
 		if (headRot == null) return ResetPostureSnapshot.unsafe("HMD rotation is invalid")
 		val crown = headRot.sandwichUnitY()
 		if (abs(crown.y) > LYING_MAX_ELEVATION) return ResetPostureSnapshot.unsafe("HMD crown is not horizontal")
@@ -139,7 +140,7 @@ object ResetPostureClassifier {
 	 * moved strap alone (HMD upright) never blocks the reset that fixes it.
 	 */
 	fun fullResetBlockReason(head: Tracker?, torso: List<Tracker>): String? {
-		if (head == null || !head.isHmd) return null
+		if (head == null || !head.isHeadsetPose) return null
 		val headRot = head.getRotation().takeIf { finite(it) && it.lenSq() > 0.5f }?.unit() ?: return null
 		val crownY = headRot.sandwichUnitY().y
 		if (crownY <= LYING_MAX_ELEVATION) return "HMD is lying flat"

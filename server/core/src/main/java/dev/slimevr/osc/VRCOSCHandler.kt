@@ -436,6 +436,8 @@ class VRCOSCHandler(
 					isComputed = true,
 					allowReset = trackerPosition != TrackerPosition.HEAD,
 					usesTimeout = true,
+					// /tracking/vrsystem/head/pose is the headset's own pose
+					isHeadsetPose = trackerPosition == TrackerPosition.HEAD,
 				)
 				vrsystemTrackersDevice!!.trackers[trackerPosition.ordinal] = tracker
 				server.registerTracker(tracker)

@@ -114,6 +114,13 @@ class Tracker @JvmOverloads constructor(
 	 * Set status when tracker is sleeping
 	 */
 	val usesSleep: Boolean = false,
+
+	/**
+	 * Rotation is a real headset pose, so reset posture checks may trust it as the
+	 * head reference. True for SteamVR HMDs ([isHmd]) and the VRChat OSC head pose,
+	 * which is the HMD pose but keeps [isHmd] false for its reset/mounting behavior.
+	 */
+	val isHeadsetPose: Boolean = isHmd,
 ) {
 	private val timer = BufferedTimer(1f)
 	private var timeAtLastUpdate: Long = monotonicMillis()
