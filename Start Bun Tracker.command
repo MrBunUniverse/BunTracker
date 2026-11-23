@@ -1,8 +1,8 @@
 #!/bin/bash
-# Double-click to start SlimeVR: the server, the USB dongle bridge (if the ESP32 is
+# Double-click to start Bun Tracker: the server, the USB dongle bridge (if the ESP32 is
 # plugged in) and the Spike app with live reload. Close this window or press Ctrl+C
 # to stop what this window started. Anything already running is left alone.
-# Launcher tests: tools/launcher-tests/test-start-slimevr.sh
+# Launcher tests: tools/launcher-tests/test-start-bun-tracker.sh
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 GUI="$ROOT/gui/app"
@@ -12,7 +12,7 @@ APP="$TAURI/target/debug/bun-tracker"
 BRIDGE="$ROOT/tools/esp32-dongle/bridge.py"
 SERVER_PORT="${SERVER_PORT:-21110}"
 SPIKE_PORT="${SPIKE_PORT:-5173}"
-LOGS="$HOME/Library/Logs/SlimeVR-launcher"
+LOGS="$HOME/Library/Logs/BunTracker-launcher"
 mkdir -p "$LOGS"
 # Appended, so tools already on the user's PATH win; these cover a Finder-style minimal PATH.
 export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.cargo/bin"
@@ -65,7 +65,7 @@ stop_started() {
 	[ ${#started[@]} -gt 0 ] || return 0
 	trap - EXIT
 	echo
-	echo "Stopping SlimeVR..."
+	echo "Stopping Bun Tracker..."
 	local pid alive _
 	for pid in "${started[@]}"; do kill -TERM -- "-$pid" 2>/dev/null; done
 	for _ in 1 2 3 4 5 6 7 8 9 10; do
@@ -95,7 +95,7 @@ wait_for_port() {
 	listening "$1"
 }
 
-echo "SlimeVR — logs in $LOGS"
+echo "Bun Tracker — logs in $LOGS"
 
 # 1. Server, built from this checkout (the only build that matches your config).
 if listening "$SERVER_PORT"; then

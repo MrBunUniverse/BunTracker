@@ -28,7 +28,7 @@ Major modifications from upstream SlimeVR-Server:
 - SolarXR protocol extensions (sj-custom branch) for osc_rate, tracker recovery,
   adaptive drift, and filter health.
 - ESP32 USB dongle receiver and bridge (tools/esp32-dongle/), macOS launcher
-  (Start SlimeVR.command), VRChat chatbox tools (Apple Music, BPM, dictation),
+  (Start Bun Tracker.command), VRChat chatbox tools (Apple Music, BPM, dictation),
   and Quest StreamCast remote control.
 
 For the full feature inventory and change history, see:

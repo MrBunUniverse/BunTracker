@@ -1,12 +1,12 @@
 #!/bin/bash
-# Mock-process tests for "Start SlimeVR.command". Each case copies the launcher into a
+# Mock-process tests for "Start Bun Tracker.command". Each case copies the launcher into a
 # throwaway checkout under a temp dir whose name has a space, with fake java, gradlew,
 # pnpm, Tauri CLI, Python and app binaries. Test ports and a test HOME keep it away from
-# the real server, Spike, dongle and logs. Run: bash tools/launcher-tests/test-start-slimevr.sh
+# the real server, Spike, dongle and logs. Run: bash tools/launcher-tests/test-start-bun-tracker.sh
 set -u
 
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
-LAUNCHER="$REPO/Start SlimeVR.command"
+LAUNCHER="$REPO/Start Bun Tracker.command"
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/slimevr launcher.XXXXXX")"
 WORK="$(cd "$WORK" && pwd)" # the launcher reports paths as pwd spells them, not as TMPDIR does
 CHECKOUT="$WORK/with space/checkout"
@@ -134,7 +134,7 @@ EOF
 echo "tauri $$ $*" >>"$CALLS"
 exec sleep 300
 EOF
-	chmod +x "$CHECKOUT/gradlew" "$CHECKOUT/gui/tauri/node_modules/.bin/tauri" "$CHECKOUT/Start SlimeVR.command"
+	chmod +x "$CHECKOUT/gradlew" "$CHECKOUT/gui/tauri/node_modules/.bin/tauri" "$CHECKOUT/Start Bun Tracker.command"
 	: >"$CALLS"
 }
 
@@ -145,7 +145,7 @@ launch() {
 	shift
 	env HOME="$WORK/home" PATH="$TEST_PATH" CALLS="$CALLS" SERVER_PORT="$SERVER_PORT" \
 		SPIKE_PORT="$SPIKE_PORT" SLIMEVR_DONGLE_PORT="" "$@" \
-		bash "$CHECKOUT/Start SlimeVR.command" >"$out" 2>&1 </dev/null &
+		bash "$CHECKOUT/Start Bun Tracker.command" >"$out" 2>&1 </dev/null &
 	LAUNCH_PID=$!
 }
 
@@ -184,7 +184,7 @@ check "case 1: dongle skipped when none plugged in" grep -qF "Dongle: not plugge
 collect_launcher 0
 check "case 1: recorded the server, Tauri and Vite pids" [ -n "$server_pid$spike_pid$vite_pid" ]
 check "case 1: TERM exits 143" [ "$EXIT_CODE" -eq 143 ]
-check "case 1: prints stop message" grep -qF "Stopping SlimeVR..." "$out"
+check "case 1: prints stop message" grep -qF "Stopping Bun Tracker..." "$out"
 check "case 1: server stopped" gone "$server_pid"
 check "case 1: Tauri stopped" gone "$spike_pid"
 check "case 1: Vite stopped" gone "$vite_pid"

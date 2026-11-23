@@ -21,8 +21,8 @@ python3 tools/check-docs.py
 python3 tools/test-check-docs.py
 
 step "Launcher"
-bash -n "Start SlimeVR.command"
-bash tools/launcher-tests/test-start-slimevr.sh
+bash -n "Start Bun Tracker.command"
+bash tools/launcher-tests/test-start-bun-tracker.sh
 
 if $full; then
 	step "Protocol"

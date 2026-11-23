@@ -20,13 +20,13 @@
 | `6969` | UDP | SlimeVR tracker packets |
 | `21110` | TCP/WebSocket | GUI to SlimeVR server RPC/data feed |
 | `9000` | UDP | VRChat/Quest OSC output |
-| `5173` | TCP | Vite development server (started by `Start SlimeVR.command`) |
+| `5173` | TCP | Vite development server (started by `Start Bun Tracker.command`) |
 
 Confirm ownership with `lsof -nP` before changing or terminating a listener, for example `lsof -nP -iTCP:21110 -sTCP:LISTEN`.
 
 ## Launch Path
 
-`Start SlimeVR.command` (repo root) starts the server jar `server/desktop/build/libs/slimevr.jar`, the dongle bridge `tools/esp32-dongle/bridge.py` when a dongle is attached, and the Spike through the workspace Tauri CLI (`gui/tauri/node_modules/.bin/tauri dev`) with Vite on port 5173. It stops the processes it started on Ctrl+C or when its window closes.
+`Start Bun Tracker.command` (repo root) starts the server jar `server/desktop/build/libs/slimevr.jar`, the dongle bridge `tools/esp32-dongle/bridge.py` when a dongle is attached, and the Spike through the workspace Tauri CLI (`gui/tauri/node_modules/.bin/tauri dev`) with Vite on port 5173. It stops the processes it started on Ctrl+C or when its window closes.
 
 ## Frontend Build
 

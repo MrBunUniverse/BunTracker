@@ -15,17 +15,17 @@ if %errorlevel% == 0 (
 echo Installing firewall rules...
 
 rem Rotational data default port
-call :AddRule "SlimeVR UDP 6969 incoming" "dir=in action=allow protocol=UDP localport=6969 enable=yes"
-call :AddRule "SlimeVR UDP 6969 outgoing" "dir=out action=allow protocol=UDP localport=6969 enable=yes"
+call :AddRule "Bun Tracker UDP 6969 incoming" "dir=in action=allow protocol=UDP localport=6969 enable=yes"
+call :AddRule "Bun Tracker UDP 6969 outgoing" "dir=out action=allow protocol=UDP localport=6969 enable=yes"
 rem WebSocket server default port
-call :AddRule "SlimeVR TCP 21110 incoming" "dir=in action=allow protocol=TCP localport=21110 enable=yes"
-call :AddRule "SlimeVR TCP 21110 outgoing" "dir=out action=allow protocol=TCP localport=21110 enable=yes"
+call :AddRule "Bun Tracker TCP 21110 incoming" "dir=in action=allow protocol=TCP localport=21110 enable=yes"
+call :AddRule "Bun Tracker TCP 21110 outgoing" "dir=out action=allow protocol=TCP localport=21110 enable=yes"
 rem OpenJDK Platform Binary access
-call :AddRule "SlimeVR OpenJDK Platform incoming" "dir=in action=allow program=""%~dp0jre\bin\java.exe"" enable=yes"
-call :AddRule "SlimeVR OpenJDK Platform outgoing" "dir=out action=allow program=""%~dp0jre\bin\java.exe"" enable=yes"
+call :AddRule "Bun Tracker OpenJDK Platform incoming" "dir=in action=allow program=""%~dp0jre\bin\java.exe"" enable=yes"
+call :AddRule "Bun Tracker OpenJDK Platform outgoing" "dir=out action=allow program=""%~dp0jre\bin\java.exe"" enable=yes"
 rem ESP8266 OTA default port
-call :AddRule "SlimeVR UDP 8266 incoming" "dir=in action=allow protocol=UDP localport=8266 enable=yes"
-call :AddRule "SlimeVR UDP 8266 outgoing" "dir=out action=allow protocol=UDP localport=8266 enable=yes"
+call :AddRule "Bun Tracker UDP 8266 incoming" "dir=in action=allow protocol=UDP localport=8266 enable=yes"
+call :AddRule "Bun Tracker UDP 8266 outgoing" "dir=out action=allow protocol=UDP localport=8266 enable=yes"
 
 echo Done!
 pause

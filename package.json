@@ -15,7 +15,7 @@
     "gui/tauri"
   ],
   "scripts": {
-    "start": "bash \"Start SlimeVR.command\"",
+    "start": "bash \"Start Bun Tracker.command\"",
     "build": "pnpm --dir gui/tauri build",
     "lint": "pnpm --dir gui/app lint",
     "lint:fix": "pnpm --dir gui/app lint:fix",

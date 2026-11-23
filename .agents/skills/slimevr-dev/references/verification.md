@@ -71,8 +71,8 @@ Target exactly `gui/app/node_modules/.vite`; never delete the complete dependenc
 ## Launcher and Documentation
 
 ```bash
-bash -n "Start SlimeVR.command"
-bash tools/launcher-tests/test-start-slimevr.sh
+bash -n "Start Bun Tracker.command"
+bash tools/launcher-tests/test-start-bun-tracker.sh
 git diff --check
 ```
 

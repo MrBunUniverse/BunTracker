@@ -155,7 +155,7 @@ android {
 	defaultConfig {
 
 		// Uniquely identifies the package for publishing.
-		applicationId = "dev.slimevr.server.android"
+		applicationId = "io.github.mrbununiverse.buntracker"
 
 		// Defines the minimum API level required to run the app.
 		minSdk = 26
@@ -172,7 +172,7 @@ android {
 		// Defines a user-friendly version name for your app.
 		versionName = extra["gitVersionName"] as? String ?: "v0.0.0"
 
-		logger.lifecycle("i: Configured for SlimeVR Android version \"$versionName\" ($versionCode).")
+		logger.lifecycle("i: Configured for Bun Tracker Android version \"$versionName\" ($versionCode).")
 
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 	}

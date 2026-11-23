@@ -589,7 +589,7 @@ settings-general-tracker_mechanics-drift_compensation-amount-label = 補償量
 settings-general-tracker_mechanics-drift_compensation-max_resets-label = 使用幾次的重置結果？
 settings-general-tracker_mechanics-save_mounting_reset = 儲存自動配戴重置的校正
 settings-general-tracker_mechanics-save_mounting_reset-description =
-    儲存自動配戴重置的校正，重新啟動 SlimeVR 後不需要再進行校正。
+    儲存自動配戴重置的校正，重新啟動 Bun Tracker 後不需要再進行校正。
     本設定適用於動捕服，因為多次穿戴後追蹤器的位置不會變化。<b>不建議一般使用者使用！</b>
 settings-general-tracker_mechanics-save_mounting_reset-enabled-label = 儲存自動配戴重置的校正
 settings-general-tracker_mechanics-use_mag_on_all_trackers = 在有磁力計支援的 IMU 追蹤器上啟用磁力計

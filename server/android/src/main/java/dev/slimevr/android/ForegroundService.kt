@@ -72,7 +72,7 @@ class ForegroundService : Service() {
 
 	private fun createNotificationChannel() {
 		val serviceChannel = NotificationChannelCompat.Builder(CHANNEL_ID, NotificationManager.IMPORTANCE_LOW)
-			.setName("SlimeVR Foreground Service Channel")
+			.setName("Bun Tracker Foreground Service Channel")
 			.build()
 		NotificationManagerCompat
 			.from(this)
@@ -80,7 +80,7 @@ class ForegroundService : Service() {
 	}
 
 	private fun createNotification(): Notification = NotificationCompat.Builder(this, CHANNEL_ID)
-		.setContentTitle("SlimeVR Server Running")
+		.setContentTitle("Bun Tracker Server Running")
 		.setContentText("This notification helps keep the server alive")
 		.setSmallIcon(R.drawable.ic_launcher_foreground)
 		.build()

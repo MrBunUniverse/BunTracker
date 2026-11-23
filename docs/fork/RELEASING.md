@@ -4,7 +4,7 @@ Version naming, local updates, and release publishing for this fork. Remotes are
 
 ## Workflow
 
-- **Day to day:** commit changes on `main` and run the hot-reload dev build (`bash "Start SlimeVR.command"`). Do not bump the version, run a full build, or publish a release for everyday changes.
+- **Day to day:** commit changes on `main` and run the hot-reload dev build (`bash "Start Bun Tracker.command"`). Do not bump the version, run a full build, or publish a release for everyday changes.
 - **Pushes:** day-to-day commits are pushed to `custom-private` (`BunTracker-Dev`, private) as a backup; only releases go to `public` (`BunTracker`).
 - **Releases:** full builds, version bumps, tags, and GitHub releases happen only when the owner decides a batch of bug fixes or new features is ready for a new version.
 
@@ -42,12 +42,12 @@ rm -rf "$STAGE"
 
 ### Dev build vs full build
 
-- **Dev build**: started with `bash "Start SlimeVR.command"` (Vite on port `5173` with hot reload, `tauri dev`, debug binary `gui/tauri/target/debug/bun-tracker`). It has no version of its own and is identified by commit hash. `gui/app/vite.config.ts` injects `__COMMIT_HASH__` (8-character `HEAD`), `__VERSION_TAG__` (tag pointing at `HEAD`, if any), and `__GIT_CLEAN__`. When debug mode is enabled (`config.debug`), `VersionTag` shows `(__VERSION_TAG__ || __COMMIT_HASH__)` plus `-dirty` if the working tree has uncommitted changes.
+- **Dev build**: started with `bash "Start Bun Tracker.command"` (Vite on port `5173` with hot reload, `tauri dev`, debug binary `gui/tauri/target/debug/bun-tracker`). It has no version of its own and is identified by commit hash. `gui/app/vite.config.ts` injects `__COMMIT_HASH__` (8-character `HEAD`), `__VERSION_TAG__` (tag pointing at `HEAD`, if any), and `__GIT_CLEAN__`. When debug mode is enabled (`config.debug`), `VersionTag` shows `(__VERSION_TAG__ || __COMMIT_HASH__)` plus `-dirty` if the working tree has uncommitted changes.
 - **Full build**: `Bun Tracker.app`, built with `tauri build`. Launching it without a terminal auto-starts the server and the ESP32 dongle bridge.
 
 ## Dev update
 
-Commit changes as you go on `main` while running `bash "Start SlimeVR.command"`:
+Commit changes as you go on `main` while running `bash "Start Bun Tracker.command"`:
 
 - `gui/app/src/` changes hot-reload through Vite.
 - `server/` (Kotlin) changes rebuild the jar on launch via the launcher's stale-jar check.

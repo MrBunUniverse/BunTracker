@@ -10,7 +10,7 @@ What this fork adds to or changes from upstream SlimeVR. Check this list before 
 | Native API contract | `gui/shared/electron-api.ts`, `gui/tauri/shim/electron-shim.js` | The name `window.electronAPI` is kept on purpose, so the frontend matches upstream. |
 | Redesigned interface | `gui/app/src/` | Navy, gray and amber theme, top bar, tracker cards, settings and broadcast controls. See `docs/dev/DESIGN.md`. |
 | Special themes | `gui/app/src/index.scss`, `docs/dev/THEMES.md` | Bun, Fox and Dog share the PawPad layout. |
-| Launcher | `Start SlimeVR.command`, `tools/launcher-tests/` | Owns Vite for hot reload and stops only what its window started. |
+| Launcher | `Start Bun Tracker.command`, `tools/launcher-tests/` | Owns Vite for hot reload and stops only what its window started. |
 | ESP32 USB dongle | `tools/esp32-dongle/` | Tracker receiver over USB. The launcher and the Dongle popup start `bridge.py`. |
 | VRChat chatbox tools | `gui/app/src/components/broadcast/` | Chatbox, Apple Music, BPM and dictation. |
 

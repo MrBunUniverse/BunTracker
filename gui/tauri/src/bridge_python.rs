@@ -11,7 +11,7 @@ const FRAMEWORK_VERSIONS: &str = "/Library/Frameworks/Python.framework/Versions"
 // A broken interpreter or the macOS command line tools prompt must not hang the Start button.
 const PROBE_TIMEOUT: Duration = Duration::from_secs(5);
 
-/// First interpreter that can import pyserial. Same search as find_python in Start SlimeVR.command.
+/// First interpreter that can import pyserial. Same search as find_python in Start Bun Tracker.command.
 pub fn find() -> Result<PathBuf, String> {
     let pin = env::var_os("SLIMEVR_PYTHON").filter(|pin| !pin.is_empty());
     let path = env::var_os("PATH");
