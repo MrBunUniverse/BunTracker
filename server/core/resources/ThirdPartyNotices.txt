@@ -1446,10 +1446,12 @@ END OF TERMS AND CONDITIONS
 ---------------------------------------------------------------
 
 ---------------------------------------------------------------
-Font file containing emojis by:
+Font file and SVG emoji graphics (used in gui/app/src/i18n/names.ts) by:
 Twitter Emoji (Twemoji)
 https://github.com/twitter/twemoji
+https://github.com/jdecked/twemoji
 
+Graphics licensed under CC-BY 4.0:
 Attribution 4.0 International
 
 =======================================================================

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useLocalization } from '@fluent/react';
 import { Typography } from '@/components/commons/Typography';
 import {
@@ -76,6 +77,20 @@ const LICENSE_ENTRIES: LicenseEntry[] = [
 
 export function LicensesSettings() {
   const { l10n } = useLocalization();
+  const [bundledNotices, setBundledNotices] = useState<string | null>(null);
+
+  const loadBundledNotices = () => {
+    if (bundledNotices !== null) return;
+    setBundledNotices('Loading...');
+    fetch('/licenses/THIRD-PARTY-NOTICES.txt')
+      .then((res) => (res.ok ? res.text() : Promise.reject(res.status)))
+      .then((text) => setBundledNotices(text))
+      .catch(() =>
+        setBundledNotices(
+          'Unable to load bundled third-party notices. See licenses/THIRD-PARTY-NOTICES.txt in the application bundle.'
+        )
+      );
+  };
 
   return (
     <SettingsPageLayout>
@@ -107,6 +122,24 @@ export function LicensesSettings() {
                 </pre>
               </details>
             ))}
+            <details
+              onToggle={(e) => {
+                if (e.currentTarget.open) loadBundledNotices();
+              }}
+              className="rounded-lg border border-background-50 bg-background-70 overflow-hidden"
+            >
+              <summary className="cursor-pointer select-none px-4 py-3 flex flex-col gap-0.5 hover:bg-background-60/50 transition-colors">
+                <Typography variant="section-title">
+                  {l10n.getString('settings-licenses-bundled-title')}
+                </Typography>
+                <Typography variant="vr-accessible" color="secondary">
+                  {l10n.getString('settings-licenses-bundled-subtitle')}
+                </Typography>
+              </summary>
+              <pre className="px-4 py-3 border-t border-background-50 text-xs font-mono text-background-20 whitespace-pre-wrap break-words max-h-96 overflow-y-auto select-text">
+                {bundledNotices ?? ''}
+              </pre>
+            </details>
           </div>
         </>
       </SettingsPagePaneLayout>

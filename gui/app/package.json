@@ -10,7 +10,8 @@
   "type": "module",
   "scripts": {
     "start": "vite --force --port 5173 --strictPort",
-    "build": "vite build",
+    "gen:licenses": "node scripts/generate-third-party-notices.mjs",
+    "build": "pnpm run gen:licenses && vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit && eslint --max-warnings=0 \"src/**/*.{js,jsx,ts,tsx,json}\" && prettier --check \"src/**/*.{js,jsx,ts,tsx,css,scss,md,json}\"",
     "lint:fix": "tsc --noEmit && eslint --fix --max-warnings=0 \"src/**/*.{js,jsx,ts,tsx,json}\" && pnpm run format",
