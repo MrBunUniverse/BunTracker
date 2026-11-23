@@ -5,6 +5,7 @@ Version naming, local updates, and release publishing for this fork. Remotes are
 ## Workflow
 
 - **Day to day:** commit changes on `main` and run the hot-reload dev build (`bash "Start SlimeVR.command"`). Do not bump the version, run a full build, or publish a release for everyday changes.
+- **Pushes:** day-to-day commits are pushed to `custom-private` (`BunTracker-Dev`, private) as a backup; only releases go to `public` (`BunTracker`).
 - **Releases:** full builds, version bumps, tags, and GitHub releases happen only when the owner decides a batch of bug fixes or new features is ready for a new version.
 
 ## Naming
