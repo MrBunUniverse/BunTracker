@@ -1862,3 +1862,9 @@ settings-user_agreement-warranty-title = No guarantees
 settings-user_agreement-warranty = I look after Bun Tracker in my spare time and share it as-is, without any warranty. I'll do my best to help when something breaks, but please use it at your own risk.
 settings-user_agreement-agreement-title = In short
 settings-user_agreement-agreement = By using Bun Tracker, you agree to the points above, including that parts of it are AI-assisted and provided as-is, and to treat the original SlimeVR developers with the respect their work deserves. Thank you for using it.
+
+## ESP32 dongle bridge
+dongle-bridge-restart = Restart
+dongle-bridge-restarting = Restarting…
+dongle-bridge-restart-aria = Restart ESP32 dongle bridge
+dongle-bridge-restarted = Restarted on { $port }. Trackers reconnect in a moment.

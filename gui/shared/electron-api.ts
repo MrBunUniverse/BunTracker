@@ -196,6 +196,8 @@ export interface IElectronAPI {
   restartServer?: () => Promise<void>;
   /** Spike only: starts the ESP32 dongle bridge; resolves to the serial port it uses. */
   startDongleBridge?: () => Promise<string>;
+  /** Spike only: restarts the ESP32 dongle bridge; resolves to the serial port it uses. */
+  restartDongleBridge?: () => Promise<string>;
   getAppleMusic?: () => Promise<{
     running: boolean;
     playing: boolean;

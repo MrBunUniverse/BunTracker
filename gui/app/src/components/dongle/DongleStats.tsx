@@ -1,5 +1,7 @@
+import { useLocalization } from '@fluent/react';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+import { Button } from '@/components/commons/Button';
 import { StatusDot } from '@/components/commons/StatusDot';
 import { USBIcon } from '@/components/commons/icon/UsbIcon';
 import { StatusBarTile } from '@/components/shell/StatusBarTile';
@@ -274,6 +276,30 @@ function StartBridgeButton() {
 }
 
 function DongleStatsPanel({ snap }: { snap: DongleSnapshot | null }) {
+  const { l10n } = useLocalization();
+  const restart = window.electronAPI?.restartDongleBridge;
+  const [restartState, setRestartState] = useState<'idle' | 'restarting'>(
+    'idle'
+  );
+  const [restartMessage, setRestartMessage] = useState('');
+  const [restartIsError, setRestartIsError] = useState(false);
+
+  const onRestart = async () => {
+    if (!restart || restartState === 'restarting') return;
+    setRestartState('restarting');
+    setRestartMessage('');
+    setRestartIsError(false);
+    try {
+      const port = await restart();
+      setRestartState('idle');
+      setRestartMessage(l10n.getString('dongle-bridge-restarted', { port }));
+    } catch (e) {
+      setRestartState('idle');
+      setRestartIsError(true);
+      setRestartMessage(String(e));
+    }
+  };
+
   if (!snap)
     return (
       <div className="text-background-20">
@@ -283,6 +309,19 @@ function DongleStatsPanel({ snap }: { snap: DongleSnapshot | null }) {
           on {STATS_URL}.
         </p>
         <StartBridgeButton />
+        {(restartState === 'restarting' || restartMessage) && (
+          <p
+            role="status"
+            className={classNames(
+              'mt-2 text-ui-xs',
+              restartIsError ? 'text-status-critical' : 'text-background-30'
+            )}
+          >
+            {restartState === 'restarting'
+              ? l10n.getString('dongle-bridge-restarting')
+              : restartMessage}
+          </p>
+        )}
       </div>
     );
 
@@ -290,12 +329,41 @@ function DongleStatsPanel({ snap }: { snap: DongleSnapshot | null }) {
   const now = snap.time;
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-4">
-        <StatusDot tone="ok" label={`${snap.port} @ ${snap.baud}`} />
-        <span className="text-ui-xs text-background-30">
-          updates every 0.5 s
-        </span>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-4">
+          <StatusDot tone="ok" label={`${snap.port} @ ${snap.baud}`} />
+          <span className="text-ui-xs text-background-30">
+            updates every 0.5 s
+          </span>
+        </div>
+        {restart && (
+          <Button
+            variant="secondary"
+            onClick={onRestart}
+            disabled={restartState === 'restarting'}
+            loading={restartState === 'restarting'}
+            className="!min-h-[30px] !px-3 !py-1.5"
+            aria-label={l10n.getString('dongle-bridge-restart-aria')}
+          >
+            {l10n.getString(
+              restartState === 'restarting'
+                ? 'dongle-bridge-restarting'
+                : 'dongle-bridge-restart'
+            )}
+          </Button>
+        )}
       </div>
+      {restartMessage && (
+        <span
+          role="status"
+          className={classNames(
+            'text-ui-xs',
+            restartIsError ? 'text-status-critical' : 'text-background-30'
+          )}
+        >
+          {restartMessage}
+        </span>
+      )}
 
       {/* Fills the popup's width, not the window's. */}
       <div className="grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] gap-2">

@@ -193,8 +193,131 @@ fn spawn_dongle_bridge(log: &Path) -> Result<BridgeStart, String> {
         // Own process group, so quitting the app leaves the bridge running.
         .process_group(0)
         .spawn()
-        .map(|_| BridgeStart::Started(port))
+        .map(|mut child| {
+            // Reap the child if it exits while this app is still running, so it doesn't sit as a zombie.
+            std::thread::spawn(move || {
+                let _ = child.wait();
+            });
+            BridgeStart::Started(port)
+        })
         .map_err(|e| format!("Couldn't start the bridge: {e}"))
+}
+
+fn matches_bridge_command(command: &str, needle: &str) -> bool {
+    !needle.is_empty() && command.contains(needle)
+}
+
+fn bridge_pids_matching(needle: &str) -> Result<Vec<u32>, String> {
+    use std::process::Command;
+
+    let candidates = Command::new("/usr/bin/pgrep")
+        .args(["-f", needle])
+        .output()
+        .map_err(|e| e.to_string())?;
+    if candidates.status.code() == Some(1) {
+        return Ok(Vec::new());
+    }
+    if !candidates.status.success() {
+        return Err("Could not enumerate dongle bridge processes.".into());
+    }
+    let self_pid = std::process::id();
+    let stdout = String::from_utf8(candidates.stdout).map_err(|e| e.to_string())?;
+    let mut matched = Vec::new();
+    for line in stdout.lines() {
+        let Ok(pid) = line.trim().parse::<u32>() else {
+            continue;
+        };
+        if pid == self_pid {
+            continue;
+        }
+        let Ok(ps) = Command::new("/bin/ps")
+            .args(["-ww", "-p", &pid.to_string(), "-o", "command="])
+            .output()
+        else {
+            continue;
+        };
+        if !ps.status.success() {
+            continue;
+        }
+        if let Ok(cmd) = String::from_utf8(ps.stdout) {
+            if matches_bridge_command(&cmd, needle) {
+                matched.push(pid);
+            }
+        }
+    }
+    Ok(matched)
+}
+
+fn pid_alive(pid: u32) -> bool {
+    let Ok(out) = std::process::Command::new("/bin/ps")
+        .args(["-p", &pid.to_string(), "-o", "stat="])
+        .output()
+    else {
+        return false;
+    };
+    if !out.status.success() {
+        return false;
+    }
+    let stat = String::from_utf8_lossy(&out.stdout);
+    let stat = stat.trim();
+    !stat.is_empty() && !stat.starts_with('Z')
+}
+
+/// Sends SIGTERM to `pids`, waits up to `timeout` for them to exit, then falls back to SIGKILL.
+fn stop_pids(pids: &[u32], timeout: std::time::Duration) -> Result<(), String> {
+    use std::process::{Command, Stdio};
+    use std::time::{Duration, Instant};
+
+    if pids.is_empty() {
+        return Ok(());
+    }
+    for &pid in pids {
+        let _ = Command::new("/bin/kill")
+            .args(["-TERM", &pid.to_string()])
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .status();
+    }
+    const POLL: Duration = Duration::from_millis(50);
+    let deadline = Instant::now() + timeout;
+    while Instant::now() < deadline {
+        if pids.iter().all(|&pid| !pid_alive(pid)) {
+            return Ok(());
+        }
+        std::thread::sleep(POLL);
+    }
+    for &pid in pids {
+        if pid_alive(pid) {
+            let _ = Command::new("/bin/kill")
+                .args(["-KILL", &pid.to_string()])
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .status();
+        }
+    }
+    let kill_deadline = Instant::now() + Duration::from_millis(500);
+    while Instant::now() < kill_deadline {
+        if pids.iter().all(|&pid| !pid_alive(pid)) {
+            return Ok(());
+        }
+        std::thread::sleep(POLL);
+    }
+    let stuck: Vec<String> = pids
+        .iter()
+        .filter(|&&pid| pid_alive(pid))
+        .map(|pid| pid.to_string())
+        .collect();
+    if stuck.is_empty() {
+        Ok(())
+    } else {
+        Err(format!("Bridge process {} did not exit.", stuck.join(", ")))
+    }
+}
+
+fn restart_dongle_bridge_impl(log: &Path) -> Result<BridgeStart, String> {
+    let pids = bridge_pids_matching(BRIDGE_MATCH)?;
+    stop_pids(&pids, std::time::Duration::from_secs(3))?;
+    spawn_dongle_bridge(log)
 }
 
 /// Starts tools/esp32-dongle/bridge.py on the plugged-in dongle and returns its serial port.
@@ -202,6 +325,19 @@ fn spawn_dongle_bridge(log: &Path) -> Result<BridgeStart, String> {
 async fn start_dongle_bridge(app: AppHandle) -> Result<String, String> {
     let log = app.path().app_log_dir().map_err(|e| e.to_string())?;
     tauri::async_runtime::spawn_blocking(move || match spawn_dongle_bridge(&log)? {
+        BridgeStart::Started(port) => Ok(port),
+        BridgeStart::AlreadyRunning => Err("The bridge is already running.".into()),
+        BridgeStart::NotPluggedIn => Err("Dongle not plugged in.".into()),
+    })
+    .await
+    .map_err(|e| e.to_string())?
+}
+
+/// Stops any running tools/esp32-dongle/bridge.py processes, waits for exit, and starts the bridge again.
+#[tauri::command]
+async fn restart_dongle_bridge(app: AppHandle) -> Result<String, String> {
+    let log = app.path().app_log_dir().map_err(|e| e.to_string())?;
+    tauri::async_runtime::spawn_blocking(move || match restart_dongle_bridge_impl(&log)? {
         BridgeStart::Started(port) => Ok(port),
         BridgeStart::AlreadyRunning => Err("The bridge is already running.".into()),
         BridgeStart::NotPluggedIn => Err("Dongle not plugged in.".into()),
@@ -734,6 +870,7 @@ fn main() {
             apple_music,
             restart_server,
             start_dongle_bridge,
+            restart_dongle_bridge,
             streamcast::streamcast_status,
             streamcast::streamcast_command,
             streamcast::streamcast_open,
@@ -751,4 +888,61 @@ fn main() {
                 }
             }
         });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::process::{Command, Stdio};
+    use std::time::Duration;
+
+    #[test]
+    fn matches_only_bridge_command() {
+        assert!(matches_bridge_command(
+            "/opt/homebrew/bin/python3 -u /Users/me/repo/tools/esp32-dongle/bridge.py --port /dev/cu.usbserial-110",
+            BRIDGE_MATCH,
+        ));
+        assert!(matches_bridge_command(
+            "python3 tools/esp32-dongle/bridge.py",
+            BRIDGE_MATCH,
+        ));
+        assert!(!matches_bridge_command("python3 -u other.py", BRIDGE_MATCH));
+        assert!(!matches_bridge_command("python3 bridge.py", BRIDGE_MATCH));
+        assert!(!matches_bridge_command("python3", BRIDGE_MATCH));
+        assert!(!matches_bridge_command("anything", ""));
+    }
+
+    #[test]
+    fn stop_pids_terminates_and_falls_back_to_kill() {
+        assert!(stop_pids(&[], Duration::from_millis(100)).is_ok());
+
+        // Normal SIGTERM exit.
+        let mut child = Command::new("/bin/sleep")
+            .arg("30")
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        let pid = child.id();
+        assert!(pid_alive(pid));
+        assert!(stop_pids(&[pid], Duration::from_secs(2)).is_ok());
+        assert!(!pid_alive(pid));
+        let _ = child.wait();
+
+        // Process ignoring SIGTERM must be cleaned up by SIGKILL fallback.
+        let mut stubborn = Command::new("/bin/sh")
+            .args(["-c", "trap '' TERM; exec /bin/sleep 30"])
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .unwrap();
+        let stubborn_pid = stubborn.id();
+        std::thread::sleep(Duration::from_millis(80));
+        assert!(pid_alive(stubborn_pid));
+        assert!(stop_pids(&[stubborn_pid], Duration::from_millis(200)).is_ok());
+        assert!(!pid_alive(stubborn_pid));
+        let _ = stubborn.wait();
+    }
 }

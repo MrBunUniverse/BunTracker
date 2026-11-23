@@ -61,6 +61,7 @@
     isSteam: async () => false,
     restartServer: () => invoke('restart_server'),
     startDongleBridge: () => invoke('start_dongle_bridge'),
+    restartDongleBridge: () => invoke('restart_dongle_bridge'),
     audioInputs: () => invoke('audio_inputs'),
     setAudioInput: (uid) => invoke('set_audio_input', { uid }),
     streamCast: {
