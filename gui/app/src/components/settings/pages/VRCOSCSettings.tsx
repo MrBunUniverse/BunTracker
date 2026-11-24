@@ -356,9 +356,9 @@ export function VRCOSCSettings() {
             </Typography>
             <div className="flex flex-col pb-2">
               <Typography>
-                Broadcast live SlimeVR tracker battery levels and low-battery
-                alerts directly to the in-game VRChat Chatbox (/chatbox/input)
-                for standalone Quest.
+                Broadcast live tracker battery levels and low-battery alerts
+                directly to the in-game VRChat Chatbox (/chatbox/input) for
+                standalone Quest.
               </Typography>
             </div>
             <div className="p-4 rounded-[12px] bg-background-10/[0.04] border border-background-10/[0.08] flex items-center justify-between">

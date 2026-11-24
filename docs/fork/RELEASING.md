@@ -36,7 +36,7 @@ Check the built architecture with `lipo -archs "Bun Tracker.app/Contents/MacOS/"
 STAGE="$(mktemp -d)"
 cp -R "gui/tauri/target/release/bundle/macos/Bun Tracker.app" "$STAGE/"
 cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt gui/app/public/licenses/THIRD-PARTY-NOTICES.txt gui/app/public/licenses/SERVER-THIRD-PARTY-NOTICES.txt "$STAGE/"
-ditto -c -k "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
+COPYFILE_DISABLE=1 ditto -c -k --norsrc --noextattr "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
 rm -rf "$STAGE"
 ```
 
@@ -121,7 +121,7 @@ To update the local copy:
    STAGE="$(mktemp -d)"
    cp -R "gui/tauri/target/release/bundle/macos/Bun Tracker.app" "$STAGE/"
    cp NOTICE LICENSE docs/licenses/LICENSE-MIT server/core/resources/ThirdPartyNotices.txt gui/app/public/licenses/THIRD-PARTY-NOTICES.txt gui/app/public/licenses/SERVER-THIRD-PARTY-NOTICES.txt "$STAGE/"
-   ditto -c -k "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
+   COPYFILE_DISABLE=1 ditto -c -k --norsrc --noextattr "$STAGE" Bun-Tracker-vX.Y.Z-macos-arm64.zip
    rm -rf "$STAGE"
    ```
 

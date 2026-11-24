@@ -8,7 +8,7 @@ OGG Vorbis in gui/app/public/sounds/.
 
 Usage:
     python3 tools/gui/sounds/make-sounds.py
-    python3 tools/gui/sounds/make-sounds.py --wav-dir /private/tmp/claude-501/sound-review/wav
+    python3 tools/gui/sounds/make-sounds.py --wav-dir /tmp/sound-review/wav
 """
 
 from __future__ import annotations

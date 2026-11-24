@@ -43,7 +43,7 @@ function createMockTracker({
   ping,
   rssi,
   status = TrackerStatus.OK,
-  deviceName = `SlimeVR #${id}`,
+  deviceName = `Tracker #${id}`,
   isImu = true,
 }: {
   id: number;

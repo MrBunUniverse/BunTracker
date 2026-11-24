@@ -97,7 +97,7 @@ Answer the questions in `questions` below. Phases 1 to 7 depend on them.
 ## Decisions (answered 2026-10-11)
 
 1. Nearly the full PawPad retro look, but body text stays clean and readable. Pixel corners on elements.
-2. Pixel-style display type only on the big key text: the SirJameSlimeVR name, the SlimeVR wordmark, and big titles.
+2. Pixel-style display type only on the big key text: the old fork name, the SlimeVR wordmark, and big titles.
 3. Text size is customisable. The app already has a `textSize` setting, so expose it instead of hard-coding a size.
 4. Menu bar icon stays consistent with the app icon (the pixel SlimeVR logo).
 5. The SlimeVR mascot stays for now. The Bun artwork may come later.
