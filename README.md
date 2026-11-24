@@ -49,7 +49,7 @@ Developer notes live in [`docs/`](docs/README.md). Every change is listed in the
 
 This is the same text as in the app under Settings > User Agreement.
 
-**About Bun Tracker.** Bun Tracker is my personal version of SlimeVR Server, adapted for my own setup and shared with friends and a few people I trust. It's an unofficial project. SlimeVR and its developers didn't make it, don't support it, and aren't connected to it in any way.
+**About Bun Tracker.** Bun Tracker is my personal version of SlimeVR Server, adapted for my own setup and shared with friends and a few people I trust. It's an unofficial project. SlimeVR and its developers didn't make it, don't support it, and aren't connected to it in any way. Bun Tracker is an unofficial fork of SlimeVR Server and is not affiliated with, endorsed by, or sponsored by SlimeVR, Meta Platforms, VRChat, Valve, Apple, or Espressif. All trademarks belong to their respective owners.
 
 **Credit where it's due.** SlimeVR Server is the work of the SlimeVR team and its many contributors, and nearly everything here is built on what they made. I don't claim their work as my own. All credit for the original project belongs to them, and its Apache 2.0 and MIT licenses and copyright notices still apply.
 
@@ -69,4 +69,4 @@ Got a problem or a question? Find me on Discord: `jamevm` (SirJame). [Open my pr
 
 Based on the work of the [SlimeVR](https://slimevr.dev) project and its contributors ([SlimeVR-Server](https://github.com/SlimeVR/SlimeVR-Server)). SlimeVR is a trademark of its owners; see [docs/TRADEMARK.md](docs/TRADEMARK.md).
 
-The root [LICENSE](LICENSE) is Apache 2.0. Server code is MIT, and new contributions are licensed under both, as upstream does. Details are in [`docs/licenses/`](docs/licenses) and [`server/LICENSE.md`](server/LICENSE.md).
+This fork's own modifications are dual-licensed under the MIT License ([`docs/licenses/LICENSE-MIT`](docs/licenses/LICENSE-MIT)) or the Apache License, Version 2.0 ([`LICENSE`](LICENSE)), at your option, the same as upstream SlimeVR Server. Existing upstream code in `server/` is MIT-only; new contributions are dual-licensed under both MIT and Apache 2.0. Details are in [`NOTICE`](NOTICE), [`docs/licenses/`](docs/licenses), and [`server/LICENSE.md`](server/LICENSE.md).

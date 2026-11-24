@@ -1260,7 +1260,7 @@ onboarding-manual_mounting-next = Next step
 ## Tracker automatic mounting setup
 onboarding-automatic_mounting-back = Go back to Enter VR
 onboarding-automatic_mounting-title = Mounting Calibration
-onboarding-automatic_mounting-description = For SlimeVR trackers to work, we need to assign a mounting orientation to your trackers to align them with your physical tracker mounting.
+onboarding-automatic_mounting-description = For your trackers to work, we need to assign a mounting orientation to your trackers to align them with your physical tracker mounting.
 onboarding-automatic_mounting-manual_mounting = Manual mounting
 onboarding-automatic_mounting-next = Next step
 onboarding-automatic_mounting-prev_step = Previous step
@@ -1308,7 +1308,7 @@ onboarding-manual_proportions-export-short = Export
 ## Tracker automatic proportions setup
 onboarding-automatic_proportions-back = Go back to Manual Proportions
 onboarding-automatic_proportions-title = Measure your body
-onboarding-automatic_proportions-description = For SlimeVR trackers to work, we need to know the length of your bones. This short calibration will measure it for you.
+onboarding-automatic_proportions-description = For your trackers to work, we need to know the length of your bones. This short calibration will measure it for you.
 onboarding-automatic_proportions-manual = Manual proportions
 onboarding-automatic_proportions-prev_step = Previous step
 
@@ -1847,6 +1847,7 @@ settings-user_agreement-about-title = About Bun Tracker
 settings-user_agreement-about =
     Bun Tracker is my personal version of SlimeVR Server, adapted for my own setup and shared with friends and a few people I trust.
     It's an unofficial project. SlimeVR and its developers didn't make it, don't support it, and aren't connected to it in any way.
+    Bun Tracker is an unofficial fork of SlimeVR Server and is not affiliated with, endorsed by, or sponsored by SlimeVR, Meta Platforms, VRChat, Valve, Apple, or Espressif. All trademarks belong to their respective owners.
 settings-user_agreement-credit-title = Credit where it's due
 settings-user_agreement-credit =
     SlimeVR Server is the work of the SlimeVR team and its many contributors, and nearly everything here is built on what they made.
@@ -1856,7 +1857,9 @@ settings-user_agreement-help =
     Please don't take problems with Bun Tracker to the SlimeVR developers, their Discord, or their GitHub. Many of the changes in this version are mine, so an issue you run into may not exist in SlimeVR at all.
     Message me on Discord instead: <discord>jamevm</discord> (SirJame). You can also find me by searching "jamevm" in Discord's Add Friend.
 settings-user_agreement-ai-title = AI-assisted ("vibe coding")
-settings-user_agreement-ai = Much of Bun Tracker's own code and docs (the changes on top of SlimeVR) was written with help from AI coding assistants, a way of working often called "vibe coding". I direct the work, test it on my own setup and review what goes in, but I'm not a professional software developer, and the code hasn't been through a professional or SlimeVR review. So it may contain bugs, odd behavior or mistakes that a careful human review would have caught, and you should treat it as experimental. Please don't rely on it where a tracking error could hurt you or others, and play in a safe, clear space. The original SlimeVR code it builds on was written by the SlimeVR team, not by AI. AI involvement applies only to my changes, and SlimeVR's Apache 2.0 and MIT licenses and copyright notices still apply.
+settings-user_agreement-ai =
+    Much of Bun Tracker's own code and docs (the changes on top of SlimeVR) was written with help from AI coding assistants, a way of working often called "vibe coding". I direct the work, test it on my own setup and review what goes in, but I'm not a professional software developer, and the code hasn't been through a professional or SlimeVR review. So it may contain bugs, odd behavior or mistakes that a careful human review would have caught, and you should treat it as experimental. Please don't rely on it where a tracking error could hurt you or others, and play in a safe, clear space. The original SlimeVR code it builds on was written by the SlimeVR team, not by AI. AI involvement applies only to my changes, and SlimeVR's Apache 2.0 and MIT licenses and copyright notices still apply.
+    The Mr Bun character and pose illustrations are my own character; the current illustrations are AI-generated placeholders (made with an image model from my character photo, using upstream images only as pose references) to be replaced with commissioned art. The Mr Bun character and artwork are © MrBunUniverse, all rights reserved, and are not covered by the MIT or Apache 2.0 licenses of the code.
 settings-user_agreement-warranty-title = No guarantees
 settings-user_agreement-warranty = I look after Bun Tracker in my spare time and share it as-is, without any warranty. I'll do my best to help when something breaks, but please use it at your own risk.
 settings-user_agreement-agreement-title = In short

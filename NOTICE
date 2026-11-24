@@ -6,11 +6,11 @@ Bun Tracker is a modified fork of SlimeVR-Server
 Copyright (c) 2020 Eiren Rain and SlimeVR Contributors,
 licensed under Apache-2.0 and MIT.
 
-This fork's modifications are distributed under the MIT option of
-SlimeVR-Server's MIT/Apache-2.0 dual license (the server/ directory is
-MIT-only upstream; see server/LICENSE.md). Apache-2.0 (LICENSE) is included
-for reference. A full list of changes is recorded in git history and
-docs/fork/CUSTOM.md.
+This fork's own modifications are dual-licensed under the MIT License
+(docs/licenses/LICENSE-MIT) or the Apache License, Version 2.0 (LICENSE),
+at the user's option, the same as upstream SlimeVR-Server (the server/
+directory is MIT-only upstream; see server/LICENSE.md). A full list of
+changes is recorded in git history and docs/fork/CUSTOM.md.
 
 Bun Tracker is not affiliated with or endorsed by SlimeVR B.V.
 SlimeVR is a trademark of SlimeVR B.V.
@@ -46,3 +46,38 @@ from the owner's own character photo, using upstream images only as pose
 references) and are intended to be replaced with commissioned art. The Mr Bun
 character and artwork are Copyright (c) MrBunUniverse, all rights reserved,
 and are not covered by the MIT or Apache-2.0 licenses of the code.
+
+This carve-out applies specifically to the following tracked artwork paths:
+- gui/app/public/images/mr-bun-*.webp
+- gui/app/public/images/assignment-pose.webp
+- gui/app/public/images/autobone-poster.webp
+- gui/app/public/images/front-standing-pose.webp
+- gui/app/public/images/mounting-reset-pose.webp
+- gui/app/public/images/reset-pose.webp
+- gui/app/public/images/mounting/*
+- gui/app/public/images/quiz/*
+- gui/app/public/images/reset/*
+- gui/app/public/images/stay-aligned/*
+- gui/app/public/images/user-height/*
+- gui/app/public/videos/autobone.webm
+- gui/tauri/icons/* (including android/ and ios/ subdirectories)
+- tools/gui/icon/icon-1024.png
+- gui/app/public/favicon.ico
+- gui/app/public/logo.svg
+- gui/app/public/logo192.png
+- gui/app/public/logo512.png
+
+Upstream SlimeVR hardware photos and videos
+(gui/app/public/images/R11_board_reset.webp,
+gui/app/public/images/R12_board_reset.webp,
+gui/app/public/images/R14_board_reset_sw.webp,
+gui/app/public/images/trackers/*, and
+gui/app/public/videos/turn-on-tracker.webm) are excluded from this carve-out
+and remain under upstream SlimeVR's licenses.
+
+MPL-2.0 dependencies:
+The desktop GUI binary statically links the MPL-2.0 Rust crates cssparser,
+cssparser-macros, dtoa-short, option-ext, and selectors. These crates are used
+unmodified, and their source code is available from crates.io and the upstream
+repositories listed in THIRD-PARTY-NOTICES.txt
+(gui/app/public/licenses/THIRD-PARTY-NOTICES.txt).
