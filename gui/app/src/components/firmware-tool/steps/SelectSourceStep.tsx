@@ -1,7 +1,6 @@
 import { Localized } from '@fluent/react';
 import { Typography } from '@/components/commons/Typography';
 import { BunLoader } from '@/components/commons/BunLoader';
-import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { useFirmwareTool } from '@/hooks/firmware-tool';
 import classNames from 'classnames';
 import { Button } from '@/components/commons/Button';
@@ -324,12 +323,10 @@ export function SelectSourceSetep({
             </div>
           )}
           {isError && (
-            <div className="flex justify-center flex-col items-center gap-3 h-44">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
-                <WarningIcon width={24} />
-              </div>
+            <div className="flex justify-center flex-col items-center gap-3 min-h-44">
+              <BunLoader mood="sad" />
               <Localized id="firmware_tool-select_source-error">
-                <Typography />
+                <Typography color="text-status-critical" />
               </Localized>
               <Localized id="firmware_tool-retry">
                 <Button variant="primary" onClick={() => refetch()} />

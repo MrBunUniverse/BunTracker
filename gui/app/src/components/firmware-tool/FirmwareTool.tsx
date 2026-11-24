@@ -9,7 +9,6 @@ import VerticalStepper, {
   VerticalStep,
 } from '@/components/commons/VerticalStepper';
 import { BunLoader } from '@/components/commons/BunLoader';
-import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { Button } from '@/components/commons/Button';
 import { useMemo } from 'react';
 import {
@@ -104,16 +103,20 @@ function FirmwareToolContent() {
         <div className="m-4 h-full">
           {isError && (
             <div className="w-full flex flex-col justify-center items-center gap-3 h-full py-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
-                <WarningIcon width={24} />
-              </div>
+              <BunLoader mood="sad" />
               {!isCompatible ? (
                 <Localized id="firmware_tool-not_compatible">
-                  <Typography variant="section-title" />
+                  <Typography
+                    variant="section-title"
+                    color="text-status-critical"
+                  />
                 </Localized>
               ) : (
                 <Localized id="firmware_tool-not_available">
-                  <Typography variant="section-title" />
+                  <Typography
+                    variant="section-title"
+                    color="text-status-critical"
+                  />
                 </Localized>
               )}
               <Localized id="firmware_tool-retry">

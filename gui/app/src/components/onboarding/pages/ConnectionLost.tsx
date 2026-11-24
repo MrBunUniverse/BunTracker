@@ -1,6 +1,5 @@
 import { Button } from '@/components/commons/Button';
 import { BunLoader } from '@/components/commons/BunLoader';
-import { WarningIcon } from '@/components/commons/icon/WarningIcon';
 import { Typography } from '@/components/commons/Typography';
 import { EmptyLayout } from '@/components/EmptyLayout';
 import { useConfig } from '@/hooks/config';
@@ -30,12 +29,10 @@ function Error({ title, desc }: { title: string; desc: string }) {
 
   return (
     <>
-      <div className="flex h-16 w-16 items-center justify-center rounded-full border border-status-critical/30 bg-status-critical/10 text-status-critical">
-        <WarningIcon width={32} />
-      </div>
+      <BunLoader mood="sad" />
       <div>
         <Localized id={title}>
-          <Typography variant="main-title" />
+          <Typography variant="main-title" color="text-status-critical" />
         </Localized>
         <Localized id={desc}>
           <Typography variant="standard" />
