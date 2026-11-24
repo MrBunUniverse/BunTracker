@@ -2,7 +2,7 @@ import { useLocalization } from '@fluent/react';
 import { useConfig } from '@/hooks/config';
 
 export function BunLoader({
-  size = 120,
+  size = 220,
   mood = 'jumping',
 }: {
   size?: number;

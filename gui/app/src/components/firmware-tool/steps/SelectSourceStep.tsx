@@ -315,7 +315,7 @@ export function SelectSourceSetep({
           )}
 
           {isFetching && (
-            <div className="flex justify-center flex-col items-center gap-4 h-44">
+            <div className="flex justify-center flex-col items-center gap-4 min-h-44">
               <BunLoader />
               <Localized id="firmware_tool-loading">
                 <Typography />
