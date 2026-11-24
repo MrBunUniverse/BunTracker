@@ -49,7 +49,7 @@ Developer notes live in [`docs/`](docs/README.md). Every change is listed in the
 
 This is the same text as in the app under Settings > User Agreement.
 
-**About Bun Tracker.** Bun Tracker is my personal version of SlimeVR Server, adapted for my own setup and shared with friends and a few people I trust. It's an unofficial project. SlimeVR and its developers didn't make it, don't support it, and aren't connected to it in any way. Bun Tracker is an unofficial fork of SlimeVR Server and is not affiliated with, endorsed by, or sponsored by SlimeVR, Meta Platforms, VRChat, Valve, Apple, or Espressif. All trademarks belong to their respective owners.
+**About Bun Tracker.** Bun Tracker is my personal version of SlimeVR Server, adapted for my own setup and shared with friends and a few people I trust. It's an unofficial project: SlimeVR and its developers didn't make it and don't support it. Bun Tracker is not affiliated with, endorsed by, or sponsored by SlimeVR, Meta Platforms, VRChat, Valve, Apple, or Espressif. All trademarks belong to their respective owners.
 
 **Credit where it's due.** SlimeVR Server is the work of the SlimeVR team and its many contributors, and nearly everything here is built on what they made. I don't claim their work as my own. All credit for the original project belongs to them, and its Apache 2.0 and MIT licenses and copyright notices still apply.
 

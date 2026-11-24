@@ -1846,8 +1846,8 @@ settings-user_agreement = User Agreement
 settings-user_agreement-about-title = About Bun Tracker
 settings-user_agreement-about =
     Bun Tracker is my personal version of SlimeVR Server, adapted for my own setup and shared with friends and a few people I trust.
-    It's an unofficial project. SlimeVR and its developers didn't make it, don't support it, and aren't connected to it in any way.
-    Bun Tracker is an unofficial fork of SlimeVR Server and is not affiliated with, endorsed by, or sponsored by SlimeVR, Meta Platforms, VRChat, Valve, Apple, or Espressif. All trademarks belong to their respective owners.
+    It's an unofficial project: SlimeVR and its developers didn't make it and don't support it.
+    Bun Tracker is not affiliated with, endorsed by, or sponsored by SlimeVR, Meta Platforms, VRChat, Valve, Apple, or Espressif. All trademarks belong to their respective owners.
 settings-user_agreement-credit-title = Credit where it's due
 settings-user_agreement-credit =
     SlimeVR Server is the work of the SlimeVR team and its many contributors, and nearly everything here is built on what they made.
